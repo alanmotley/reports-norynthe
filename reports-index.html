@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Norynthe.Reports</title>
+  <style>
+    :root {
+      --bg: #edf2f5;
+      --paper: rgba(255, 255, 255, 0.9);
+      --paper-2: rgba(255, 255, 255, 0.76);
+      --ink: #0f1115;
+      --muted: #5c6670;
+      --line: rgba(15, 17, 21, 0.08);
+      --accent: #7a3030;
+      --slate: #254f74;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", Times, serif;
+      background:
+        radial-gradient(circle at 16% 18%, rgba(145, 171, 194, 0.18), transparent 28%),
+        radial-gradient(circle at 82% 12%, rgba(122, 48, 48, 0.08), transparent 22%),
+        linear-gradient(180deg, #f6f9fb 0%, #e9eef2 100%);
+    }
+    .shell {
+      width: min(calc(100% - 48px), 1180px);
+      margin: 0 auto;
+      padding: 40px 0 72px;
+    }
+    .hero, .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+    .hero {
+      padding: 26px 28px 30px;
+      margin-bottom: 20px;
+    }
+    .kicker {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+    }
+    .wordmark {
+      margin: 8px 0 0;
+      font-size: clamp(3rem, 7vw, 5.2rem);
+      line-height: 0.92;
+      letter-spacing: -0.06em;
+      font-weight: 700;
+    }
+    .lede {
+      max-width: 760px;
+      margin: 16px 0 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #32404d;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .card {
+      padding: 22px;
+    }
+    .card h2 {
+      margin: 10px 0 10px;
+      font-size: 30px;
+      letter-spacing: -0.05em;
+    }
+    .card p {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #32404d;
+    }
+    .meta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .action-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+    .action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.85);
+      color: var(--ink);
+      text-decoration: none;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+    }
+    .action.primary {
+      background: #0f1115;
+      color: #fff;
+      border-color: #0f1115;
+    }
+    .note {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-left: 3px solid var(--accent);
+      background: rgba(122, 48, 48, 0.05);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #304050;
+    }
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div class="kicker">reports.norynthe.com</div>
+      <div class="wordmark">Norynthe.</div>
+      <p class="lede">
+        Norynthe.Reports is the reporting layer for model comparison, trust scoring, and calibration.
+        This landing page separates the internal reporting workspace from the client-facing report concept.
+      </p>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="kicker">Internal Surface</div>
+        <h2>Norynthe.Reports</h2>
+        <p>
+          The internal reporting and calibration experience. Use this to inspect saved reports,
+          compare models, run human review mode, and work through the scoring backbone.
+        </p>
+        <div class="meta">
+          <span>Comparison reports</span>
+          <span>Model drill-down</span>
+          <span>Human review</span>
+        </div>
+        <div class="action-row">
+          <a class="action primary" href="./norynthe-run-console.html">Open Norynthe.Reports</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="kicker">Client Surface</div>
+        <h2>Norynthe.Report</h2>
+        <p>
+          A client-facing report concept built from the same scoring engine. Use this to show what
+          a polished external deliverable could look like once the reporting layer is productized.
+        </p>
+        <div class="meta">
+          <span>Executive summary</span>
+          <span>Norynthe.Score</span>
+          <span>Decision-ready framing</span>
+        </div>
+        <div class="action-row">
+          <a class="action primary" href="./norynthe-customer-report.html">Open Norynthe.Report</a>
+        </div>
+      </article>
+    </section>
+
+    <div class="note">
+      Recommended walkthrough order for Nick: start with <strong>Norynthe.Reports</strong> to show the scoring engine and internal workflow, then open <strong>Norynthe.Report</strong> to show how the client deliverable layer sits on top of that system.
+    </div>
+  </div>
+</body>
+</html>

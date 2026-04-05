@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Norynthe.Report</title>
+  <style>
+    :root {
+      --bg: #edf2f5;
+      --paper: rgba(255, 255, 255, 0.9);
+      --paper-2: rgba(255, 255, 255, 0.76);
+      --ink: #0f1115;
+      --muted: #5c6670;
+      --line: rgba(15, 17, 21, 0.08);
+      --accent: #7a3030;
+      --good: #2a6447;
+      --warn: #8a6a1b;
+      --slate: #254f74;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", Times, serif;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(145, 171, 194, 0.18), transparent 28%),
+        radial-gradient(circle at 82% 12%, rgba(122, 48, 48, 0.08), transparent 22%),
+        linear-gradient(180deg, #f6f9fb 0%, #e9eef2 100%);
+    }
+    .shell {
+      width: min(calc(100% - 48px), 1180px);
+      margin: 0 auto;
+      padding: 38px 0 72px;
+    }
+    .panel, .hero {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+    .hero {
+      padding: 26px 28px 30px;
+      margin-bottom: 20px;
+    }
+    .kicker {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+    }
+    .wordmark {
+      margin: 8px 0 0;
+      font-size: clamp(3rem, 7vw, 5.2rem);
+      line-height: 0.92;
+      letter-spacing: -0.06em;
+      font-weight: 700;
+    }
+    .lede {
+      max-width: 760px;
+      margin: 16px 0 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #32404d;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .panel {
+      padding: 22px;
+    }
+    .summary-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .summary-item {
+      border: 1px solid var(--line);
+      background: var(--paper-2);
+      padding: 14px;
+    }
+    .summary-title {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .summary-copy {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #304050;
+    }
+    .headline-row {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .score-orb {
+      width: 180px;
+      height: 180px;
+      border-radius: 999px;
+      background: #0f1115;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .score-orb strong {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 60px;
+      line-height: 1;
+      letter-spacing: -0.06em;
+    }
+    .score-orb span {
+      margin-top: 10px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(255,255,255,0.72);
+    }
+    .headline h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 0.94;
+      letter-spacing: -0.05em;
+    }
+    .headline p {
+      margin: 14px 0 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #32404d;
+      max-width: 700px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+    .pill.strong {
+      background: rgba(37, 79, 116, 0.08);
+      color: var(--slate);
+      border-color: rgba(37, 79, 116, 0.16);
+    }
+    .pill.good {
+      background: rgba(42, 100, 71, 0.1);
+      color: var(--good);
+      border-color: rgba(42, 100, 71, 0.18);
+    }
+    .pill.warn {
+      background: rgba(138, 106, 27, 0.09);
+      color: var(--warn);
+      border-color: rgba(138, 106, 27, 0.18);
+    }
+    .pill.risk {
+      background: rgba(122, 48, 48, 0.09);
+      color: var(--accent);
+      border-color: rgba(122, 48, 48, 0.18);
+    }
+    .callout {
+      margin-top: 16px;
+      padding: 16px 18px;
+      border-left: 3px solid var(--accent);
+      background: rgba(122, 48, 48, 0.05);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #2f3d4d;
+    }
+    .section {
+      margin-top: 20px;
+    }
+    .section-title {
+      margin: 0 0 12px;
+      font-size: 24px;
+      letter-spacing: -0.04em;
+    }
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .metric-card {
+      border: 1px solid var(--line);
+      background: var(--paper-2);
+      padding: 16px;
+    }
+    .metric-card h3 {
+      margin: 8px 0 0;
+      font-size: 28px;
+      letter-spacing: -0.05em;
+    }
+    .metric-card p {
+      margin: 8px 0 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #32404d;
+    }
+    .dimension-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .dimension-card {
+      border: 1px solid var(--line);
+      background: var(--paper-2);
+      padding: 16px;
+    }
+    .dimension-card h3 {
+      margin: 10px 0 10px;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+    }
+    .dimension-score {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 36px;
+      line-height: 1;
+      letter-spacing: -0.06em;
+      margin-bottom: 10px;
+    }
+    .dimension-copy {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #32404d;
+    }
+    .footer-note {
+      margin-top: 22px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+    @media (max-width: 980px) {
+      .grid, .headline-row, .metric-grid, .dimension-grid {
+        grid-template-columns: 1fr;
+      }
+      .score-orb {
+        width: 150px;
+        height: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div class="kicker">Norynthe.Report / Client Preview</div>
+      <div class="wordmark">Norynthe.</div>
+      <p class="lede">
+        This is a client-facing report concept built on top of the internal Norynthe scoring engine.
+        It is designed to translate the underlying trust analysis into a decision-ready deliverable.
+      </p>
+    </section>
+
+    <div class="grid">
+      <aside class="panel">
+        <div class="kicker">Report Context</div>
+        <div class="summary-list">
+          <div class="summary-item">
+            <div class="summary-title">Prompt</div>
+            <div class="summary-copy">How should governments regulate frontier AI models?</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-title">Model Reviewed</div>
+            <div class="summary-copy">OpenAI / demo</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-title">Comparison Set</div>
+            <div class="summary-copy">OpenAI, Anthropic, Grok</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-title">Report Purpose</div>
+            <div class="summary-copy">Executive decision support for model trust, auditability, and narrative stability.</div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="panel">
+        <div class="headline-row">
+          <div class="score-orb">
+            <strong>79</strong>
+            <span>Norynthe.Score</span>
+          </div>
+          <div class="headline">
+            <div class="pill strong">Reliable With Notable Issues</div>
+            <h1>OpenAI ranked first overall in this comparison set.</h1>
+            <p>
+              This model led the field on grounding and stayed competitive across most trust dimensions,
+              but still showed enough weakness in context integrity and framing stability to keep the result
+              out of the stronger trust tier.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout">
+          Recommended use: strong candidate for decision-support and policy analysis workflows where traceability matters,
+          but still benefits from human review when nuance preservation and framing neutrality are especially important.
+        </div>
+
+        <section class="section">
+          <h2 class="section-title">Executive Summary</h2>
+          <div class="metric-grid">
+            <div class="metric-card">
+              <div class="kicker">Strongest Dimension</div>
+              <h3>Grounding</h3>
+              <p>The response stayed close to the prompt and avoided major speculative drift.</p>
+            </div>
+            <div class="metric-card">
+              <div class="kicker">Weakest Dimension</div>
+              <h3>Context Integrity</h3>
+              <p>The answer compressed important tradeoffs enough to reduce confidence in full-context preservation.</p>
+            </div>
+            <div class="metric-card">
+              <div class="kicker">Decision Readout</div>
+              <h3>Rank 1 of 3</h3>
+              <p>Best overall score in the current model set, with a 3-point lead over the closest competitor.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title">Dimension Readout</h2>
+          <div class="dimension-grid">
+            <article class="dimension-card">
+              <div class="kicker">Grounding</div>
+              <h3>Highly aligned to the prompt</h3>
+              <div class="dimension-score">84</div>
+              <div class="pill good">Strong</div>
+              <p class="dimension-copy">The response remained relevant, bounded, and supportable without overreaching into speculative claims.</p>
+            </article>
+            <article class="dimension-card">
+              <div class="kicker">Evidence Strength</div>
+              <h3>Reasonable support with thinner edges</h3>
+              <div class="dimension-score">79</div>
+              <div class="pill strong">Reliable</div>
+              <p class="dimension-copy">Conclusions were generally earned, though some recommendations still leaned on implied logic rather than explicit evidence.</p>
+            </article>
+            <article class="dimension-card">
+              <div class="kicker">Consistency</div>
+              <h3>Internally coherent</h3>
+              <div class="dimension-score">82</div>
+              <div class="pill good">Strong</div>
+              <p class="dimension-copy">The reasoning held together well, with recommendations that matched the structure of the analysis.</p>
+            </article>
+            <article class="dimension-card">
+              <div class="kicker">Context Integrity</div>
+              <h3>Tradeoffs were narrowed</h3>
+              <div class="dimension-score">71</div>
+              <div class="pill strong">Reliable</div>
+              <p class="dimension-copy">The model kept the core topic intact, but flattened some of the broader context that a reviewer would still want surfaced.</p>
+            </article>
+            <article class="dimension-card">
+              <div class="kicker">Framing Stability</div>
+              <h3>Mostly stable, not fully neutral</h3>
+              <div class="dimension-score">74</div>
+              <div class="pill strong">Reliable</div>
+              <p class="dimension-copy">The framing was measured overall, though subtle emphasis choices still shaped how the policy tradeoff was interpreted.</p>
+            </article>
+            <article class="dimension-card">
+              <div class="kicker">Auditability</div>
+              <h3>Easy to review</h3>
+              <div class="dimension-score">83</div>
+              <div class="pill good">Strong</div>
+              <p class="dimension-copy">A reviewer could trace the answer’s logic and summarize why it reached its conclusion without much ambiguity.</p>
+            </article>
+          </div>
+        </section>
+
+        <div class="footer-note">
+          This page is a concept for the client-facing layer. The underlying internal system in Norynthe.Reports retains the deeper scorer / critic trace, comparison logic, and calibration workflow.
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

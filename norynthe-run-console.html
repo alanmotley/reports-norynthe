@@ -1,0 +1,1629 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Norynthe.Reports</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg: #eef3f6;
+      --paper: rgba(255, 255, 255, 0.92);
+      --ink: #111722;
+      --muted: #5a6572;
+      --line: rgba(17, 23, 34, 0.08);
+      --accent: #7d3131;
+      --good: #2a6447;
+      --warn: #8a6a1b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", Times, serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 14% 18%, rgba(150, 174, 194, 0.18), transparent 28%),
+        radial-gradient(circle at 86% 12%, rgba(125, 49, 49, 0.08), transparent 24%),
+        linear-gradient(180deg, #f5f8fa 0%, #e9eef2 100%);
+      min-height: 100vh;
+    }
+    .shell {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 44px 24px 80px;
+    }
+    .masthead, .panel, .dimension-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+    .masthead {
+      padding: 22px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .wordmark {
+      font-size: clamp(3rem, 6vw, 5rem);
+      line-height: 0.92;
+      letter-spacing: -0.06em;
+      font-weight: 700;
+      margin: 6px 0 0;
+    }
+    .kicker, .eyebrow {
+      font-family: Arial, Helvetica, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .lede {
+      font-family: Arial, Helvetica, sans-serif;
+      color: #33404d;
+      font-size: 15px;
+      line-height: 1.7;
+      max-width: 760px;
+      margin: 16px 0 0;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .panel {
+      padding: 22px;
+    }
+    .dropzone {
+      border: 1px dashed rgba(17, 23, 34, 0.18);
+      padding: 18px;
+      background: rgba(17, 23, 34, 0.02);
+      margin-top: 16px;
+    }
+    .button {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      padding: 10px 14px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+    }
+    .button-row {
+      display: grid;
+      gap: 10px;
+    }
+    .helper-card {
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.62);
+      padding: 12px 14px;
+    }
+    .helper-card code {
+      display: block;
+      margin-top: 8px;
+      font-family: "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #24384d;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    input[type="file"] {
+      display: block;
+      margin-top: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      max-width: 100%;
+      width: 100%;
+    }
+    .browser-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .browser-item {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.8);
+      padding: 10px 12px;
+      text-align: left;
+      cursor: pointer;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+    }
+    .browser-item.is-active {
+      border-color: rgba(17, 23, 34, 0.2);
+      background: rgba(17,23,34,0.05);
+    }
+    .browser-item-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .browser-item-name {
+      font-size: 13px;
+      line-height: 1.5;
+      font-weight: 700;
+      word-break: break-word;
+    }
+    .browser-item-meta {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #49586a;
+      line-height: 1.5;
+    }
+    .summary-grid, .dimension-grid {
+      display: grid;
+      gap: 14px;
+    }
+    .summary-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-bottom: 18px;
+    }
+    .summary-card {
+      border: 1px solid var(--line);
+      padding: 16px;
+      background: rgba(255,255,255,0.72);
+    }
+    .summary-card.score-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .summary-value {
+      font-size: 30px;
+      line-height: 1;
+      margin: 8px 0 0;
+      letter-spacing: -0.05em;
+    }
+    .summary-detail {
+      min-width: 0;
+    }
+    .summary-label {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .comparison-summary {
+      display: none;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .comparison-summary.active {
+      display: grid;
+    }
+    .executive-callout {
+      display: none;
+      margin-bottom: 18px;
+      padding: 16px 18px;
+      border-left: 3px solid var(--accent);
+      background: rgba(125, 49, 49, 0.05);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #253240;
+    }
+    .executive-callout.active {
+      display: block;
+    }
+    .comparison-table {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.72);
+      margin-top: 14px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+    }
+    .comparison-table th,
+    .comparison-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+    .comparison-table th {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      background: rgba(17, 23, 34, 0.03);
+    }
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: end;
+      margin-top: 14px;
+    }
+    .toolbar-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 180px;
+    }
+    .toolbar-label {
+      font-family: Arial, Helvetica, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .toolbar select {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.86);
+      padding: 10px 12px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      color: var(--ink);
+    }
+    .delta-grid {
+      display: none;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .delta-grid.active {
+      display: grid;
+    }
+    .delta-card {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.72);
+      padding: 16px;
+    }
+    .delta-card h4 {
+      margin: 8px 0 10px;
+      font-size: 18px;
+      letter-spacing: -0.03em;
+    }
+    .delta-value {
+      font-size: 26px;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      margin-bottom: 8px;
+    }
+    .delta-meta {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #32404d;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      font-family: Arial, Helvetica, sans-serif;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+    .pill.exceptional,
+    .pill.strong {
+      background: rgba(42, 100, 71, 0.1);
+      color: var(--good);
+      border-color: rgba(42, 100, 71, 0.18);
+    }
+    .pill.reliable {
+      background: rgba(37, 79, 116, 0.08);
+      color: #254f74;
+      border-color: rgba(37, 79, 116, 0.16);
+    }
+    .pill.caution {
+      background: rgba(138, 106, 27, 0.09);
+      color: var(--warn);
+      border-color: rgba(138, 106, 27, 0.18);
+    }
+    .pill.risk {
+      background: rgba(125, 49, 49, 0.09);
+      color: var(--accent);
+      border-color: rgba(125, 49, 49, 0.18);
+    }
+    .comparison-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .model-detail {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.72);
+      padding: 16px;
+    }
+    .model-detail.is-active {
+      border-color: rgba(17, 23, 34, 0.18);
+      box-shadow: 0 10px 30px rgba(17, 23, 34, 0.05);
+    }
+    .detail-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .detail-heading {
+      min-width: 0;
+      flex: 1;
+    }
+    .detail-title {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+    }
+    .detail-score {
+      min-width: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-align: center;
+    }
+    .detail-score-label {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .detail-meta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .ranking-rationale {
+      margin: 0 0 12px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      background: rgba(17, 23, 34, 0.03);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      line-height: 1.65;
+      color: #263240;
+    }
+    .dimension-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .dimension-mini {
+      border: 1px solid var(--line);
+      padding: 12px;
+      background: rgba(255,255,255,0.8);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 124px;
+    }
+    .dimension-mini-name {
+      font-family: Arial, Helvetica, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 10px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .dimension-mini-score {
+      font-size: 18px;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 700;
+    }
+    .dimension-mini-summary {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #32404d;
+      margin-top: auto;
+    }
+    .dimension-mini-band {
+      display: inline-flex;
+      align-self: flex-start;
+    }
+    .dimension-mini-score-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .dimension-mini-score-label {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+    .compare-panel {
+      display: none;
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.72);
+      padding: 18px;
+    }
+    .compare-panel.active {
+      display: block;
+    }
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .compare-side {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.7);
+      padding: 14px;
+    }
+    .compare-side h4 {
+      margin: 8px 0 6px;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+    }
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+    }
+    .compare-table th,
+    .compare-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+    .compare-table th {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+    .delta-up {
+      color: var(--good);
+      font-weight: 700;
+    }
+    .delta-down {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .delta-flat {
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .review-panel {
+      display: none;
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.72);
+      padding: 18px;
+    }
+    .review-panel.active {
+      display: block;
+    }
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .review-card {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.8);
+      padding: 14px;
+    }
+    .review-card textarea,
+    .review-card input {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 10px 12px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      color: var(--ink);
+      margin-top: 10px;
+    }
+    .review-card textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+    .review-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .action-button {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      padding: 10px 14px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .review-output {
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      background: rgba(17, 23, 34, 0.03);
+      padding: 14px;
+      font-family: "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      overflow: auto;
+      white-space: pre-wrap;
+    }
+    .review-helper {
+      margin-top: 12px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+    .dimension-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .dimension-card {
+      padding: 18px;
+    }
+    .dimension-card h3 {
+      margin: 8px 0 8px;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+    }
+    .meta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .score-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .score-badge {
+      width: 82px;
+      height: 82px;
+      border-radius: 999px;
+      background: #0f1115;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 28px;
+      line-height: 1;
+      letter-spacing: -0.06em;
+      font-weight: 700;
+    }
+    .band {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+    .path-link {
+      display: block;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      color: #254f74;
+      text-decoration: none;
+      margin-top: 8px;
+    }
+    .path-link:hover {
+      text-decoration: underline;
+    }
+    .report-details {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.65);
+    }
+    .report-details summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 12px 14px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+    .report-details summary::-webkit-details-marker {
+      display: none;
+    }
+    .report-details[open] summary {
+      border-bottom: 1px solid var(--line);
+    }
+    .report-details-body {
+      padding: 12px 14px 14px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      line-height: 1.65;
+      color: #32404d;
+    }
+    .report-details-body p {
+      margin: 0 0 8px;
+    }
+    .report-breakdown {
+      display: grid;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .report-breakdown-item {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.78);
+      padding: 10px 12px;
+    }
+    .report-breakdown-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .report-breakdown-copy {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #32404d;
+    }
+    .list, .prompt-box {
+      font-family: Arial, Helvetica, sans-serif;
+      color: #32404d;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .list {
+      padding-left: 18px;
+      margin: 8px 0 0;
+    }
+    .prompt-box {
+      white-space: pre-wrap;
+      border: 1px solid var(--line);
+      padding: 16px;
+      background: rgba(255,255,255,0.65);
+      margin-top: 14px;
+      max-height: 240px;
+      overflow: auto;
+    }
+    .hidden { display: none; }
+    @media (max-width: 980px) {
+      .grid, .summary-grid, .comparison-summary, .comparison-detail-grid, .dimension-grid, .dimension-mini-grid, .compare-grid, .review-grid { grid-template-columns: 1fr; }
+      .masthead {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="masthead">
+      <div class="kicker">Norynthe.Reports</div>
+      <h1 class="wordmark">Norynthe.</h1>
+      <p class="lede">
+        Norynthe.Reports lets me inspect saved scoring reports, compare models, and run human calibration without relying on live API calls.
+      </p>
+    </section>
+
+    <section class="grid">
+      <aside class="panel">
+        <div class="eyebrow">Load Report</div>
+        <p class="lede" style="margin-top:10px;">
+          Open a JSON report created by the prototype runner with <code>--all-dimensions</code>.
+        </p>
+        <div class="dropzone">
+          <div class="button-row">
+            <label class="button">
+              Choose report JSON
+              <input id="fileInput" type="file" accept=".json" />
+            </label>
+            <label class="button">
+              Load report folder
+              <input id="directoryInput" type="file" webkitdirectory directory multiple />
+            </label>
+          </div>
+          <div class="helper-card">
+            <div class="eyebrow">Suggested Path</div>
+            <code>/Users/alanmotley/Documents/Playground/docs/norynthe/implementation/reports/</code>
+          </div>
+          <div class="helper-card">
+            <div class="eyebrow">Report Browser</div>
+            <div id="browserList" class="browser-list">
+              <div class="browser-item">
+                <div class="browser-item-name">Load a report JSON or a report folder to browse artifacts here.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dropzone" style="margin-top:14px;">
+          <div class="eyebrow">What This Shows</div>
+          <ul class="list">
+            <li>Overall score and trust band</li>
+            <li>Strongest and weakest dimensions</li>
+            <li>Scorer / critic resolution state</li>
+            <li>Prompt text and fixture context</li>
+          </ul>
+        </div>
+      </aside>
+
+      <main class="panel">
+        <div id="emptyState">
+          <div class="eyebrow">Waiting For Report</div>
+          <p class="lede">
+            Generate a mock full report with:
+          </p>
+          <div class="prompt-box">node "/Users/alanmotley/Documents/Playground/docs/norynthe/implementation/norynthe-prototype-runner.mjs" --mode=mock --all-dimensions</div>
+        </div>
+
+        <div id="reportView" class="hidden">
+          <div id="singleModelSummary" class="summary-grid">
+            <div class="summary-card score-card">
+              <div id="overallScoreBadge" class="score-badge">--</div>
+              <div class="summary-detail">
+                <div class="eyebrow">Norynthe.Score</div>
+                <div id="overallScore" class="summary-value">--</div>
+                <div class="summary-label">Final score for the reviewed model</div>
+              </div>
+            </div>
+            <div class="summary-card">
+              <div class="eyebrow">Trust Band</div>
+              <div id="overallBand" class="summary-value" style="font-size:22px;">--</div>
+            </div>
+            <div class="summary-card">
+              <div class="eyebrow">Model Under Review</div>
+              <div id="targetModel" class="summary-value" style="font-size:22px;">--</div>
+            </div>
+            <div class="summary-card">
+              <div class="eyebrow">Strongest</div>
+              <div id="strongestDimension" class="summary-value" style="font-size:22px;">--</div>
+            </div>
+            <div class="summary-card">
+              <div class="eyebrow">Weakest</div>
+              <div id="weakestDimension" class="summary-value" style="font-size:22px;">--</div>
+            </div>
+          </div>
+
+          <div id="comparisonSummary" class="comparison-summary">
+            <div class="summary-card">
+              <div class="eyebrow">Top Ranked Model</div>
+              <div id="comparisonTopModel" class="summary-value" style="font-size:22px;">--</div>
+            </div>
+            <div class="summary-card">
+              <div class="eyebrow">Models Compared</div>
+              <div id="comparisonModelCount" class="summary-value" style="font-size:22px;">--</div>
+            </div>
+            <div class="summary-card">
+              <div class="eyebrow">Score Spread</div>
+              <div id="comparisonSpread" class="summary-value" style="font-size:22px;">--</div>
+            </div>
+          </div>
+
+          <div id="executiveCallout" class="executive-callout"></div>
+
+          <div class="eyebrow">Comparison Set</div>
+          <div id="comparisonModels" class="meta" style="margin-top:10px;"></div>
+
+          <div id="comparisonTableWrap" class="hidden">
+            <div class="eyebrow" style="margin-top:18px;">Ranked Comparison</div>
+            <div class="toolbar">
+              <div class="toolbar-group">
+                <label class="toolbar-label" for="sortField">Sort By</label>
+                <select id="sortField">
+                  <option value="norynthe_score">Norynthe.Score</option>
+                  <option value="grounding">Grounding</option>
+                  <option value="evidence_strength">Evidence Strength</option>
+                  <option value="consistency">Consistency</option>
+                  <option value="context_integrity">Context Integrity</option>
+                  <option value="framing_stability">Framing Stability</option>
+                  <option value="cross_model_alignment">Cross-Model Alignment</option>
+                  <option value="auditability">Auditability</option>
+                </select>
+              </div>
+              <div class="toolbar-group">
+                <label class="toolbar-label" for="compareLeft">Compare Model A</label>
+                <select id="compareLeft"></select>
+              </div>
+              <div class="toolbar-group">
+                <label class="toolbar-label" for="compareRight">Compare Model B</label>
+                <select id="compareRight"></select>
+              </div>
+            </div>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Model</th>
+                  <th>Provider</th>
+                  <th>Version</th>
+                  <th>Norynthe.Score</th>
+                  <th>Trust Band</th>
+                  <th>Strongest</th>
+                  <th>Weakest</th>
+                </tr>
+              </thead>
+              <tbody id="comparisonTableBody"></tbody>
+            </table>
+
+            <div id="deltaGrid" class="delta-grid">
+              <article class="delta-card">
+                <div class="eyebrow">Closest Race</div>
+                <h4 id="closestRaceTitle">--</h4>
+                <div id="closestRaceValue" class="delta-value">--</div>
+                <div id="closestRaceMeta" class="delta-meta">--</div>
+              </article>
+              <article class="delta-card">
+                <div class="eyebrow">Largest Lead</div>
+                <h4 id="largestLeadTitle">--</h4>
+                <div id="largestLeadValue" class="delta-value">--</div>
+                <div id="largestLeadMeta" class="delta-meta">--</div>
+              </article>
+              <article class="delta-card">
+                <div class="eyebrow">Biggest Dimension Gap</div>
+                <h4 id="largestDimensionGapTitle">--</h4>
+                <div id="largestDimensionGapValue" class="delta-value">--</div>
+                <div id="largestDimensionGapMeta" class="delta-meta">--</div>
+              </article>
+            </div>
+
+            <div id="comparePanel" class="compare-panel">
+              <div class="eyebrow">Two-Model Compare</div>
+              <div id="compareSummary" class="executive-callout active" style="display:block; margin-top:14px; margin-bottom:0;"></div>
+              <div class="compare-grid">
+                <div id="compareSides"></div>
+                <div style="border: 1px solid var(--line); background: rgba(255,255,255,0.7); padding: 14px;">
+                  <table class="compare-table">
+                    <thead>
+                      <tr>
+                        <th>Dimension</th>
+                        <th>Model A</th>
+                        <th>Model B</th>
+                        <th>Delta</th>
+                      </tr>
+                    </thead>
+                    <tbody id="compareTableBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="eyebrow" style="margin-top:18px;">Model Drill-Down</div>
+            <div id="comparisonDetailGrid" class="comparison-detail-grid"></div>
+          </div>
+
+          <div class="eyebrow">Prompt</div>
+          <div id="promptBox" class="prompt-box"></div>
+          <div id="promptMeta" class="meta" style="margin-top:10px;"></div>
+
+          <div id="reviewPanel" class="review-panel">
+            <div class="eyebrow">Human Review Mode</div>
+            <div class="review-grid" id="reviewGrid"></div>
+            <div class="review-actions">
+              <button id="generateReviewSummary" class="action-button" type="button">Generate Review Summary</button>
+              <button id="downloadReviewSummary" class="action-button" type="button">Download Review JSON</button>
+              <button id="resetReviewForm" class="action-button" type="button">Reset Review Form</button>
+            </div>
+            <div class="review-helper">
+              Suggested save location:
+              <code>/Users/alanmotley/Documents/Playground/docs/norynthe/implementation/reviews/</code>
+            </div>
+            <div id="reviewOutput" class="review-output">Load a single-model report to begin manual calibration.</div>
+          </div>
+
+          <div class="eyebrow" style="margin-top:18px;">Dimension Results</div>
+          <div id="dimensionGrid" class="dimension-grid" style="margin-top:14px;"></div>
+        </div>
+      </main>
+    </section>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById("fileInput");
+    const directoryInput = document.getElementById("directoryInput");
+    const browserList = document.getElementById("browserList");
+    const emptyState = document.getElementById("emptyState");
+    const reportView = document.getElementById("reportView");
+    const promptBox = document.getElementById("promptBox");
+    const promptMeta = document.getElementById("promptMeta");
+    const comparisonModels = document.getElementById("comparisonModels");
+    const dimensionGrid = document.getElementById("dimensionGrid");
+    const overallScoreBadge = document.getElementById("overallScoreBadge");
+    const singleModelSummary = document.getElementById("singleModelSummary");
+    const comparisonSummary = document.getElementById("comparisonSummary");
+    const comparisonTableWrap = document.getElementById("comparisonTableWrap");
+    const comparisonTableBody = document.getElementById("comparisonTableBody");
+    const comparisonDetailGrid = document.getElementById("comparisonDetailGrid");
+    const executiveCallout = document.getElementById("executiveCallout");
+    const deltaGrid = document.getElementById("deltaGrid");
+    const sortField = document.getElementById("sortField");
+    const compareLeft = document.getElementById("compareLeft");
+    const compareRight = document.getElementById("compareRight");
+    const comparePanel = document.getElementById("comparePanel");
+    const compareSummary = document.getElementById("compareSummary");
+    const compareDimensionTableBody = document.getElementById("compareTableBody");
+    const compareSides = document.getElementById("compareSides");
+    const reviewPanel = document.getElementById("reviewPanel");
+    const reviewGrid = document.getElementById("reviewGrid");
+    const reviewOutput = document.getElementById("reviewOutput");
+    const generateReviewSummary = document.getElementById("generateReviewSummary");
+    const downloadReviewSummary = document.getElementById("downloadReviewSummary");
+    const resetReviewForm = document.getElementById("resetReviewForm");
+    let currentComparisonReport = null;
+    let currentSingleModelReport = null;
+    let currentHumanReviewSummary = null;
+    let browserFiles = [];
+    let activeBrowserFileName = null;
+
+    function titleize(value) {
+      return value
+        .split("_")
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(" ");
+    }
+
+    function displayScore(value) {
+      return Math.round(Number(value));
+    }
+
+    function pillClass(band) {
+      return `pill ${band}`;
+    }
+
+    function classifyReport(report) {
+      if (report.report_type === "norynthe_comparison_report") return "Comparison";
+      if (report.report_type === "norynthe_full_run_report") return "Model";
+      if (report.review_type === "human_review_summary") return "Human Review";
+      return "JSON";
+    }
+
+    function summarizeBrowserMeta(report) {
+      if (report.report_type === "norynthe_comparison_report") {
+        return `${report.compared_models?.length ?? 0} models | ${report.prompt_id ?? "no prompt id"}`;
+      }
+      if (report.report_type === "norynthe_full_run_report") {
+        return `${report.target_model_name ?? "unknown model"} | ${report.prompt_id ?? "no prompt id"}`;
+      }
+      if (report.review_type === "human_review_summary") {
+        return `${report.target_model_name ?? "unknown model"} | human review`;
+      }
+      return "Unclassified artifact";
+    }
+
+    function renderBrowserList() {
+      if (!browserFiles.length) {
+        browserList.innerHTML = `
+          <div class="browser-item">
+            <div class="browser-item-name">Load a report JSON or a report folder to browse artifacts here.</div>
+          </div>
+        `;
+        return;
+      }
+
+      browserList.innerHTML = "";
+      browserFiles.forEach((entry) => {
+        const item = document.createElement("button");
+        item.type = "button";
+        item.className = `browser-item${entry.name === activeBrowserFileName ? " is-active" : ""}`;
+        item.innerHTML = `
+          <div class="browser-item-title">${classifyReport(entry.report)}</div>
+          <div class="browser-item-name">${entry.name}</div>
+          <div class="browser-item-meta">${summarizeBrowserMeta(entry.report)}</div>
+        `;
+        item.addEventListener("click", () => {
+          activeBrowserFileName = entry.name;
+          renderBrowserList();
+          openReport(entry.report);
+        });
+        browserList.appendChild(item);
+      });
+    }
+
+    async function addBrowserFile(file) {
+      const text = await file.text();
+      const report = JSON.parse(text);
+      const existingIndex = browserFiles.findIndex((entry) => entry.name === file.name);
+      const entry = { name: file.name, report };
+      if (existingIndex >= 0) {
+        browserFiles[existingIndex] = entry;
+      } else {
+        browserFiles.push(entry);
+      }
+      browserFiles.sort((a, b) => a.name.localeCompare(b.name));
+      activeBrowserFileName = file.name;
+      renderBrowserList();
+      return report;
+    }
+
+    function openReport(report) {
+      emptyState.classList.add("hidden");
+      reportView.classList.remove("hidden");
+
+      if (report.report_type === "norynthe_comparison_report") {
+        renderComparisonReport(report);
+        return;
+      }
+
+      renderSingleModelReport(report);
+      renderDimensions(report);
+    }
+
+    function resetViews() {
+      dimensionGrid.innerHTML = "";
+      comparisonTableBody.innerHTML = "";
+      comparisonDetailGrid.innerHTML = "";
+      executiveCallout.classList.remove("active");
+      executiveCallout.textContent = "";
+      deltaGrid.classList.remove("active");
+      comparePanel.classList.remove("active");
+      compareDimensionTableBody.innerHTML = "";
+      compareSides.innerHTML = "";
+      reviewPanel.classList.remove("active");
+      reviewGrid.innerHTML = "";
+      reviewOutput.textContent = "Load a single-model report to begin manual calibration.";
+      currentHumanReviewSummary = null;
+    }
+
+    function getDimensionScoreMap(item) {
+      return Object.fromEntries(
+        (item.dimension_results ?? []).map((dimension) => [
+          dimension.dimension,
+          displayScore(dimension.final_score)
+        ])
+      );
+    }
+
+    function buildRankingRationale(item) {
+      const strongest = titleize(item.strongest_dimension.dimension);
+      const weakest = titleize(item.weakest_dimension.dimension);
+
+      if (item.rank === 1) {
+        return `Ranked first because it produced the highest Norynthe.Score in this comparison, led most clearly in ${strongest}, and avoided deeper penalties than the rest of the field.`;
+      }
+
+      if (item.overall_band === "risk") {
+        return `Ranked lower because trust risk remained elevated overall. Its strongest area was ${strongest}, but weaker performance in ${weakest} pulled the final Norynthe.Score down.`;
+      }
+
+      return `Ranked here because it stayed competitive in ${strongest}, but did not separate enough from the field and gave back ground through ${weakest}.`;
+    }
+
+    function renderHumanReviewPanel(report) {
+      currentSingleModelReport = report;
+      reviewPanel.classList.add("active");
+      reviewGrid.innerHTML = "";
+
+      report.dimension_results.forEach((dimension) => {
+        const card = document.createElement("div");
+        card.className = "review-card";
+        card.innerHTML = `
+          <div class="eyebrow">${titleize(dimension.dimension)}</div>
+          <div class="detail-meta">
+            <span>System score: ${displayScore(dimension.final_score)}</span>
+            <span>Band: ${dimension.final_score_band}</span>
+          </div>
+          <input type="number" min="0" max="100" step="1" data-review-score="${dimension.dimension}" placeholder="Manual score" />
+          <textarea data-review-note="${dimension.dimension}" placeholder="Why would you adjust this dimension, if at all?"></textarea>
+        `;
+        reviewGrid.appendChild(card);
+      });
+    }
+
+    function collectHumanReview() {
+      if (!currentSingleModelReport) return null;
+
+      const review = currentSingleModelReport.dimension_results.map((dimension) => {
+        const scoreInput = document.querySelector(`[data-review-score="${dimension.dimension}"]`);
+        const noteInput = document.querySelector(`[data-review-note="${dimension.dimension}"]`);
+        const manualScore = scoreInput?.value ? Number(scoreInput.value) : null;
+        const note = noteInput?.value?.trim() ?? "";
+
+        return {
+          dimension: dimension.dimension,
+          system_score: displayScore(dimension.final_score),
+          manual_score: manualScore,
+          delta:
+            manualScore == null ? null : manualScore - displayScore(dimension.final_score),
+          note
+        };
+      });
+
+      return {
+        review_type: "human_review_summary",
+        generated_at: new Date().toISOString(),
+        target_model_name: currentSingleModelReport.target_model_name,
+        prompt: currentSingleModelReport.prompt,
+        prompt_context: currentSingleModelReport.prompt_context,
+        review
+      };
+    }
+
+    function renderHumanReviewSummary() {
+      const collected = collectHumanReview();
+      if (!collected) return;
+
+      const changed = collected.review.filter(
+        (item) => item.manual_score != null || item.note
+      );
+
+      currentHumanReviewSummary = {
+        ...collected,
+        changed_dimensions: changed
+      };
+      reviewOutput.textContent = JSON.stringify(currentHumanReviewSummary, null, 2);
+    }
+
+    function downloadHumanReviewSummary() {
+      if (!currentHumanReviewSummary) {
+        renderHumanReviewSummary();
+      }
+      if (!currentHumanReviewSummary) return;
+
+      const safeModel = currentHumanReviewSummary.target_model_name
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+      const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+      const fileName = `human-review-${safeModel}-${timestamp}.json`;
+      const blob = new Blob(
+        [JSON.stringify(currentHumanReviewSummary, null, 2)],
+        { type: "application/json" }
+      );
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = fileName;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function getSortValue(item, field) {
+      if (field === "norynthe_score") {
+        return displayScore(item.norynthe_score);
+      }
+      const found = (item.dimension_results ?? []).find((dimension) => dimension.dimension === field);
+      return found ? displayScore(found.final_score) : -Infinity;
+    }
+
+    function dimensionLabel(field) {
+      return field === "norynthe_score" ? "Norynthe.Score" : titleize(field);
+    }
+
+    function fillCompareSelectors(report) {
+      const options = (report.ranked_models ?? [])
+        .map((item) => `<option value="${item.target_model_name}">${item.target_model_name}</option>`)
+        .join("");
+      compareLeft.innerHTML = options;
+      compareRight.innerHTML = options;
+      if (report.ranked_models?.[0]) compareLeft.value = report.ranked_models[0].target_model_name;
+      if (report.ranked_models?.[1]) compareRight.value = report.ranked_models[1].target_model_name;
+    }
+
+    function renderDeltaInsights(report) {
+      const ranked = report.ranked_models ?? [];
+      if (ranked.length < 2) {
+        deltaGrid.classList.remove("active");
+        return;
+      }
+
+      deltaGrid.classList.add("active");
+
+      let closestRace = null;
+      let largestLead = null;
+      for (let index = 0; index < ranked.length - 1; index += 1) {
+        const current = ranked[index];
+        const next = ranked[index + 1];
+        const gap = displayScore(current.norynthe_score) - displayScore(next.norynthe_score);
+        const pair = { current, next, gap };
+        if (!closestRace || gap < closestRace.gap) closestRace = pair;
+        if (!largestLead || gap > largestLead.gap) largestLead = pair;
+      }
+
+      let biggestDimensionGap = null;
+      for (let i = 0; i < ranked.length; i += 1) {
+        for (let j = i + 1; j < ranked.length; j += 1) {
+          const left = ranked[i];
+          const right = ranked[j];
+          const leftScores = getDimensionScoreMap(left);
+          const rightScores = getDimensionScoreMap(right);
+          Object.keys(leftScores).forEach((dimension) => {
+            const gap = Math.abs((leftScores[dimension] ?? 0) - (rightScores[dimension] ?? 0));
+            if (!biggestDimensionGap || gap > biggestDimensionGap.gap) {
+              biggestDimensionGap = {
+                gap,
+                dimension,
+                left,
+                right,
+                leftScore: leftScores[dimension] ?? 0,
+                rightScore: rightScores[dimension] ?? 0
+              };
+            }
+          });
+        }
+      }
+
+      document.getElementById("closestRaceTitle").textContent =
+        `${closestRace.current.target_model_name} vs ${closestRace.next.target_model_name}`;
+      document.getElementById("closestRaceValue").textContent = `${closestRace.gap} point${closestRace.gap === 1 ? "" : "s"}`;
+      document.getElementById("closestRaceMeta").textContent =
+        `This is the tightest overall Norynthe.Score gap in the current comparison.`;
+
+      document.getElementById("largestLeadTitle").textContent =
+        `${largestLead.current.target_model_name} over ${largestLead.next.target_model_name}`;
+      document.getElementById("largestLeadValue").textContent = `${largestLead.gap} point${largestLead.gap === 1 ? "" : "s"}`;
+      document.getElementById("largestLeadMeta").textContent =
+        `This is the widest adjacent ranking gap in the current comparison.`;
+
+      document.getElementById("largestDimensionGapTitle").textContent =
+        titleize(biggestDimensionGap.dimension);
+      document.getElementById("largestDimensionGapValue").textContent =
+        `${biggestDimensionGap.gap} point${biggestDimensionGap.gap === 1 ? "" : "s"}`;
+      document.getElementById("largestDimensionGapMeta").textContent =
+        `${biggestDimensionGap.left.target_model_name} scored ${biggestDimensionGap.leftScore} while ${biggestDimensionGap.right.target_model_name} scored ${biggestDimensionGap.rightScore}.`;
+    }
+
+    function renderComparisonRows(report) {
+      comparisonTableBody.innerHTML = "";
+      report.ranked_models.forEach((item) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${item.rank}</td>
+          <td>${item.target_model_name}</td>
+          <td>${item.provider}</td>
+          <td>${item.version}</td>
+          <td>${displayScore(item.norynthe_score)}</td>
+          <td><span class="${pillClass(item.overall_band)}">${item.overall_band_label}</span></td>
+          <td>${titleize(item.strongest_dimension.dimension)} (${displayScore(item.strongest_dimension.score)})</td>
+          <td>${titleize(item.weakest_dimension.dimension)} (${displayScore(item.weakest_dimension.score)})</td>
+        `;
+        comparisonTableBody.appendChild(row);
+      });
+    }
+
+    function renderComparisonCards(report) {
+      comparisonDetailGrid.innerHTML = "";
+      report.ranked_models.forEach((item) => {
+        const dimensionsMarkup = (item.dimension_results ?? [])
+          .map(
+            (dimension) => `
+              <div class="dimension-mini">
+                <div class="dimension-mini-name">${titleize(dimension.dimension)}</div>
+                <div class="dimension-mini-score-row">
+                  <div class="dimension-mini-score-label">Score</div>
+                  <div class="dimension-mini-score">${displayScore(dimension.final_score)}</div>
+                </div>
+                <span class="${pillClass(dimension.final_score_band)} dimension-mini-band">${dimension.final_score_band}</span>
+                <div class="dimension-mini-summary">${dimension.resolution_type.replaceAll("_", " ")}</div>
+              </div>
+            `
+          )
+          .join("");
+
+        const card = document.createElement("article");
+        card.className = `model-detail${item.rank === 1 ? " is-active" : ""}`;
+        card.innerHTML = `
+          <div class="detail-header">
+            <div class="detail-heading">
+              <div class="eyebrow">Rank ${item.rank}</div>
+              <h3 class="detail-title">${item.target_model_name}</h3>
+            </div>
+            <div class="detail-score">
+              <div class="score-badge">${displayScore(item.norynthe_score)}</div>
+              <div class="detail-score-label">Norynthe.Score</div>
+            </div>
+          </div>
+          <div class="detail-meta">
+            <span>Provider: ${item.provider}</span>
+            <span>Version: ${item.version}</span>
+            <span class="${pillClass(item.overall_band)}">${item.overall_band_label}</span>
+            <span>Strongest: ${titleize(item.strongest_dimension.dimension)} (${displayScore(item.strongest_dimension.score)})</span>
+            <span>Weakest: ${titleize(item.weakest_dimension.dimension)} (${displayScore(item.weakest_dimension.score)})</span>
+          </div>
+          <p class="ranking-rationale">${buildRankingRationale(item)}</p>
+          <details class="report-details">
+            <summary>Report Details</summary>
+            <div class="report-details-body">
+              <p>This model sits inside a small report stack, with each artifact serving a different purpose.</p>
+              <div class="report-breakdown">
+                <div class="report-breakdown-item">
+                  <div class="report-breakdown-title">Model Report JSON</div>
+                  <div class="report-breakdown-copy">Open this when you want the full saved report for ${item.target_model_name}. It contains the model identity, Norynthe.Score, trust band, strongest and weakest dimensions, full 7-dimension results, and the scorer / critic resolution output behind the final score.</div>
+                  <a class="path-link" href="file://${item.report_path}">${item.report_path}</a>
+                </div>
+                <div class="report-breakdown-item">
+                  <div class="report-breakdown-title">Comparison Report JSON</div>
+                  <div class="report-breakdown-copy">Open this when you want the full ranked comparison for the prompt. It contains the compared model list, ranked ordering, Norynthe.Score results across the set, dimension gap summaries, and the drill-down data used in this screen.</div>
+                  <a class="path-link" href="file://${report.report_path}">${report.report_path}</a>
+                </div>
+                <div class="report-breakdown-item">
+                  <div class="report-breakdown-title">Human Review JSON</div>
+                  <div class="report-breakdown-copy">This is where a saved manual calibration review would live for this model. A human review JSON contains manual scores by dimension, reviewer notes, system-versus-human deltas, and the review timestamp.</div>
+                  <div class="path-link" style="text-decoration:none; color:#5a6572;">/Users/alanmotley/Documents/Playground/docs/norynthe/implementation/reviews/</div>
+                </div>
+              </div>
+            </div>
+          </details>
+          <div class="dimension-mini-grid" style="margin-top:14px;">${dimensionsMarkup}</div>
+        `;
+        comparisonDetailGrid.appendChild(card);
+      });
+    }
+
+    function renderComparePanel(report) {
+      const left = report.ranked_models.find((item) => item.target_model_name === compareLeft.value);
+      const right = report.ranked_models.find((item) => item.target_model_name === compareRight.value);
+      if (!left || !right) {
+        comparePanel.classList.remove("active");
+        return;
+      }
+
+      comparePanel.classList.add("active");
+      compareDimensionTableBody.innerHTML = "";
+      compareSides.innerHTML = "";
+
+      const leftMap = getDimensionScoreMap(left);
+      const rightMap = getDimensionScoreMap(right);
+      const dimensions = Object.keys(leftMap);
+      let biggest = { dimension: dimensions[0], gap: -1 };
+
+      dimensions.forEach((dimension) => {
+        const leftScore = leftMap[dimension] ?? 0;
+        const rightScore = rightMap[dimension] ?? 0;
+        const delta = leftScore - rightScore;
+        const row = document.createElement("tr");
+        const deltaClass = delta > 0 ? "delta-up" : delta < 0 ? "delta-down" : "delta-flat";
+        const deltaLabel = delta > 0 ? `+${delta}` : `${delta}`;
+        row.innerHTML = `
+          <td>${titleize(dimension)}</td>
+          <td>${leftScore}</td>
+          <td>${rightScore}</td>
+          <td class="${deltaClass}">${deltaLabel}</td>
+        `;
+        compareDimensionTableBody.appendChild(row);
+        if (Math.abs(delta) > biggest.gap) {
+          biggest = { dimension, gap: Math.abs(delta), leftScore, rightScore };
+        }
+      });
+
+      compareSummary.innerHTML = `<strong>${left.target_model_name}</strong> and <strong>${right.target_model_name}</strong> are being compared dimension by dimension. The largest current separation is in <strong>${titleize(biggest.dimension)}</strong>, where the scores differ by <strong>${biggest.gap} points</strong>.`;
+
+      [left, right].forEach((item, index) => {
+        const side = document.createElement("div");
+        side.className = "compare-side";
+        side.innerHTML = `
+          <div class="eyebrow">Model ${index === 0 ? "A" : "B"}</div>
+          <h4>${item.target_model_name}</h4>
+          <div class="detail-meta">
+            <span>Provider: ${item.provider}</span>
+            <span>Version: ${item.version}</span>
+            <span class="${pillClass(item.overall_band)}">${item.overall_band_label}</span>
+          </div>
+          <div class="list" style="padding-left:0;">
+            <strong>Norynthe.Score:</strong> ${displayScore(item.norynthe_score)}<br>
+            <strong>Strongest:</strong> ${titleize(item.strongest_dimension.dimension)} (${displayScore(item.strongest_dimension.score)})<br>
+            <strong>Weakest:</strong> ${titleize(item.weakest_dimension.dimension)} (${displayScore(item.weakest_dimension.score)})
+          </div>
+        `;
+        compareSides.appendChild(side);
+      });
+    }
+
+    function rerenderSortedComparison() {
+      if (!currentComparisonReport) return;
+      const field = sortField.value;
+      currentComparisonReport.ranked_models.sort((a, b) => {
+        const diff = getSortValue(b, field) - getSortValue(a, field);
+        if (diff !== 0) return diff;
+        return displayScore(b.norynthe_score) - displayScore(a.norynthe_score);
+      });
+      currentComparisonReport.ranked_models.forEach((item, index) => {
+        item.rank = index + 1;
+      });
+
+      const top = currentComparisonReport.ranked_models[0];
+      const bottom = currentComparisonReport.ranked_models.at(-1);
+      const spread = top && bottom
+        ? Math.abs(displayScore(getSortValue(top, field)) - displayScore(getSortValue(bottom, field)))
+        : "--";
+
+      document.getElementById("comparisonTopModel").textContent =
+        top ? `${top.target_model_name} (${displayScore(getSortValue(top, field))})` : "--";
+      document.getElementById("comparisonSpread").textContent =
+        spread === "--" ? "--" : `${spread} points`;
+      executiveCallout.innerHTML = top && bottom
+        ? `<strong>${top.target_model_name}</strong> currently leads when sorted by <strong>${dimensionLabel(field)}</strong>. The widest gap to monitor in this view is the <strong>${spread}-point spread</strong> between the top and bottom ranked models.`
+        : "Comparison report loaded.";
+
+      renderComparisonRows(currentComparisonReport);
+      renderComparisonCards(currentComparisonReport);
+      renderDeltaInsights(currentComparisonReport);
+      renderComparePanel(currentComparisonReport);
+    }
+
+    function renderSingleModelReport(report) {
+      resetViews();
+      singleModelSummary.style.display = "grid";
+      comparisonSummary.classList.remove("active");
+      comparisonTableWrap.classList.add("hidden");
+      const roundedScore = displayScore(report.scoring_summary.norynthe_score);
+      document.getElementById("overallScore").textContent = roundedScore;
+      overallScoreBadge.textContent = roundedScore;
+      document.getElementById("overallBand").textContent = report.scoring_summary.overall_band_label;
+      document.getElementById("targetModel").textContent = report.target_model_name;
+      document.getElementById("strongestDimension").textContent =
+        `${titleize(report.scoring_summary.strongest_dimension.dimension)} (${displayScore(report.scoring_summary.strongest_dimension.score)})`;
+      document.getElementById("weakestDimension").textContent =
+        `${titleize(report.scoring_summary.weakest_dimension.dimension)} (${displayScore(report.scoring_summary.weakest_dimension.score)})`;
+      comparisonModels.innerHTML = (report.comparison_models ?? [])
+        .map((model) => `<span>${model.name} | ${model.provider} | ${model.version}</span>`)
+        .join("");
+      promptBox.textContent = report.prompt;
+      promptMeta.innerHTML = `
+        <span>Category: ${report.prompt_context?.category ?? "n/a"}</span>
+        <span>Purpose: ${report.prompt_context?.purpose ?? "n/a"}</span>
+        <span>Mode: ${report.mode}</span>
+        <span>Provider: ${report.target_model?.provider ?? "n/a"}</span>
+        <span>Version: ${report.target_model?.version ?? "n/a"}</span>
+      `;
+      renderHumanReviewPanel(report);
+    }
+
+    function renderComparisonReport(report) {
+      resetViews();
+      currentComparisonReport = JSON.parse(JSON.stringify(report));
+      singleModelSummary.style.display = "none";
+      comparisonSummary.classList.add("active");
+      comparisonTableWrap.classList.remove("hidden");
+      fillCompareSelectors(currentComparisonReport);
+      const topModel = currentComparisonReport.ranked_models[0];
+      const bottomModel = currentComparisonReport.ranked_models.at(-1);
+      const spread =
+        topModel && bottomModel
+          ? displayScore(topModel.norynthe_score) - displayScore(bottomModel.norynthe_score)
+          : "--";
+
+      document.getElementById("comparisonTopModel").textContent =
+        topModel ? `${topModel.target_model_name} (${displayScore(topModel.norynthe_score)})` : "--";
+      document.getElementById("comparisonModelCount").textContent = String(
+        report.compared_models?.length ?? 0
+      );
+      document.getElementById("comparisonSpread").textContent =
+        spread === "--" ? "--" : `${spread} points`;
+      executiveCallout.classList.add("active");
+      executiveCallout.innerHTML = topModel && bottomModel
+        ? `<strong>${topModel.target_model_name}</strong> currently leads this comparison with a <strong>Norynthe.Score of ${displayScore(topModel.norynthe_score)}</strong>. The widest gap to monitor is the <strong>${spread}-point spread</strong> between the top and bottom ranked models.`
+        : "Comparison report loaded.";
+      renderDeltaInsights(currentComparisonReport);
+      comparisonModels.innerHTML = (currentComparisonReport.compared_models ?? [])
+        .map((model) => `<span>${model.name} | ${model.provider} | ${model.version}</span>`)
+        .join("");
+      promptBox.textContent = currentComparisonReport.prompt;
+      promptMeta.innerHTML = `
+        <span>Category: ${currentComparisonReport.prompt_context?.category ?? "n/a"}</span>
+        <span>Purpose: ${currentComparisonReport.prompt_context?.purpose ?? "n/a"}</span>
+        <span>Mode: ${currentComparisonReport.mode}</span>
+      `;
+      renderComparisonRows(currentComparisonReport);
+      renderComparisonCards(currentComparisonReport);
+      renderComparePanel(currentComparisonReport);
+    }
+
+    function renderDimensions(report) {
+      dimensionGrid.innerHTML = "";
+      report.dimension_runs.forEach((run) => {
+        const card = document.createElement("article");
+        card.className = "dimension-card";
+
+        const strengths = run.scorer_outputs[0]?.strengths ?? [];
+        const concerns = run.critic_output?.concerns ?? [];
+
+        card.innerHTML = `
+          <div class="eyebrow">${titleize(run.dimension)}</div>
+          <h3>${titleize(run.dimension)}</h3>
+          <div class="score-row">
+            <div class="score-badge">${displayScore(run.resolved_output.final_score)}</div>
+            <div class="band">${run.resolved_output.final_score_band}</div>
+          </div>
+          <div class="meta">
+            <span>Resolution: ${run.resolved_output.resolution_type}</span>
+            <span>Passes: ${run.prompt_plan.join(", ")}</span>
+            <span>Confidence: ${run.resolved_output.final_confidence}</span>
+          </div>
+          <div class="list"><strong>Summary:</strong> ${run.resolved_output.resolution_summary}</div>
+          <ul class="list">
+            ${strengths.map((item) => `<li>${item}</li>`).join("")}
+          </ul>
+          ${
+            concerns.length
+              ? `<div class="list" style="margin-top:10px;"><strong>Critic concerns:</strong></div>
+                 <ul class="list">${concerns.map((item) => `<li>${item}</li>`).join("")}</ul>`
+              : ""
+          }
+        `;
+
+        dimensionGrid.appendChild(card);
+      });
+    }
+
+    fileInput.addEventListener("change", async (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const report = await addBrowserFile(file);
+      openReport(report);
+    });
+
+    directoryInput.addEventListener("change", async (event) => {
+      const files = Array.from(event.target.files ?? []).filter((file) => file.name.endsWith(".json"));
+      if (!files.length) return;
+
+      for (const file of files) {
+        await addBrowserFile(file);
+      }
+
+      const latest = browserFiles.find((entry) => entry.name === activeBrowserFileName) ?? browserFiles[0];
+      if (latest) {
+        openReport(latest.report);
+      }
+    });
+
+    sortField.addEventListener("change", () => {
+      rerenderSortedComparison();
+    });
+
+    compareLeft.addEventListener("change", () => {
+      if (currentComparisonReport) renderComparePanel(currentComparisonReport);
+    });
+
+    compareRight.addEventListener("change", () => {
+      if (currentComparisonReport) renderComparePanel(currentComparisonReport);
+    });
+
+    generateReviewSummary.addEventListener("click", () => {
+      renderHumanReviewSummary();
+    });
+
+    downloadReviewSummary.addEventListener("click", () => {
+      downloadHumanReviewSummary();
+    });
+
+    resetReviewForm.addEventListener("click", () => {
+      if (!currentSingleModelReport) return;
+      renderHumanReviewPanel(currentSingleModelReport);
+      reviewOutput.textContent = "Load a single-model report to begin manual calibration.";
+    });
+  </script>
+</body>
+</html>
