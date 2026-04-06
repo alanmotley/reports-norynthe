@@ -1344,7 +1344,7 @@
       <div class="walkthrough-top">
         <div class="walkthrough-copy">
           <div class="eyebrow">Guided Walkthrough</div>
-          <p id="walkthroughNarrative">Start with the benchmark composite to show the scoring system at work across Norynthe’s controlled question bank, then move through the winner profile, the two-model delta view, and finally the client-facing report layer.</p>
+          <p id="walkthroughNarrative">Start with the 15-question benchmark composite to show the scoring system at work across Norynthe’s controlled question bank, including the new humanities layer, then move through the winner profile, the two-model delta view, and finally the client-facing report layer.</p>
         </div>
         <button id="presentationToggle" class="presentation-toggle" type="button">Presentation Mode</button>
       </div>
@@ -1352,7 +1352,7 @@
         <article id="walkthroughStepComparison" class="walkthrough-step is-active">
           <div class="walkthrough-step-number">Step 1</div>
           <h3>Open Benchmark</h3>
-          <p>Show the ranked model set, the current leader, and the overall benchmark-composite Norynthe.Score spread.</p>
+          <p>Show the ranked model set, the current leader, and the overall Norynthe.Score spread across the full 15-question benchmark.</p>
           <button type="button" data-walkthrough-step="comparison">Go To Comparison</button>
         </article>
         <article id="walkthroughStepWinner" class="walkthrough-step">
@@ -1380,7 +1380,7 @@
       <aside class="panel">
         <div class="eyebrow">Report Navigator</div>
         <p class="rail-intro">
-          Start with the benchmark samples for the cleanest product walkthrough, then use the browser or local upload tools when I want to inspect supporting artifacts.
+          Start with the hosted benchmark samples for the cleanest product walkthrough. The active demo uses Norynthe’s full 15-question `core_v1` set, including policy, enterprise, analysis, safety, adversarial framing, governance, and humanities questions.
         </p>
         <div class="rail-stack">
           <section class="rail-section">
@@ -1391,7 +1391,7 @@
                 <div class="sample-library-head">
                   <div>
                     <div class="sample-library-title">Core Benchmark Comparison</div>
-                    <div class="sample-library-meta">The benchmark-composite view across Norynthe’s controlled question bank, showing the ranked field and benchmark Norynthe.Score.</div>
+                    <div class="sample-library-meta">The full 15-question benchmark-composite view across Norynthe’s controlled question bank, including the humanities layer and the ranked Norynthe.Score field.</div>
                   </div>
                   <button class="sample-button" type="button" data-sample="./samples/mock-benchmark-comparison-report.json" data-sample-name="mock-benchmark-comparison-report.json">Open</button>
                 </div>
@@ -1400,7 +1400,7 @@
                 <div class="sample-library-head">
                   <div>
                     <div class="sample-library-title">Benchmark Winner Profile</div>
-                    <div class="sample-library-meta">The leading model’s benchmark profile, showing how one model performs across the controlled question set.</div>
+                    <div class="sample-library-meta">The leading model’s profile across the full 15-question benchmark, showing how the strongest current result holds up across the controlled set.</div>
                   </div>
                   <button class="sample-button" type="button" data-sample="./samples/mock-benchmark-model-report-openai.json" data-sample-name="mock-benchmark-model-report-openai.json">Open</button>
                 </div>
@@ -1409,7 +1409,7 @@
                 <div class="sample-library-head">
                   <div>
                     <div class="sample-library-title">Benchmark Challenger Profile</div>
-                    <div class="sample-library-meta">A close benchmark competitor showing how a model can stay near the lead without taking first place overall.</div>
+                    <div class="sample-library-meta">A near-leading profile showing how a model can stay competitive across the same 15-question benchmark without taking first overall.</div>
                   </div>
                   <button class="sample-button" type="button" data-sample="./samples/mock-benchmark-model-report-anthropic.json" data-sample-name="mock-benchmark-model-report-anthropic.json">Open</button>
                 </div>
@@ -1418,7 +1418,7 @@
                 <div class="sample-library-head">
                   <div>
                     <div class="sample-library-title">Benchmark High-Risk Profile</div>
-                    <div class="sample-library-meta">A lower-trust benchmark result showing how weaknesses compound across a controlled set of Norynthe questions.</div>
+                    <div class="sample-library-meta">A lower-trust profile showing how weaknesses compound across the full controlled benchmark, including loaded framing and humanities questions.</div>
                   </div>
                   <button class="sample-button" type="button" data-sample="./samples/mock-benchmark-model-report-grok.json" data-sample-name="mock-benchmark-model-report-grok.json">Open</button>
                 </div>
@@ -1855,19 +1855,19 @@
     const SAMPLE_LIBRARY_META = {
       "mock-benchmark-comparison-report.json": {
         title: "Core Benchmark Comparison",
-        meta: "Hosted walkthrough | benchmark-composite model ranking"
+        meta: "Hosted walkthrough | full 15-question benchmark ranking"
       },
       "mock-benchmark-model-report-openai.json": {
         title: "Benchmark Winner Profile",
-        meta: "Hosted walkthrough | top benchmark profile"
+        meta: "Hosted walkthrough | top profile across 15 benchmark questions"
       },
       "mock-benchmark-model-report-anthropic.json": {
         title: "Benchmark Challenger Profile",
-        meta: "Hosted walkthrough | near-leading benchmark profile"
+        meta: "Hosted walkthrough | near-leading profile across 15 benchmark questions"
       },
       "mock-benchmark-model-report-grok.json": {
         title: "Benchmark High-Risk Profile",
-        meta: "Hosted walkthrough | lower-trust benchmark profile"
+        meta: "Hosted walkthrough | lower-trust profile across 15 benchmark questions"
       },
       "mock-comparison-report.json": {
         title: "Policy Trust Comparison",
@@ -2080,13 +2080,13 @@
       const bottom = report.ranked_models?.at(-1);
       if (!top || !bottom) return "Benchmark report loaded.";
       const spread = Math.abs(displayScore(top.norynthe_score) - displayScore(bottom.norynthe_score));
-      return `${top.target_model_name} currently leads the active benchmark set across ${report.benchmark_question_count} controlled Norynthe questions. The current benchmark-composite spread is ${spread} points from top to bottom.`;
+      return `${top.target_model_name} currently leads the active benchmark set across ${report.benchmark_question_count} controlled Norynthe questions, including the humanities layer. The current benchmark-composite spread is ${spread} points from top to bottom.`;
     }
 
     function buildBenchmarkModelNarrative(report) {
       const strongest = report.scoring_summary.strongest_question;
       const weakest = report.scoring_summary.weakest_question;
-      return `${report.target_model_name} was evaluated across ${report.benchmark_question_count} controlled benchmark questions. Its strongest benchmark result came on ${strongest.prompt_id}, while ${weakest.prompt_id} produced the lowest trust profile in the set.`;
+      return `${report.target_model_name} was evaluated across ${report.benchmark_question_count} controlled benchmark questions, including policy, enterprise, analysis, safety, adversarial framing, governance, and humanities. Its strongest benchmark result came on ${strongest.prompt_id}, while ${weakest.prompt_id} produced the lowest trust profile in the set.`;
     }
 
     function buildBenchmarkModelRecommendation(report) {
@@ -2632,7 +2632,7 @@
             <strong>Strongest:</strong> ${item.strongest_question.prompt_id} (${displayScore(item.strongest_question.score)})<br>
             <strong>Weakest:</strong> ${item.weakest_question.prompt_id} (${displayScore(item.weakest_question.score)})
           </div>
-          <div class="compare-side-copy">${item.target_model_name} is being compared on benchmark-composite performance, not on a single prompt. This view shows where the benchmark separates the field most clearly.</div>
+          <div class="compare-side-copy">${item.target_model_name} is being compared on benchmark-composite performance across the full 15-question benchmark, not on a single prompt. This view shows where the benchmark separates the field most clearly.</div>
         `;
         compareSides.appendChild(side);
       });
@@ -2662,7 +2662,7 @@
         document.getElementById("comparisonHeroCopy").textContent =
           buildBenchmarkHeroNarrative(currentComparisonReport);
         executiveCallout.innerHTML = top && bottom
-          ? `<strong>${top.target_model_name}</strong> currently leads the active benchmark set with a <strong>Norynthe.Score of ${displayScore(top.norynthe_score)}</strong>. The composite spread across the field is <strong>${spread} points</strong>.`
+        ? `<strong>${top.target_model_name}</strong> currently leads the active 15-question benchmark set with a <strong>Norynthe.Score of ${displayScore(top.norynthe_score)}</strong>. The composite spread across the field is <strong>${spread} points</strong>.`
           : "Benchmark report loaded.";
         renderBenchmarkComparisonRows(currentComparisonReport);
         renderBenchmarkComparisonCards(currentComparisonReport);
@@ -2725,7 +2725,7 @@
       document.getElementById("weakestDimension").textContent =
         `${report.scoring_summary.weakest_question.prompt_id} (${displayScore(report.scoring_summary.weakest_question.score)})`;
       document.getElementById("singleReportHeadline").textContent =
-        `${report.target_model_name} produced a ${report.scoring_summary.overall_band_label.toLowerCase()} benchmark result across the active question set.`;
+        `${report.target_model_name} produced a ${report.scoring_summary.overall_band_label.toLowerCase()} benchmark result across the active 15-question set, including the humanities layer.`;
       document.getElementById("singleReportSummary").textContent =
         buildBenchmarkModelNarrative(report);
       document.getElementById("singleReportRecommendation").textContent =
@@ -2733,10 +2733,11 @@
       comparisonModels.innerHTML = report.question_reports
         .map((question) => `<span>${question.prompt_id} | ${question.category} | ${displayScore(question.norynthe_score)}</span>`)
         .join("");
-      promptBox.textContent = "This report is benchmark-composite. Use the question cards below to inspect each benchmark question included in the final Norynthe.Score.";
+      promptBox.textContent = "This report is benchmark-composite. Use the question cards below to inspect each of the 15 benchmark questions included in the final Norynthe.Score, including the new humanities questions.";
       promptMeta.innerHTML = `
         <span>Benchmark Set: ${report.benchmark_set_id ?? "n/a"}</span>
         <span>Questions Evaluated: ${report.benchmark_question_count ?? "n/a"}</span>
+        <span>Coverage: policy, enterprise, analysis, safety, adversarial, governance, humanities</span>
         <span>Mode: ${report.mode}</span>
         <span>Provider: ${report.target_model?.provider ?? "n/a"}</span>
         <span>Version: ${report.target_model?.version ?? "n/a"}</span>
@@ -2845,7 +2846,7 @@
         buildComparisonHeroNarrative(currentComparisonReport);
       executiveCallout.classList.add("active");
       executiveCallout.innerHTML = topModel && bottomModel
-        ? `<strong>${topModel.target_model_name}</strong> currently leads this comparison with a <strong>Norynthe.Score of ${displayScore(topModel.norynthe_score)}</strong>. The widest gap to monitor is the <strong>${spread}-point spread</strong> between the top and bottom ranked models.`
+        ? `<strong>${topModel.target_model_name}</strong> currently leads this comparison with a <strong>Norynthe.Score of ${displayScore(topModel.norynthe_score)}</strong>. The widest gap to monitor is the <strong>${spread}-point spread</strong> across the full 15-question benchmark between the top and bottom ranked models.`
         : "Comparison report loaded.";
       renderDeltaInsights(currentComparisonReport);
       comparisonModels.innerHTML = (currentComparisonReport.compared_models ?? [])
@@ -2894,16 +2895,17 @@
         buildBenchmarkHeroNarrative(currentComparisonReport);
       executiveCallout.classList.add("active");
       executiveCallout.innerHTML = topModel && bottomModel
-        ? `<strong>${topModel.target_model_name}</strong> currently leads the active benchmark set with a <strong>Norynthe.Score of ${displayScore(topModel.norynthe_score)}</strong>. The benchmark-composite spread is <strong>${spread} points</strong> across ${report.benchmark_question_count} controlled questions.`
+        ? `<strong>${topModel.target_model_name}</strong> currently leads the active benchmark set with a <strong>Norynthe.Score of ${displayScore(topModel.norynthe_score)}</strong>. The benchmark-composite spread is <strong>${spread} points</strong> across ${report.benchmark_question_count} controlled questions, including the humanities layer.`
         : "Benchmark report loaded.";
       renderDeltaInsights(currentComparisonReport);
       comparisonModels.innerHTML = report.ranked_models
         .map((model) => `<span>${model.target_model_name} | ${model.provider} | ${model.questions_evaluated} questions</span>`)
         .join("");
-      promptBox.textContent = "This view shows the active benchmark set rather than a single prompt. Each model score is a composite across Norynthe’s controlled questions.";
+      promptBox.textContent = "This view shows the active 15-question benchmark set rather than a single prompt. Each model score is a composite across Norynthe’s controlled questions, including policy, enterprise, analysis, safety, adversarial framing, governance, and humanities.";
       promptMeta.innerHTML = `
         <span>Benchmark Set: ${report.benchmark_set_id ?? "n/a"}</span>
         <span>Questions Evaluated: ${report.benchmark_question_count ?? "n/a"}</span>
+        <span>Coverage: policy, enterprise, analysis, safety, adversarial, governance, humanities</span>
         <span>Mode: ${report.mode}</span>
       `;
       renderBenchmarkComparisonRows(currentComparisonReport);
