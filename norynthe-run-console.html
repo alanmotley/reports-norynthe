@@ -70,6 +70,27 @@
       height: auto;
       filter: drop-shadow(0 10px 18px rgba(15, 17, 21, 0.04));
     }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      margin-bottom: 18px;
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.7);
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+    }
+    .back-link:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(15, 17, 21, 0.06);
+    }
     .kicker, .eyebrow {
       text-transform: uppercase;
       letter-spacing: 0.22em;
@@ -956,6 +977,7 @@
 <body>
   <div class="shell">
     <section class="masthead">
+      <a class="back-link" href="./reports-index.html">Back To Reports</a>
       <div class="kicker">Norynthe.Reports</div>
       <div class="brand-lockup">
         <img class="brand-logo" src="/Norynthe_master.png" alt="Norynthe.">
