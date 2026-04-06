@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>Norynthe.Reports</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/Norynthe_master.png">
   <style>
     :root {
       --bg: #eef3f6;
@@ -43,12 +44,13 @@
       flex-direction: column;
       justify-content: center;
     }
-    .wordmark {
-      font-size: clamp(3rem, 6vw, 5rem);
-      line-height: 0.92;
-      letter-spacing: -0.06em;
-      font-weight: 700;
-      margin: 6px 0 0;
+    .brand-lockup {
+      margin-top: 8px;
+    }
+    .brand-logo {
+      display: block;
+      width: min(420px, 100%);
+      height: auto;
     }
     .kicker, .eyebrow {
       font-family: Arial, Helvetica, sans-serif;
@@ -757,7 +759,9 @@
   <div class="shell">
     <section class="masthead">
       <div class="kicker">Norynthe.Reports</div>
-      <h1 class="wordmark">Norynthe.</h1>
+      <div class="brand-lockup">
+        <img class="brand-logo" src="/Norynthe_master.png" alt="Norynthe.">
+      </div>
       <p class="lede">
         Norynthe.Reports lets me inspect saved scoring reports, compare models, and run human calibration without relying on live API calls.
       </p>
