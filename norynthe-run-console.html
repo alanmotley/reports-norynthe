@@ -1369,8 +1369,8 @@
               <div class="sample-library-item">
                 <div class="sample-library-head">
                   <div>
-                    <div class="sample-library-title">Comparison Demo</div>
-                    <div class="sample-library-meta">Three-model ranked comparison with deltas, drill-down, and executive summary.</div>
+                    <div class="sample-library-title">Policy Trust Comparison</div>
+                    <div class="sample-library-meta">A ranked three-model policy evaluation showing Norynthe.Score, trust spread, and dimension deltas.</div>
                   </div>
                   <button class="sample-button" type="button" data-sample="./samples/mock-comparison-report.json" data-sample-name="mock-comparison-report.json">Open</button>
                 </div>
@@ -1378,8 +1378,8 @@
               <div class="sample-library-item">
                 <div class="sample-library-head">
                   <div>
-                    <div class="sample-library-title">OpenAI Model Report</div>
-                    <div class="sample-library-meta">Single-model report with full dimension results and human review mode.</div>
+                    <div class="sample-library-title">Leading Model Profile</div>
+                    <div class="sample-library-meta">The winning single-model report, showing why the top-ranked trust profile still needs reviewer judgment.</div>
                   </div>
                   <button class="sample-button" type="button" data-sample="./samples/mock-full-report-openai.json" data-sample-name="mock-full-report-openai.json">Open</button>
                 </div>
@@ -1387,8 +1387,8 @@
               <div class="sample-library-item">
                 <div class="sample-library-head">
                   <div>
-                    <div class="sample-library-title">Anthropic Model Report</div>
-                    <div class="sample-library-meta">Single-model report showing strong auditability with weaker context integrity.</div>
+                    <div class="sample-library-title">Close Challenger Profile</div>
+                    <div class="sample-library-meta">A near-leader report that shows how a competitive model can still lose ground through weaker context retention.</div>
                   </div>
                   <button class="sample-button" type="button" data-sample="./samples/mock-full-report-anthropic.json" data-sample-name="mock-full-report-anthropic.json">Open</button>
                 </div>
@@ -1396,8 +1396,8 @@
               <div class="sample-library-item">
                 <div class="sample-library-head">
                   <div>
-                    <div class="sample-library-title">Grok Model Report</div>
-                    <div class="sample-library-meta">Lower-scoring sample showing how trust risk appears in the reporting surface.</div>
+                    <div class="sample-library-title">High-Risk Profile</div>
+                    <div class="sample-library-meta">A lower-trust example that makes the risk band and weaker dimension pattern visible in the reporting surface.</div>
                   </div>
                   <button class="sample-button" type="button" data-sample="./samples/mock-full-report-grok.json" data-sample-name="mock-full-report-grok.json">Open</button>
                 </div>
@@ -1812,20 +1812,20 @@
 
     const SAMPLE_LIBRARY_META = {
       "mock-comparison-report.json": {
-        title: "Comparison Demo",
-        meta: "Hosted sample | ranked three-model comparison"
+        title: "Policy Trust Comparison",
+        meta: "Hosted walkthrough | ranked three-model policy comparison"
       },
       "mock-full-report-openai.json": {
-        title: "OpenAI Model Report",
-        meta: "Hosted sample | single-model drill-down"
+        title: "Leading Model Profile",
+        meta: "Hosted walkthrough | top-ranked single-model report"
       },
       "mock-full-report-anthropic.json": {
-        title: "Anthropic Model Report",
-        meta: "Hosted sample | single-model drill-down"
+        title: "Close Challenger Profile",
+        meta: "Hosted walkthrough | near-leading single-model report"
       },
       "mock-full-report-grok.json": {
-        title: "Grok Model Report",
-        meta: "Hosted sample | lower-trust example"
+        title: "High-Risk Profile",
+        meta: "Hosted walkthrough | lower-trust single-model report"
       }
     };
 
