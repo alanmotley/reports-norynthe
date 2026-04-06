@@ -89,7 +89,7 @@
     .page {
       position: relative;
       min-height: 100dvh;
-      padding: 1.6rem 0 5rem;
+      padding: 1.4rem 0 5.4rem;
     }
 
     .topline {
@@ -97,7 +97,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 16px;
-      margin-bottom: 2.8rem;
+      margin-bottom: 3.15rem;
       color: var(--muted);
       font-size: 0.68rem;
       letter-spacing: 0.2em;
@@ -107,12 +107,12 @@
     .topline nav {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 18px;
     }
 
     .topline nav a {
       position: relative;
-      padding-bottom: 4px;
+      padding-bottom: 5px;
     }
 
     .topline nav a::after {
@@ -134,7 +134,7 @@
 
     .hero {
       position: relative;
-      padding: 1rem 0 2.8rem;
+      padding: 1.1rem 0 3.5rem;
     }
 
     .hero::after {
@@ -142,18 +142,18 @@
       position: absolute;
       left: 50%;
       bottom: 0;
-      width: min(48vw, 420px);
-      height: 24px;
+      width: min(54vw, 520px);
+      height: 30px;
       transform: translateX(-50%);
-      background: radial-gradient(ellipse at center, rgba(15, 17, 21, 0.10), rgba(15, 17, 21, 0) 72%);
-      filter: blur(14px);
+      background: radial-gradient(ellipse at center, rgba(15, 17, 21, 0.11), rgba(15, 17, 21, 0) 72%);
+      filter: blur(16px);
       pointer-events: none;
     }
 
     .brand-lockup {
       display: grid;
       place-items: center;
-      gap: 1.25rem;
+      gap: 1.45rem;
       text-align: center;
     }
 
@@ -167,9 +167,9 @@
     .logo-shell::before {
       content: "";
       position: absolute;
-      inset: -2rem -2.4rem -2rem;
+      inset: -2.4rem -2.8rem -2.3rem;
       background:
-        radial-gradient(circle at 50% 46%, rgba(255, 255, 255, 0.54), rgba(255, 255, 255, 0) 44%),
+        radial-gradient(circle at 50% 46%, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0) 44%),
         linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
       pointer-events: none;
       z-index: 0;
@@ -187,7 +187,7 @@
       display: block;
       width: var(--logo-width);
       height: auto;
-      filter: drop-shadow(0 16px 22px rgba(15, 17, 21, 0.06));
+      filter: drop-shadow(0 18px 24px rgba(15, 17, 21, 0.065));
     }
 
     .logo-fallback {
@@ -215,41 +215,41 @@
       margin: 0;
       width: min(90vw, 44rem);
       color: var(--muted);
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      line-height: 1.6;
+      line-height: 1.72;
     }
 
     .hero-copy {
-      margin: 2.8rem auto 0;
+      margin: 3.05rem auto 0;
       width: min(100%, 58rem);
       display: grid;
-      gap: 1.2rem;
+      gap: 1.35rem;
       justify-items: center;
       text-align: center;
     }
 
     .hero-copy h1 {
       margin: 0;
-      font-size: clamp(2.9rem, 6vw, 5.2rem);
-      line-height: 0.92;
-      letter-spacing: -0.065em;
-      max-width: 11ch;
+      font-size: clamp(3.2rem, 6.4vw, 5.75rem);
+      line-height: 0.9;
+      letter-spacing: -0.072em;
+      max-width: 10.5ch;
       text-wrap: balance;
     }
 
     .hero-copy p {
       margin: 0;
-      max-width: 52rem;
+      max-width: 48rem;
       color: var(--muted);
-      font-size: 1.04rem;
-      line-height: 1.75;
+      font-size: 1.02rem;
+      line-height: 1.84;
       text-wrap: balance;
     }
 
     .signal-row {
-      margin-top: 2rem;
+      margin-top: 2.2rem;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -263,9 +263,9 @@
       padding: 10px 14px;
       border-radius: 999px;
       border: 1px solid rgba(15, 17, 21, 0.07);
-      background: rgba(255, 255, 255, 0.56);
+      background: rgba(255, 255, 255, 0.58);
       color: var(--muted);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       box-shadow: var(--shadow-soft);
@@ -280,13 +280,13 @@
     }
 
     section {
-      padding-top: 1.5rem;
+      padding-top: 1.8rem;
     }
 
     .section-head {
       display: grid;
-      gap: 0.8rem;
-      margin-bottom: 1.15rem;
+      gap: 0.72rem;
+      margin-bottom: 1.5rem;
     }
 
     .section-label {
@@ -299,15 +299,15 @@
     .section-head h2 {
       margin: 0;
       font-size: clamp(1.7rem, 3.2vw, 2.5rem);
-      line-height: 1;
+      line-height: 0.94;
       letter-spacing: -0.05em;
     }
 
     .section-head p {
       margin: 0;
-      max-width: 58rem;
+      max-width: 54rem;
       color: var(--muted);
-      line-height: 1.7;
+      line-height: 1.76;
     }
 
     .panel,
@@ -347,7 +347,7 @@
     .prompt-grid,
     .category-grid {
       display: grid;
-      gap: 16px;
+      gap: 18px;
     }
 
     .grid-3,
@@ -371,7 +371,15 @@
     .artifact,
     .band,
     .status-card {
-      padding: 20px;
+      padding: 22px;
+    }
+
+    .panel h3,
+    .card h3,
+    .artifact h3,
+    .band h3,
+    .status-card h3 {
+      text-wrap: balance;
     }
 
     .card h3,
@@ -379,9 +387,10 @@
     .dimension h3,
     .band h3,
     .status-card h3 {
-      margin: 0 0 10px;
-      font-size: 1.08rem;
-      letter-spacing: -0.03em;
+      margin: 0 0 11px;
+      font-size: 1.12rem;
+      letter-spacing: -0.032em;
+      line-height: 1.06;
     }
 
     .card p,
@@ -394,7 +403,7 @@
     .footnote {
       margin: 0;
       color: var(--muted);
-      line-height: 1.62;
+      line-height: 1.68;
     }
 
     .metric {
@@ -422,7 +431,7 @@
     }
 
     .dimension {
-      padding: 18px;
+      padding: 19px;
     }
 
     .dimension .weight {
@@ -460,7 +469,7 @@
     }
 
     .panel {
-      padding: 22px;
+      padding: 24px;
     }
 
     .flow {
@@ -512,7 +521,7 @@
     }
 
     .code-head {
-      padding: 13px 16px;
+      padding: 14px 16px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       color: rgba(233, 237, 242, 0.68);
       font-size: 0.68rem;
@@ -522,9 +531,9 @@
 
     pre {
       margin: 0;
-      padding: 16px;
+      padding: 18px 16px;
       font-size: 12.5px;
-      line-height: 1.58;
+      line-height: 1.62;
       overflow: auto;
       white-space: pre-wrap;
     }
@@ -533,22 +542,23 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 14px;
+      margin-top: 16px;
     }
 
     .report-link {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 10px 14px;
+      padding: 11px 15px;
       border-radius: 999px;
       border: 1px solid rgba(15, 17, 21, 0.08);
       background: rgba(255, 255, 255, 0.74);
       color: var(--ink);
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       box-shadow: var(--shadow-soft);
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
     }
 
     .report-link.primary {
@@ -557,9 +567,14 @@
       border-color: #0f1115;
     }
 
+    .report-link:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(15, 17, 21, 0.06);
+    }
+
     .footer-note {
       width: min(100%, 54rem);
-      margin: 3.4rem auto 0;
+      margin: 4rem auto 0;
       text-align: center;
       color: var(--muted);
       font-size: 0.74rem;
@@ -626,7 +641,11 @@
       .topline {
         flex-direction: column;
         align-items: flex-start;
-        margin-bottom: 2rem;
+        margin-bottom: 2.15rem;
+      }
+
+      .topline nav {
+        gap: 14px;
       }
 
       .hero-copy h1 {
@@ -635,6 +654,10 @@
 
       .subline {
         width: min(92vw, 28rem);
+      }
+
+      .hero-copy {
+        margin-top: 2.3rem;
       }
 
       .dimension-strip {
@@ -674,11 +697,11 @@
         </div>
 
         <div class="hero-copy">
-          <h1>Build the reporting layer on top of the trust standard.</h1>
+          <h1>Turn the trust standard into a reporting product.</h1>
           <p>
-            Norynthe.Reports turns the Phase 1 trust system into a visible product surface:
+            Norynthe.Reports is the visible product layer for the Phase 1 trust system:
             model comparison, dimension-level reasoning, calibration workflow, and client-facing
-            reporting built on the same governed evaluation standard.
+            reporting built on the same governed standard.
           </p>
           <div class="signal-row">
             <span class="signal-pill">7 trust dimensions</span>
@@ -721,13 +744,13 @@
         <div class="section-head">
           <div class="section-label">Current State</div>
           <h2>Where we are now, and why it matters.</h2>
-          <p>This is no longer only a concept pass. The reporting layer now has a branded front door, an internal comparison workspace, a client-facing report concept, and a clearer bridge from narrative to implementation.</p>
+          <p>This is no longer only a concept pass. The reporting layer now has a branded front door, an internal comparison workspace, a client-facing report concept, and a cleaner bridge from narrative to implementation.</p>
         </div>
         <div class="status-grid">
           <article class="status-card">
             <div class="metric">Operational</div>
             <h3>Canonical source of truth</h3>
-            <p>The rubric, score bands, weights, pass plan, and resolver policy now live in one implementation-ready config instead of scattered notes.</p>
+            <p>The rubric, score bands, weights, pass plan, and resolver policy now live in one implementation-ready standard instead of scattered notes.</p>
             <ul class="status-list">
               <li>Single config for all seven dimensions</li>
               <li>Per-dimension prompt-pass plan encoded</li>
@@ -737,7 +760,7 @@
           <article class="status-card">
             <div class="metric">Operational</div>
             <h3>Runnable reporting flow</h3>
-            <p>The system can now execute comparison, drill-down, human review, and client-surface presentation through one connected reporting flow.</p>
+            <p>The system can now execute comparison, drill-down, human review, and client presentation through one connected reporting flow.</p>
             <ul class="status-list">
               <li>Comparison reports and model profiles exist</li>
               <li>Human review mode is built into the workflow</li>
@@ -900,7 +923,7 @@
         <div class="section-head">
           <div class="section-label">Report Surfaces</div>
           <h2>The trust standard now has a visible product layer.</h2>
-          <p>This is the part Phase 1 did not originally have: internal and client-facing report surfaces that turn the evaluation system into a live product story.</p>
+          <p>This is the part Phase 1 did not originally have: internal and client-facing report surfaces that turn the evaluation system into something people can actually walk through.</p>
         </div>
         <div class="grid-2">
           <article class="panel">
@@ -926,7 +949,7 @@
         <div class="section-head">
           <div class="section-label">MVP Contracts</div>
           <h2>Strict JSON before broader automation.</h2>
-          <p>Phase 1 ends with machine-readable output contracts so the prototype can be implemented with predictable parsing and deterministic score resolution.</p>
+          <p>Phase 1 ends with machine-readable contracts so the prototype can be implemented with predictable parsing and deterministic score resolution.</p>
         </div>
         <div class="schema-grid">
           <article class="panel">
