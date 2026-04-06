@@ -130,38 +130,37 @@
     }
     .sample-library {
       display: grid;
-      gap: 10px;
-      margin-top: 12px;
+      gap: 12px;
+      margin-top: 14px;
     }
     .sample-library-item {
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.78);
-      padding: 12px 14px;
-      border-radius: 14px;
+      padding: 14px 15px;
+      border-radius: 16px;
     }
     .sample-library-head {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 10px;
+      display: grid;
+      gap: 12px;
     }
     .sample-library-title {
       font-size: 13px;
       font-weight: 700;
-      line-height: 1.4;
+      line-height: 1.45;
       color: var(--ink);
     }
     .sample-library-meta {
-      margin-top: 6px;
+      margin-top: 7px;
       font-size: 12px;
-      line-height: 1.6;
+      line-height: 1.72;
       color: #49586a;
+      max-width: 28ch;
     }
     .sample-library-item .sample-button {
-      width: auto;
-      min-width: 108px;
+      width: 100%;
       padding: 9px 12px;
-      flex: 0 0 auto;
+      justify-content: center;
+      text-align: center;
     }
     .sample-button {
       width: 100%;
@@ -671,21 +670,82 @@
       margin-top: 18px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.72);
-      padding: 18px;
+      border-radius: 18px;
+      overflow: hidden;
     }
     .review-panel.active {
       display: block;
+    }
+    .review-summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .review-summary::-webkit-details-marker {
+      display: none;
+    }
+    .review-panel[open] .review-summary {
+      border-bottom: 1px solid var(--line);
+      background: rgba(17, 23, 34, 0.02);
+    }
+    .review-summary-copy {
+      min-width: 0;
+    }
+    .review-summary-title {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .review-summary-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #32404d;
+    }
+    .review-chevron {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .review-body {
+      padding: 18px;
     }
     .review-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
-      margin-top: 14px;
     }
     .review-card {
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.8);
       padding: 14px;
+      border-radius: 16px;
+    }
+    .review-card-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .review-system-score {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .review-input-label {
+      display: block;
+      margin-top: 10px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
     }
     .review-card textarea,
     .review-card input {
@@ -696,7 +756,8 @@
       font-family: Arial, Helvetica, sans-serif;
       font-size: 13px;
       color: var(--ink);
-      margin-top: 10px;
+      margin-top: 8px;
+      border-radius: 12px;
     }
     .review-card textarea {
       min-height: 92px;
@@ -716,6 +777,12 @@
       font-family: Arial, Helvetica, sans-serif;
       font-size: 13px;
       cursor: pointer;
+      border-radius: 999px;
+      transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+    }
+    .action-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(15, 17, 21, 0.06);
     }
     .review-output {
       margin-top: 14px;
@@ -769,6 +836,10 @@
     .score-badge {
       width: 82px;
       height: 82px;
+      min-width: 82px;
+      min-height: 82px;
+      flex: 0 0 82px;
+      aspect-ratio: 1 / 1;
       border-radius: 999px;
       background: #0f1115;
       color: #ffffff;
@@ -1150,23 +1221,31 @@
           <div id="promptBox" class="prompt-box"></div>
           <div id="promptMeta" class="meta" style="margin-top:10px;"></div>
 
-          <div id="reviewPanel" class="review-panel">
-            <div class="eyebrow">Human Review Mode</div>
-            <div class="review-grid" id="reviewGrid"></div>
-            <div class="review-actions">
-              <button id="generateReviewSummary" class="action-button" type="button">Generate Review Summary</button>
-              <button id="downloadReviewSummary" class="action-button" type="button">Download Review JSON</button>
-              <button id="resetReviewForm" class="action-button" type="button">Reset Review Form</button>
-            </div>
-            <div class="review-helper">
-              Suggested save location:
-              <code>/Users/alanmotley/Documents/Playground/docs/norynthe/implementation/reviews/</code>
-            </div>
-            <div id="reviewOutput" class="review-output">Load a single-model report to begin manual calibration.</div>
-          </div>
-
           <div class="eyebrow" style="margin-top:18px;">Dimension Results</div>
           <div id="dimensionGrid" class="dimension-grid" style="margin-top:14px;"></div>
+
+          <details id="reviewPanel" class="review-panel">
+            <summary class="review-summary">
+              <div class="review-summary-copy">
+                <div class="review-summary-title">Human Review Workspace</div>
+                <div class="review-summary-text">Manual calibration lives here when I want to compare the system score against a reviewer’s judgment.</div>
+              </div>
+              <div class="review-chevron">Open Review</div>
+            </summary>
+            <div class="review-body">
+              <div class="review-grid" id="reviewGrid"></div>
+              <div class="review-actions">
+                <button id="generateReviewSummary" class="action-button" type="button">Generate Review Summary</button>
+                <button id="downloadReviewSummary" class="action-button" type="button">Download Review JSON</button>
+                <button id="resetReviewForm" class="action-button" type="button">Reset Review Form</button>
+              </div>
+              <div class="review-helper">
+                Suggested save location:
+                <code>/Users/alanmotley/Documents/Playground/docs/norynthe/implementation/reviews/</code>
+              </div>
+              <div id="reviewOutput" class="review-output">Open this workspace when I want to record manual calibration notes.</div>
+            </div>
+          </details>
         </div>
       </main>
     </section>
@@ -1449,13 +1528,17 @@
         const card = document.createElement("div");
         card.className = "review-card";
         card.innerHTML = `
-          <div class="eyebrow">${titleize(dimension.dimension)}</div>
+          <div class="review-card-head">
+            <div class="eyebrow">${titleize(dimension.dimension)}</div>
+            <div class="review-system-score">System score ${displayScore(dimension.final_score)}</div>
+          </div>
           <div class="detail-meta">
-            <span>System score: ${displayScore(dimension.final_score)}</span>
             <span>Band: ${dimension.final_score_band}</span>
           </div>
-          <input type="number" min="0" max="100" step="1" data-review-score="${dimension.dimension}" placeholder="Manual score" />
-          <textarea data-review-note="${dimension.dimension}" placeholder="Why would you adjust this dimension, if at all?"></textarea>
+          <label class="review-input-label" for="score-${dimension.dimension}">Manual Score</label>
+          <input id="score-${dimension.dimension}" type="number" min="0" max="100" step="1" data-review-score="${dimension.dimension}" placeholder="Manual score" />
+          <label class="review-input-label" for="note-${dimension.dimension}">Reviewer Note</label>
+          <textarea id="note-${dimension.dimension}" data-review-note="${dimension.dimension}" placeholder="Why would I adjust this dimension, if at all?"></textarea>
         `;
         reviewGrid.appendChild(card);
       });
