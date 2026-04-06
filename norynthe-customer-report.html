@@ -20,6 +20,7 @@
       --slate: #254f74;
       --shadow: 0 18px 44px rgba(15, 17, 21, 0.05);
       --radius: 22px;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, "Times New Roman", serif;
     }
     * { box-sizing: border-box; }
     body {
@@ -179,9 +180,11 @@
     }
     .headline h1 {
       margin: 0;
+      font-family: var(--serif);
       font-size: clamp(2rem, 5vw, 3.4rem);
       line-height: 0.94;
       letter-spacing: -0.05em;
+      font-weight: 700;
     }
     .headline p {
       margin: 14px 0 0;
@@ -251,8 +254,11 @@
     }
     .section-title {
       margin: 0 0 12px;
+      font-family: var(--serif);
       font-size: 24px;
       letter-spacing: -0.04em;
+      line-height: 0.98;
+      font-weight: 700;
     }
     .metric-grid {
       display: grid;
@@ -268,8 +274,11 @@
     }
     .metric-card h3 {
       margin: 8px 0 0;
+      font-family: var(--serif);
       font-size: 28px;
       letter-spacing: -0.05em;
+      line-height: 0.96;
+      font-weight: 700;
     }
     .metric-card p {
       margin: 8px 0 0;
@@ -293,9 +302,11 @@
     }
     .dimension-card h3 {
       margin: 8px 0 10px;
+      font-family: var(--serif);
       font-size: 24px;
       letter-spacing: -0.04em;
       line-height: 1.02;
+      font-weight: 700;
     }
     .dimension-topline {
       display: flex;
@@ -322,8 +333,11 @@
     }
     .insight-card h3 {
       margin: 8px 0 8px;
+      font-family: var(--serif);
       font-size: 22px;
       letter-spacing: -0.04em;
+      line-height: 1;
+      font-weight: 700;
     }
     .insight-card p,
     .insight-card ul {
