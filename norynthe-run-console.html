@@ -571,7 +571,6 @@
       text-transform: uppercase;
       letter-spacing: 0.12em;
       font-weight: 700;
-      font-family: Arial, Helvetica, sans-serif;
       border: 1px solid transparent;
       white-space: nowrap;
     }
@@ -639,7 +638,6 @@
       text-align: center;
     }
     .detail-score-label {
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.16em;
@@ -651,7 +649,6 @@
       gap: 10px;
       flex-wrap: wrap;
       margin-bottom: 14px;
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 12px;
       color: var(--muted);
     }
@@ -668,7 +665,6 @@
       padding: 14px 16px;
       border: 1px solid var(--line);
       background: rgba(17, 23, 34, 0.03);
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 13px;
       line-height: 1.72;
       color: #263240;
@@ -690,7 +686,6 @@
       border-radius: 16px;
     }
     .dimension-mini-name {
-      font-family: Arial, Helvetica, sans-serif;
       text-transform: uppercase;
       letter-spacing: 0.14em;
       font-size: 10px;
@@ -701,11 +696,9 @@
       font-size: 18px;
       line-height: 1;
       letter-spacing: -0.05em;
-      font-family: Arial, Helvetica, sans-serif;
       font-weight: 700;
     }
     .dimension-mini-summary {
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 12px;
       line-height: 1.5;
       color: #32404d;
@@ -722,7 +715,6 @@
       gap: 10px;
     }
     .dimension-mini-score-label {
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.14em;
@@ -780,7 +772,6 @@
     .compare-table {
       width: 100%;
       border-collapse: collapse;
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 13px;
     }
     .compare-table th,
@@ -896,7 +887,6 @@
       border: 1px solid var(--line);
       background: #fff;
       padding: 10px 12px;
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 13px;
       color: var(--ink);
       margin-top: 8px;
@@ -917,7 +907,6 @@
       background: #fff;
       color: var(--ink);
       padding: 10px 14px;
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 13px;
       cursor: pointer;
       border-radius: 999px;
@@ -940,7 +929,6 @@
     }
     .review-helper {
       margin-top: 12px;
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 12px;
       line-height: 1.6;
       color: var(--muted);
@@ -1012,7 +1000,6 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 28px;
       line-height: 1;
       letter-spacing: -0.06em;
@@ -1059,7 +1046,6 @@
       list-style: none;
       cursor: pointer;
       padding: 12px 14px;
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.16em;
@@ -1073,7 +1059,6 @@
     }
     .report-details-body {
       padding: 12px 14px 14px;
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 13px;
       line-height: 1.65;
       color: #32404d;
@@ -1104,7 +1089,6 @@
       color: #32404d;
     }
     .list, .prompt-box {
-      font-family: Arial, Helvetica, sans-serif;
       color: #32404d;
       font-size: 14px;
       line-height: 1.6;
@@ -1130,8 +1114,40 @@
       .grid, .summary-grid, .comparison-summary, .comparison-detail-grid, .dimension-grid, .dimension-mini-grid, .compare-grid, .review-grid, .single-report-metrics, .comparison-metrics { grid-template-columns: 1fr; }
       .single-report-hero { grid-template-columns: 1fr; }
       .comparison-hero { grid-template-columns: 1fr; }
+      .shell {
+        padding: 28px 14px 44px;
+      }
+      .panel,
+      .dimension-card {
+        padding: 18px;
+      }
       .masthead {
-        padding: 20px;
+        padding: 24px 20px 26px;
+        margin-bottom: 18px;
+      }
+      .grid {
+        gap: 16px;
+      }
+      .single-report-hero,
+      .comparison-hero,
+      .report-section,
+      .comparison-table-section,
+      .compare-panel {
+        padding: 16px;
+      }
+      .detail-header {
+        align-items: flex-start;
+      }
+      .detail-title {
+        font-size: 22px;
+      }
+      .score-badge {
+        width: 74px;
+        height: 74px;
+        min-width: 74px;
+        min-height: 74px;
+        flex-basis: 74px;
+        font-size: 25px;
       }
     }
   </style>
