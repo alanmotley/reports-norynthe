@@ -1176,6 +1176,40 @@
       return "Unclassified artifact";
     }
 
+    const SAMPLE_LIBRARY_META = {
+      "mock-comparison-report.json": {
+        title: "Comparison Demo",
+        meta: "Hosted sample | ranked three-model comparison"
+      },
+      "mock-full-report-openai.json": {
+        title: "OpenAI Model Report",
+        meta: "Hosted sample | single-model drill-down"
+      },
+      "mock-full-report-anthropic.json": {
+        title: "Anthropic Model Report",
+        meta: "Hosted sample | single-model drill-down"
+      },
+      "mock-full-report-grok.json": {
+        title: "Grok Model Report",
+        meta: "Hosted sample | lower-trust example"
+      }
+    };
+
+    function getArtifactDisplay(entry) {
+      const sampleMeta = SAMPLE_LIBRARY_META[entry.name];
+      if (sampleMeta) {
+        return {
+          title: sampleMeta.title,
+          meta: sampleMeta.meta
+        };
+      }
+
+      return {
+        title: entry.name,
+        meta: summarizeBrowserMeta(entry.report)
+      };
+    }
+
     function addBrowserEntry(name, report) {
       const existingIndex = browserFiles.findIndex((entry) => entry.name === name);
       const entry = { name, report };
@@ -1209,13 +1243,14 @@
 
       browserList.innerHTML = "";
       browserFiles.forEach((entry) => {
+        const display = getArtifactDisplay(entry);
         const item = document.createElement("button");
         item.type = "button";
         item.className = `browser-item${entry.name === activeBrowserFileName ? " is-active" : ""}`;
         item.innerHTML = `
           <div class="browser-item-title">${classifyReport(entry.report)}</div>
-          <div class="browser-item-name">${entry.name}</div>
-          <div class="browser-item-meta">${summarizeBrowserMeta(entry.report)}</div>
+          <div class="browser-item-name">${display.title}</div>
+          <div class="browser-item-meta">${display.meta}</div>
         `;
         item.addEventListener("click", () => {
           activeBrowserFileName = entry.name;
