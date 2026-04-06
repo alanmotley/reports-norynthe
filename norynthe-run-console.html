@@ -739,7 +739,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
     .detail-heading {
       min-width: 0;
@@ -773,7 +773,8 @@
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-      margin-bottom: 14px;
+      row-gap: 10px;
+      margin-bottom: 16px;
       font-size: 12px;
       color: var(--muted);
     }
@@ -786,7 +787,7 @@
       border: 1px solid var(--line);
     }
     .ranking-rationale {
-      margin: 0 0 12px;
+      margin: 0 0 14px;
       padding: 14px 16px;
       border: 1px solid var(--line);
       background: rgba(17, 23, 34, 0.03);
@@ -797,17 +798,17 @@
     }
     .dimension-mini-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
     }
     .dimension-mini {
       border: 1px solid var(--line);
-      padding: 14px;
+      padding: 15px;
       background: rgba(255,255,255,0.8);
       display: flex;
       flex-direction: column;
-      gap: 9px;
-      min-height: 132px;
+      gap: 10px;
+      min-height: 144px;
       border-radius: 16px;
     }
     .dimension-mini-name {
@@ -832,10 +833,16 @@
     .dimension-mini-band {
       display: inline-flex;
       align-self: flex-start;
+      max-width: 100%;
+      white-space: normal;
+      line-height: 1.35;
+      text-align: left;
+      padding-top: 7px;
+      padding-bottom: 7px;
     }
     .dimension-mini-score-row {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       gap: 10px;
     }
@@ -844,6 +851,13 @@
       text-transform: uppercase;
       letter-spacing: 0.14em;
       color: var(--muted);
+    }
+    .dimension-mini-score-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 0;
+      flex: 1;
     }
     .compare-panel {
       display: none;
@@ -2392,10 +2406,12 @@
               <div class="dimension-mini">
                 <div class="dimension-mini-name">${titleize(dimension.dimension)}</div>
                 <div class="dimension-mini-score-row">
-                  <div class="dimension-mini-score-label">Score</div>
+                  <div class="dimension-mini-score-stack">
+                    <div class="dimension-mini-score-label">Score</div>
+                    <span class="${pillClass(dimension.final_score_band)} dimension-mini-band">${dimension.final_score_band}</span>
+                  </div>
                   <div class="dimension-mini-score">${displayScore(dimension.final_score)}</div>
                 </div>
-                <span class="${pillClass(dimension.final_score_band)} dimension-mini-band">${dimension.final_score_band}</span>
                 <div class="dimension-mini-summary">${dimension.resolution_type.replaceAll("_", " ")}</div>
               </div>
             `
@@ -2461,10 +2477,12 @@
               <div class="dimension-mini">
                 <div class="dimension-mini-name">${question.prompt_id}</div>
                 <div class="dimension-mini-score-row">
-                  <div class="dimension-mini-score-label">Score</div>
+                  <div class="dimension-mini-score-stack">
+                    <div class="dimension-mini-score-label">Score</div>
+                    <span class="${pillClass(question.overall_band)} dimension-mini-band">${question.overall_band_label}</span>
+                  </div>
                   <div class="dimension-mini-score">${displayScore(question.norynthe_score)}</div>
                 </div>
-                <span class="${pillClass(question.overall_band)} dimension-mini-band">${question.overall_band_label}</span>
                 <div class="dimension-mini-summary">${question.category} benchmark question</div>
               </div>
             `
