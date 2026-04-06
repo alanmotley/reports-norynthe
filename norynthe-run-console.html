@@ -1323,15 +1323,15 @@
       <div class="walkthrough-top">
         <div class="walkthrough-copy">
           <div class="eyebrow">Guided Walkthrough</div>
-          <p id="walkthroughNarrative">Start with the ranked comparison to show the scoring system at work, then move through the winner profile, the two-model delta view, and finally the client-facing report layer.</p>
+          <p id="walkthroughNarrative">Start with the benchmark composite to show the scoring system at work across Norynthe’s controlled question bank, then move through the winner profile, the two-model delta view, and finally the client-facing report layer.</p>
         </div>
         <button id="presentationToggle" class="presentation-toggle" type="button">Presentation Mode</button>
       </div>
       <div class="walkthrough-steps">
         <article id="walkthroughStepComparison" class="walkthrough-step is-active">
           <div class="walkthrough-step-number">Step 1</div>
-          <h3>Open Comparison</h3>
-          <p>Show the ranked model set, the current leader, and the overall Norynthe.Score spread.</p>
+          <h3>Open Benchmark</h3>
+          <p>Show the ranked model set, the current leader, and the overall benchmark-composite Norynthe.Score spread.</p>
           <button type="button" data-walkthrough-step="comparison">Go To Comparison</button>
         </article>
         <article id="walkthroughStepWinner" class="walkthrough-step">
@@ -1359,7 +1359,7 @@
       <aside class="panel">
         <div class="eyebrow">Report Navigator</div>
         <p class="rail-intro">
-          Start with the hosted samples for the cleanest walkthrough, then use the browser or local upload tools when I want to inspect new artifacts.
+          Start with the benchmark samples for the cleanest product walkthrough, then use the browser or local upload tools when I want to inspect supporting artifacts.
         </p>
         <div class="rail-stack">
           <section class="rail-section">
@@ -1369,37 +1369,46 @@
               <div class="sample-library-item">
                 <div class="sample-library-head">
                   <div>
-                    <div class="sample-library-title">Policy Trust Comparison</div>
-                    <div class="sample-library-meta">A ranked three-model policy evaluation showing Norynthe.Score, trust spread, and dimension deltas.</div>
+                    <div class="sample-library-title">Core Benchmark Comparison</div>
+                    <div class="sample-library-meta">The benchmark-composite view across Norynthe’s controlled question bank, showing the ranked field and benchmark Norynthe.Score.</div>
+                  </div>
+                  <button class="sample-button" type="button" data-sample="./samples/mock-benchmark-comparison-report.json" data-sample-name="mock-benchmark-comparison-report.json">Open</button>
+                </div>
+              </div>
+              <div class="sample-library-item">
+                <div class="sample-library-head">
+                  <div>
+                    <div class="sample-library-title">Benchmark Winner Profile</div>
+                    <div class="sample-library-meta">The leading model’s benchmark profile, showing how one model performs across the controlled question set.</div>
+                  </div>
+                  <button class="sample-button" type="button" data-sample="./samples/mock-benchmark-model-report-openai.json" data-sample-name="mock-benchmark-model-report-openai.json">Open</button>
+                </div>
+              </div>
+              <div class="sample-library-item">
+                <div class="sample-library-head">
+                  <div>
+                    <div class="sample-library-title">Benchmark Challenger Profile</div>
+                    <div class="sample-library-meta">A close benchmark competitor showing how a model can stay near the lead without taking first place overall.</div>
+                  </div>
+                  <button class="sample-button" type="button" data-sample="./samples/mock-benchmark-model-report-anthropic.json" data-sample-name="mock-benchmark-model-report-anthropic.json">Open</button>
+                </div>
+              </div>
+              <div class="sample-library-item">
+                <div class="sample-library-head">
+                  <div>
+                    <div class="sample-library-title">Benchmark High-Risk Profile</div>
+                    <div class="sample-library-meta">A lower-trust benchmark result showing how weaknesses compound across a controlled set of Norynthe questions.</div>
+                  </div>
+                  <button class="sample-button" type="button" data-sample="./samples/mock-benchmark-model-report-grok.json" data-sample-name="mock-benchmark-model-report-grok.json">Open</button>
+                </div>
+              </div>
+              <div class="sample-library-item">
+                <div class="sample-library-head">
+                  <div>
+                    <div class="sample-library-title">Single Question Trust Comparison</div>
+                    <div class="sample-library-meta">The earlier question-level comparison surface, kept here as a supporting artifact behind the benchmark layer.</div>
                   </div>
                   <button class="sample-button" type="button" data-sample="./samples/mock-comparison-report.json" data-sample-name="mock-comparison-report.json">Open</button>
-                </div>
-              </div>
-              <div class="sample-library-item">
-                <div class="sample-library-head">
-                  <div>
-                    <div class="sample-library-title">Leading Model Profile</div>
-                    <div class="sample-library-meta">The winning single-model report, showing why the top-ranked trust profile still needs reviewer judgment.</div>
-                  </div>
-                  <button class="sample-button" type="button" data-sample="./samples/mock-full-report-openai.json" data-sample-name="mock-full-report-openai.json">Open</button>
-                </div>
-              </div>
-              <div class="sample-library-item">
-                <div class="sample-library-head">
-                  <div>
-                    <div class="sample-library-title">Close Challenger Profile</div>
-                    <div class="sample-library-meta">A near-leader report that shows how a competitive model can still lose ground through weaker context retention.</div>
-                  </div>
-                  <button class="sample-button" type="button" data-sample="./samples/mock-full-report-anthropic.json" data-sample-name="mock-full-report-anthropic.json">Open</button>
-                </div>
-              </div>
-              <div class="sample-library-item">
-                <div class="sample-library-head">
-                  <div>
-                    <div class="sample-library-title">High-Risk Profile</div>
-                    <div class="sample-library-meta">A lower-trust example that makes the risk band and weaker dimension pattern visible in the reporting surface.</div>
-                  </div>
-                  <button class="sample-button" type="button" data-sample="./samples/mock-full-report-grok.json" data-sample-name="mock-full-report-grok.json">Open</button>
                 </div>
               </div>
             </div>
@@ -1728,6 +1737,19 @@
       Anthropic: "./samples/mock-full-report-anthropic.json",
       Grok: "./samples/mock-full-report-grok.json"
     };
+    const SAMPLE_BENCHMARK_MODEL_REPORT_URLS = {
+      OpenAI: "./samples/mock-benchmark-model-report-openai.json",
+      Anthropic: "./samples/mock-benchmark-model-report-anthropic.json",
+      Grok: "./samples/mock-benchmark-model-report-grok.json"
+    };
+
+    function isBenchmarkComparisonReport(report) {
+      return report?.report_type === "norynthe_benchmark_comparison_report";
+    }
+
+    function isBenchmarkModelReport(report) {
+      return report?.report_type === "norynthe_benchmark_model_report";
+    }
 
     function titleize(value) {
       return value
@@ -1791,15 +1813,23 @@
     }
 
     function classifyReport(report) {
+      if (isBenchmarkComparisonReport(report)) return "Benchmark";
       if (report.report_type === "norynthe_comparison_report") return "Comparison";
+      if (isBenchmarkModelReport(report)) return "Benchmark Model";
       if (report.report_type === "norynthe_full_run_report") return "Model";
       if (report.review_type === "human_review_summary") return "Human Review";
       return "JSON";
     }
 
     function summarizeBrowserMeta(report) {
+      if (isBenchmarkComparisonReport(report)) {
+        return `${report.benchmark_question_count ?? 0} questions | benchmark composite`;
+      }
       if (report.report_type === "norynthe_comparison_report") {
         return `${report.compared_models?.length ?? 0} models | ${report.prompt_id ?? "no prompt id"}`;
+      }
+      if (isBenchmarkModelReport(report)) {
+        return `${report.target_model_name ?? "unknown model"} | ${report.benchmark_question_count ?? 0} questions`;
       }
       if (report.report_type === "norynthe_full_run_report") {
         return `${report.target_model_name ?? "unknown model"} | ${report.prompt_id ?? "no prompt id"}`;
@@ -1811,6 +1841,22 @@
     }
 
     const SAMPLE_LIBRARY_META = {
+      "mock-benchmark-comparison-report.json": {
+        title: "Core Benchmark Comparison",
+        meta: "Hosted walkthrough | benchmark-composite model ranking"
+      },
+      "mock-benchmark-model-report-openai.json": {
+        title: "Benchmark Winner Profile",
+        meta: "Hosted walkthrough | top benchmark profile"
+      },
+      "mock-benchmark-model-report-anthropic.json": {
+        title: "Benchmark Challenger Profile",
+        meta: "Hosted walkthrough | near-leading benchmark profile"
+      },
+      "mock-benchmark-model-report-grok.json": {
+        title: "Benchmark High-Risk Profile",
+        meta: "Hosted walkthrough | lower-trust benchmark profile"
+      },
       "mock-comparison-report.json": {
         title: "Policy Trust Comparison",
         meta: "Hosted walkthrough | ranked three-model policy comparison"
@@ -1935,6 +1981,16 @@
         return;
       }
 
+      if (isBenchmarkComparisonReport(report)) {
+        renderBenchmarkComparisonReport(report);
+        return;
+      }
+
+      if (isBenchmarkModelReport(report)) {
+        renderBenchmarkModelReport(report);
+        return;
+      }
+
       renderSingleModelReport(report);
       renderDimensions(report);
     }
@@ -2005,6 +2061,34 @@
       if (!top || !bottom) return "Comparison report loaded.";
       const spread = Math.abs(displayScore(getSortValue(top, field)) - displayScore(getSortValue(bottom, field)));
       return `${top.target_model_name} currently leads this evaluation set, while ${bottom.target_model_name} remains the lowest-scoring model in the same prompt context. The current spread is ${spread} points under ${dimensionLabel(field)}.`;
+    }
+
+    function buildBenchmarkHeroNarrative(report) {
+      const top = report.ranked_models?.[0];
+      const bottom = report.ranked_models?.at(-1);
+      if (!top || !bottom) return "Benchmark report loaded.";
+      const spread = Math.abs(displayScore(top.norynthe_score) - displayScore(bottom.norynthe_score));
+      return `${top.target_model_name} currently leads the active benchmark set across ${report.benchmark_question_count} controlled Norynthe questions. The current benchmark-composite spread is ${spread} points from top to bottom.`;
+    }
+
+    function buildBenchmarkModelNarrative(report) {
+      const strongest = report.scoring_summary.strongest_question;
+      const weakest = report.scoring_summary.weakest_question;
+      return `${report.target_model_name} was evaluated across ${report.benchmark_question_count} controlled benchmark questions. Its strongest benchmark result came on ${strongest.prompt_id}, while ${weakest.prompt_id} produced the lowest trust profile in the set.`;
+    }
+
+    function buildBenchmarkModelRecommendation(report) {
+      const band = report.scoring_summary.overall_band;
+      if (band === "strong" || band === "exceptional") {
+        return "Recommendation: strong benchmark performer. This model looks best positioned for controlled, reviewer-assisted use across the current benchmark set.";
+      }
+      if (band === "risk") {
+        return "Recommendation: benchmark risk remains high. This model should be treated as a weak candidate for trust-sensitive workflows under the current benchmark set.";
+      }
+      if (band === "caution") {
+        return "Recommendation: benchmark performance is mixed enough to require caution before relying on this model in higher-trust workflows.";
+      }
+      return "Recommendation: benchmark performance is usable but uneven. Human review should remain concentrated on the weaker benchmark questions.";
     }
 
     function renderHumanReviewPanel(report) {
@@ -2125,6 +2209,70 @@
     }
 
     function renderDeltaInsights(report) {
+      if (isBenchmarkComparisonReport(report)) {
+        const ranked = report.ranked_models ?? [];
+        if (ranked.length < 2) {
+          deltaGrid.classList.remove("active");
+          return;
+        }
+
+        deltaGrid.classList.add("active");
+
+        let closestRace = null;
+        let largestLead = null;
+        for (let index = 0; index < ranked.length - 1; index += 1) {
+          const current = ranked[index];
+          const next = ranked[index + 1];
+          const gap = displayScore(current.norynthe_score) - displayScore(next.norynthe_score);
+          const pair = { current, next, gap };
+          if (!closestRace || gap < closestRace.gap) closestRace = pair;
+          if (!largestLead || gap > largestLead.gap) largestLead = pair;
+        }
+
+        let biggestQuestionGap = null;
+        for (let i = 0; i < ranked.length; i += 1) {
+          for (let j = i + 1; j < ranked.length; j += 1) {
+            const left = ranked[i];
+            const right = ranked[j];
+            const leftScores = Object.fromEntries((left.question_reports ?? []).map((q) => [q.prompt_id, displayScore(q.norynthe_score)]));
+            const rightScores = Object.fromEntries((right.question_reports ?? []).map((q) => [q.prompt_id, displayScore(q.norynthe_score)]));
+            Object.keys(leftScores).forEach((promptId) => {
+              const gap = Math.abs((leftScores[promptId] ?? 0) - (rightScores[promptId] ?? 0));
+              if (!biggestQuestionGap || gap > biggestQuestionGap.gap) {
+                biggestQuestionGap = {
+                  gap,
+                  promptId,
+                  left,
+                  right,
+                  leftScore: leftScores[promptId] ?? 0,
+                  rightScore: rightScores[promptId] ?? 0
+                };
+              }
+            });
+          }
+        }
+
+        document.getElementById("closestRaceTitle").textContent =
+          `${closestRace.current.target_model_name} vs ${closestRace.next.target_model_name}`;
+        document.getElementById("closestRaceValue").textContent = `${closestRace.gap} point${closestRace.gap === 1 ? "" : "s"}`;
+        document.getElementById("closestRaceMeta").textContent =
+          `This is the tightest overall benchmark-composite Norynthe.Score gap in the current field.`;
+
+        document.getElementById("largestLeadTitle").textContent =
+          `${largestLead.current.target_model_name} over ${largestLead.next.target_model_name}`;
+        document.getElementById("largestLeadValue").textContent = `${largestLead.gap} point${largestLead.gap === 1 ? "" : "s"}`;
+        document.getElementById("largestLeadMeta").textContent =
+          `This is the widest adjacent benchmark-ranking gap in the current field.`;
+
+        document.getElementById("largestDimensionGapTitle").textContent =
+          biggestQuestionGap.promptId;
+        document.getElementById("largestDimensionGapValue").textContent =
+          `${biggestQuestionGap.gap} point${biggestQuestionGap.gap === 1 ? "" : "s"}`;
+        document.getElementById("largestDimensionGapMeta").textContent =
+          `${biggestQuestionGap.left.target_model_name} scored ${biggestQuestionGap.leftScore} while ${biggestQuestionGap.right.target_model_name} scored ${biggestQuestionGap.rightScore}.`;
+        return;
+      }
+
       const ranked = report.ranked_models ?? [];
       if (ranked.length < 2) {
         deltaGrid.classList.remove("active");
@@ -2205,6 +2353,24 @@
       });
     }
 
+    function renderBenchmarkComparisonRows(report) {
+      comparisonTableBody.innerHTML = "";
+      report.ranked_models.forEach((item) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${item.rank}</td>
+          <td>${item.target_model_name}</td>
+          <td>${item.provider}</td>
+          <td>${item.version}</td>
+          <td>${displayScore(item.norynthe_score)}</td>
+          <td><span class="${pillClass(item.overall_band)}">${item.overall_band_label}</span></td>
+          <td>${item.strongest_question.prompt_id} (${displayScore(item.strongest_question.score)})</td>
+          <td>${item.weakest_question.prompt_id} (${displayScore(item.weakest_question.score)})</td>
+        `;
+        comparisonTableBody.appendChild(row);
+      });
+    }
+
     function renderComparisonCards(report) {
       comparisonDetailGrid.innerHTML = "";
       report.ranked_models.forEach((item) => {
@@ -2274,6 +2440,71 @@
       });
     }
 
+    function renderBenchmarkComparisonCards(report) {
+      comparisonDetailGrid.innerHTML = "";
+      report.ranked_models.forEach((item) => {
+        const questionsMarkup = (item.question_reports ?? [])
+          .map(
+            (question) => `
+              <div class="dimension-mini">
+                <div class="dimension-mini-name">${question.prompt_id}</div>
+                <div class="dimension-mini-score-row">
+                  <div class="dimension-mini-score-label">Score</div>
+                  <div class="dimension-mini-score">${displayScore(question.norynthe_score)}</div>
+                </div>
+                <span class="${pillClass(question.overall_band)} dimension-mini-band">${question.overall_band_label}</span>
+                <div class="dimension-mini-summary">${question.category} benchmark question</div>
+              </div>
+            `
+          )
+          .join("");
+
+        const card = document.createElement("article");
+        card.className = `model-detail${item.rank === 1 ? " is-active" : ""}`;
+        card.innerHTML = `
+          <div class="detail-header">
+            <div class="detail-heading">
+              <div class="eyebrow">Rank ${item.rank}</div>
+              <h3 class="detail-title">${item.target_model_name}</h3>
+            </div>
+            <div class="detail-score">
+              <div class="score-badge">${displayScore(item.norynthe_score)}</div>
+              <div class="detail-score-label">Norynthe.Score</div>
+            </div>
+          </div>
+          <div class="detail-meta">
+            <span>Provider: ${item.provider}</span>
+            <span>Version: ${item.version}</span>
+            <span class="${pillClass(item.overall_band)}">${item.overall_band_label}</span>
+            <span>Questions: ${item.questions_evaluated}</span>
+            <span>Strongest: ${item.strongest_question.prompt_id} (${displayScore(item.strongest_question.score)})</span>
+            <span>Weakest: ${item.weakest_question.prompt_id} (${displayScore(item.weakest_question.score)})</span>
+          </div>
+          <p class="ranking-rationale">${item.target_model_name} holds rank ${item.rank} on the current benchmark set. Its composite score comes from controlled Norynthe questions rather than a single prompt, making this a more durable trust signal.</p>
+          <details class="report-details">
+            <summary>Report Details</summary>
+            <div class="report-details-body">
+              <p>This benchmark card sits inside a benchmark report stack, with each artifact serving a different purpose.</p>
+              <div class="report-breakdown">
+                <div class="report-breakdown-item">
+                  <div class="report-breakdown-title">Benchmark Model Report JSON</div>
+                  <div class="report-breakdown-copy">Open this when you want the full benchmark profile for ${item.target_model_name}. It contains the benchmark-composite Norynthe.Score, overall band, strongest and weakest questions, and the per-question reports used in the composite.</div>
+                  ${getArtifactLink(SAMPLE_BENCHMARK_MODEL_REPORT_URLS[item.target_model_name] ?? null, SAMPLE_BENCHMARK_MODEL_REPORT_URLS[item.target_model_name] ? "Open bundled benchmark model report" : "Bundled benchmark model report not available in this view.")}
+                </div>
+                <div class="report-breakdown-item">
+                  <div class="report-breakdown-title">Benchmark Comparison JSON</div>
+                  <div class="report-breakdown-copy">Open this when you want the full ranked benchmark set. It contains the ranked models, the composite benchmark score, question counts, and the per-model benchmark summaries used in this screen.</div>
+                  ${getArtifactLink(report.__artifact_url ?? null, report.__artifact_url ? "Open current benchmark comparison artifact" : "This benchmark artifact was loaded locally.")}
+                </div>
+              </div>
+            </div>
+          </details>
+          <div class="dimension-mini-grid" style="margin-top:14px;">${questionsMarkup}</div>
+        `;
+        comparisonDetailGrid.appendChild(card);
+      });
+    }
+
     function renderComparePanel(report) {
       const left = report.ranked_models.find((item) => item.target_model_name === compareLeft.value);
       const right = report.ranked_models.find((item) => item.target_model_name === compareRight.value);
@@ -2334,8 +2565,98 @@
       });
     }
 
+    function renderBenchmarkComparePanel(report) {
+      const left = report.ranked_models.find((item) => item.target_model_name === compareLeft.value);
+      const right = report.ranked_models.find((item) => item.target_model_name === compareRight.value);
+      if (!left || !right) {
+        comparePanel.classList.remove("active");
+        return;
+      }
+
+      comparePanel.classList.add("active");
+      compareDimensionTableBody.innerHTML = "";
+      compareSides.innerHTML = "";
+
+      const leftMap = Object.fromEntries((left.question_reports ?? []).map((q) => [q.prompt_id, displayScore(q.norynthe_score)]));
+      const rightMap = Object.fromEntries((right.question_reports ?? []).map((q) => [q.prompt_id, displayScore(q.norynthe_score)]));
+      const promptIds = Array.from(new Set([...Object.keys(leftMap), ...Object.keys(rightMap)]));
+      let biggest = { promptId: promptIds[0], gap: -1 };
+
+      promptIds.forEach((promptId) => {
+        const leftScore = leftMap[promptId] ?? 0;
+        const rightScore = rightMap[promptId] ?? 0;
+        const delta = leftScore - rightScore;
+        const row = document.createElement("tr");
+        const deltaClass = delta > 0 ? "delta-up" : delta < 0 ? "delta-down" : "delta-flat";
+        const deltaLabel = delta > 0 ? `+${delta}` : `${delta}`;
+        row.innerHTML = `
+          <td>${promptId}</td>
+          <td>${leftScore}</td>
+          <td>${rightScore}</td>
+          <td class="${deltaClass}">${deltaLabel}</td>
+        `;
+        compareDimensionTableBody.appendChild(row);
+        if (Math.abs(delta) > biggest.gap) {
+          biggest = { promptId, gap: Math.abs(delta), leftScore, rightScore };
+        }
+      });
+
+      compareSummary.innerHTML = `<strong>${left.target_model_name}</strong> and <strong>${right.target_model_name}</strong> are being compared across the benchmark question set. The largest current separation is on <strong>${biggest.promptId}</strong>, where the scores differ by <strong>${biggest.gap} points</strong>.`;
+
+      [left, right].forEach((item, index) => {
+        const side = document.createElement("div");
+        side.className = "compare-side";
+        side.innerHTML = `
+          <div class="eyebrow">Model ${index === 0 ? "A" : "B"}</div>
+          <h4>${item.target_model_name}</h4>
+          <div class="detail-meta">
+            <span>Provider: ${item.provider}</span>
+            <span>Version: ${item.version}</span>
+            <span class="${pillClass(item.overall_band)}">${item.overall_band_label}</span>
+          </div>
+          <div class="list" style="padding-left:0;">
+            <strong>Norynthe.Score:</strong> ${displayScore(item.norynthe_score)}<br>
+            <strong>Questions:</strong> ${item.questions_evaluated}<br>
+            <strong>Strongest:</strong> ${item.strongest_question.prompt_id} (${displayScore(item.strongest_question.score)})<br>
+            <strong>Weakest:</strong> ${item.weakest_question.prompt_id} (${displayScore(item.weakest_question.score)})
+          </div>
+          <div class="compare-side-copy">${item.target_model_name} is being compared on benchmark-composite performance, not on a single prompt. This view shows where the benchmark separates the field most clearly.</div>
+        `;
+        compareSides.appendChild(side);
+      });
+    }
+
     function rerenderSortedComparison() {
       if (!currentComparisonReport) return;
+      if (isBenchmarkComparisonReport(currentComparisonReport)) {
+        currentComparisonReport.ranked_models.sort((a, b) => {
+          return displayScore(b.norynthe_score) - displayScore(a.norynthe_score);
+        });
+        currentComparisonReport.ranked_models.forEach((item, index) => {
+          item.rank = index + 1;
+        });
+        const top = currentComparisonReport.ranked_models[0];
+        const bottom = currentComparisonReport.ranked_models.at(-1);
+        const spread = top && bottom
+          ? Math.abs(displayScore(top.norynthe_score) - displayScore(bottom.norynthe_score))
+          : "--";
+        document.getElementById("comparisonTopModel").textContent =
+          top ? `${top.target_model_name} (${displayScore(top.norynthe_score)})` : "--";
+        document.getElementById("comparisonSpread").textContent =
+          spread === "--" ? "--" : `${spread} points`;
+        comparisonHeroBadge.textContent = top ? `${displayScore(top.norynthe_score)}` : "--";
+        document.getElementById("comparisonHeroTitle").textContent =
+          top ? `${top.target_model_name} leads the benchmark set.` : "--";
+        document.getElementById("comparisonHeroCopy").textContent =
+          buildBenchmarkHeroNarrative(currentComparisonReport);
+        executiveCallout.innerHTML = top && bottom
+          ? `<strong>${top.target_model_name}</strong> currently leads the active benchmark set with a <strong>Norynthe.Score of ${displayScore(top.norynthe_score)}</strong>. The composite spread across the field is <strong>${spread} points</strong>.`
+          : "Benchmark report loaded.";
+        renderBenchmarkComparisonRows(currentComparisonReport);
+        renderBenchmarkComparisonCards(currentComparisonReport);
+        renderBenchmarkComparePanel(currentComparisonReport);
+        return;
+      }
       const field = sortField.value;
       currentComparisonReport.ranked_models.sort((a, b) => {
         const diff = getSortValue(b, field) - getSortValue(a, field);
@@ -2371,8 +2692,82 @@
       renderComparePanel(currentComparisonReport);
     }
 
+    function renderBenchmarkModelReport(report) {
+      resetViews();
+      currentSingleModelReport = null;
+      sortField.disabled = false;
+      singleModelSummary.style.display = "grid";
+      comparisonSummary.classList.remove("active");
+      comparisonTableWrap.classList.add("hidden");
+      reviewPanel.classList.remove("active");
+      const roundedScore = displayScore(report.scoring_summary.norynthe_score);
+      overallScoreBadge.textContent = roundedScore;
+      document.getElementById("overallBand").textContent = report.scoring_summary.overall_band_label;
+      overallBandPill.textContent = report.scoring_summary.overall_band_label;
+      overallBandPill.className = pillClass(report.scoring_summary.overall_band);
+      document.getElementById("targetModel").textContent = report.target_model_name;
+      document.getElementById("targetModelMeta").textContent =
+        `${report.target_model?.provider ?? "n/a"} | ${report.target_model?.version ?? "n/a"} | benchmark profile`;
+      document.getElementById("strongestDimension").textContent =
+        `${report.scoring_summary.strongest_question.prompt_id} (${displayScore(report.scoring_summary.strongest_question.score)})`;
+      document.getElementById("weakestDimension").textContent =
+        `${report.scoring_summary.weakest_question.prompt_id} (${displayScore(report.scoring_summary.weakest_question.score)})`;
+      document.getElementById("singleReportHeadline").textContent =
+        `${report.target_model_name} produced a ${report.scoring_summary.overall_band_label.toLowerCase()} benchmark result across the active question set.`;
+      document.getElementById("singleReportSummary").textContent =
+        buildBenchmarkModelNarrative(report);
+      document.getElementById("singleReportRecommendation").textContent =
+        buildBenchmarkModelRecommendation(report);
+      comparisonModels.innerHTML = report.question_reports
+        .map((question) => `<span>${question.prompt_id} | ${question.category} | ${displayScore(question.norynthe_score)}</span>`)
+        .join("");
+      promptBox.textContent = "This report is benchmark-composite. Use the question cards below to inspect each benchmark question included in the final Norynthe.Score.";
+      promptMeta.innerHTML = `
+        <span>Benchmark Set: ${report.benchmark_set_id ?? "n/a"}</span>
+        <span>Questions Evaluated: ${report.benchmark_question_count ?? "n/a"}</span>
+        <span>Mode: ${report.mode}</span>
+        <span>Provider: ${report.target_model?.provider ?? "n/a"}</span>
+        <span>Version: ${report.target_model?.version ?? "n/a"}</span>
+      `;
+
+      dimensionGrid.innerHTML = "";
+      report.question_reports.forEach((question) => {
+        const card = document.createElement("article");
+        card.className = "dimension-card";
+        card.innerHTML = `
+          <div class="dimension-topline">
+            <div class="dimension-heading">
+              <div class="eyebrow">${question.category}</div>
+              <h3>${question.prompt_id}</h3>
+              <p class="dimension-lede">${question.purpose}</p>
+            </div>
+            <div class="score-row">
+              <div class="score-badge">${displayScore(question.norynthe_score)}</div>
+              <div class="band">${question.overall_band_label}</div>
+            </div>
+          </div>
+          <div class="meta">
+            <span>Prompt ID: ${question.prompt_id}</span>
+            <span>Category: ${question.category}</span>
+            <span>Band: ${question.overall_band_label}</span>
+          </div>
+          <div class="dimension-strengths">
+            <div class="dimension-section-title">Question Prompt</div>
+            <div class="prompt-box">${question.prompt}</div>
+          </div>
+          <div class="dimension-concerns">
+            <div class="dimension-section-title">Underlying Report</div>
+            ${getArtifactLink(question.report_path ?? null, question.report_path ? "Open question-level report artifact" : "Question-level artifact path not available.")}
+          </div>
+        `;
+        dimensionGrid.appendChild(card);
+      });
+      setWalkthroughStep("winner");
+    }
+
     function renderSingleModelReport(report) {
       resetViews();
+      sortField.disabled = false;
       singleModelSummary.style.display = "grid";
       comparisonSummary.classList.remove("active");
       comparisonTableWrap.classList.add("hidden");
@@ -2410,6 +2805,7 @@
 
     function renderComparisonReport(report) {
       resetViews();
+      sortField.disabled = false;
       currentComparisonReport = JSON.parse(JSON.stringify(report));
       singleModelSummary.style.display = "none";
       comparisonSummary.classList.add("active");
@@ -2452,6 +2848,55 @@
       renderComparisonRows(currentComparisonReport);
       renderComparisonCards(currentComparisonReport);
       renderComparePanel(currentComparisonReport);
+      setWalkthroughStep("comparison");
+    }
+
+    function renderBenchmarkComparisonReport(report) {
+      resetViews();
+      currentComparisonReport = JSON.parse(JSON.stringify(report));
+      singleModelSummary.style.display = "none";
+      comparisonSummary.classList.add("active");
+      comparisonTableWrap.classList.remove("hidden");
+      sortField.value = "norynthe_score";
+      sortField.disabled = true;
+      fillCompareSelectors(currentComparisonReport);
+      const topModel = currentComparisonReport.ranked_models[0];
+      const bottomModel = currentComparisonReport.ranked_models.at(-1);
+      const spread =
+        topModel && bottomModel
+          ? displayScore(topModel.norynthe_score) - displayScore(bottomModel.norynthe_score)
+          : "--";
+
+      document.getElementById("comparisonTopModel").textContent =
+        topModel ? `${topModel.target_model_name} (${displayScore(topModel.norynthe_score)})` : "--";
+      document.getElementById("comparisonModelCount").textContent = String(
+        report.ranked_models?.length ?? 0
+      );
+      document.getElementById("comparisonSpread").textContent =
+        spread === "--" ? "--" : `${spread} points`;
+      comparisonHeroBadge.textContent =
+        topModel ? `${displayScore(topModel.norynthe_score)}` : "--";
+      document.getElementById("comparisonHeroTitle").textContent =
+        topModel ? `${topModel.target_model_name} leads the benchmark set.` : "--";
+      document.getElementById("comparisonHeroCopy").textContent =
+        buildBenchmarkHeroNarrative(currentComparisonReport);
+      executiveCallout.classList.add("active");
+      executiveCallout.innerHTML = topModel && bottomModel
+        ? `<strong>${topModel.target_model_name}</strong> currently leads the active benchmark set with a <strong>Norynthe.Score of ${displayScore(topModel.norynthe_score)}</strong>. The benchmark-composite spread is <strong>${spread} points</strong> across ${report.benchmark_question_count} controlled questions.`
+        : "Benchmark report loaded.";
+      renderDeltaInsights(currentComparisonReport);
+      comparisonModels.innerHTML = report.ranked_models
+        .map((model) => `<span>${model.target_model_name} | ${model.provider} | ${model.questions_evaluated} questions</span>`)
+        .join("");
+      promptBox.textContent = "This view shows the active benchmark set rather than a single prompt. Each model score is a composite across Norynthe’s controlled questions.";
+      promptMeta.innerHTML = `
+        <span>Benchmark Set: ${report.benchmark_set_id ?? "n/a"}</span>
+        <span>Questions Evaluated: ${report.benchmark_question_count ?? "n/a"}</span>
+        <span>Mode: ${report.mode}</span>
+      `;
+      renderBenchmarkComparisonRows(currentComparisonReport);
+      renderBenchmarkComparisonCards(currentComparisonReport);
+      renderBenchmarkComparePanel(currentComparisonReport);
       setWalkthroughStep("comparison");
     }
 
@@ -2529,14 +2974,22 @@
 
     compareLeft.addEventListener("change", () => {
       if (currentComparisonReport) {
-        renderComparePanel(currentComparisonReport);
+        if (isBenchmarkComparisonReport(currentComparisonReport)) {
+          renderBenchmarkComparePanel(currentComparisonReport);
+        } else {
+          renderComparePanel(currentComparisonReport);
+        }
         setWalkthroughStep("compare");
       }
     });
 
     compareRight.addEventListener("change", () => {
       if (currentComparisonReport) {
-        renderComparePanel(currentComparisonReport);
+        if (isBenchmarkComparisonReport(currentComparisonReport)) {
+          renderBenchmarkComparePanel(currentComparisonReport);
+        } else {
+          renderComparePanel(currentComparisonReport);
+        }
         setWalkthroughStep("compare");
       }
     });
@@ -2599,7 +3052,7 @@
 
     window.addEventListener("DOMContentLoaded", async () => {
       try {
-        await loadSampleReport("./samples/mock-comparison-report.json", "mock-comparison-report.json");
+        await loadSampleReport("./samples/mock-benchmark-comparison-report.json", "mock-benchmark-comparison-report.json");
       } catch (error) {
         // Keep the console usable even when the page is opened outside a hosted environment.
       }
