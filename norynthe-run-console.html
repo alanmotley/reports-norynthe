@@ -115,6 +115,29 @@
     .panel {
       padding: 24px;
     }
+    .rail-intro {
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 1.75;
+      color: #36414e;
+    }
+    .rail-stack {
+      display: grid;
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .rail-section {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.66);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .rail-section-copy {
+      margin: 10px 0 0;
+      font-size: 13px;
+      line-height: 1.72;
+      color: #485667;
+    }
     .dropzone {
       border: 1px dashed rgba(17, 23, 34, 0.18);
       padding: 18px;
@@ -582,11 +605,12 @@
     .model-detail {
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.72);
-      padding: 16px;
+      padding: 18px;
+      border-radius: 20px;
     }
     .model-detail.is-active {
       border-color: rgba(17, 23, 34, 0.18);
-      box-shadow: 0 10px 30px rgba(17, 23, 34, 0.05);
+      box-shadow: 0 18px 36px rgba(17, 23, 34, 0.08);
     }
     .detail-header {
       display: flex;
@@ -601,8 +625,9 @@
     }
     .detail-title {
       margin: 0;
-      font-size: 22px;
+      font-size: 24px;
       letter-spacing: -0.04em;
+      line-height: 1.02;
     }
     .detail-score {
       min-width: 110px;
@@ -625,20 +650,29 @@
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       font-family: Arial, Helvetica, sans-serif;
       font-size: 12px;
       color: var(--muted);
     }
+    .detail-meta span {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.74);
+      border: 1px solid var(--line);
+    }
     .ranking-rationale {
       margin: 0 0 12px;
-      padding: 12px 14px;
+      padding: 14px 16px;
       border: 1px solid var(--line);
       background: rgba(17, 23, 34, 0.03);
       font-family: Arial, Helvetica, sans-serif;
       font-size: 13px;
-      line-height: 1.65;
+      line-height: 1.72;
       color: #263240;
+      border-radius: 16px;
     }
     .dimension-mini-grid {
       display: grid;
@@ -647,12 +681,13 @@
     }
     .dimension-mini {
       border: 1px solid var(--line);
-      padding: 12px;
+      padding: 13px;
       background: rgba(255,255,255,0.8);
       display: flex;
       flex-direction: column;
       gap: 8px;
       min-height: 124px;
+      border-radius: 16px;
     }
     .dimension-mini-name {
       font-family: Arial, Helvetica, sans-serif;
@@ -699,6 +734,7 @@
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.72);
       padding: 18px;
+      border-radius: 20px;
     }
     .compare-panel.active {
       display: block;
@@ -709,15 +745,37 @@
       gap: 16px;
       margin-top: 14px;
     }
+    .compare-side-stack {
+      display: grid;
+      gap: 12px;
+    }
     .compare-side {
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.7);
-      padding: 14px;
+      padding: 16px;
+      border-radius: 18px;
     }
     .compare-side h4 {
       margin: 8px 0 6px;
-      font-size: 22px;
+      font-size: 24px;
       letter-spacing: -0.04em;
+      line-height: 1.02;
+    }
+    .compare-side-copy {
+      margin-top: 12px;
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      background: rgba(17, 23, 34, 0.03);
+      border-radius: 14px;
+      font-size: 13px;
+      line-height: 1.72;
+      color: #263240;
+    }
+    .compare-table-shell {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.74);
+      border-radius: 18px;
+      padding: 14px;
     }
     .compare-table {
       width: 100%;
@@ -1093,39 +1151,14 @@
 
     <section class="grid">
       <aside class="panel">
-        <div class="eyebrow">Load Report</div>
-        <p class="lede" style="margin-top:10px;">
-          Upload a local JSON report from your machine, or open one of the hosted sample artifacts below.
+        <div class="eyebrow">Report Navigator</div>
+        <p class="rail-intro">
+          Start with the hosted samples for the cleanest walkthrough, then use the browser or local upload tools when I want to inspect new artifacts.
         </p>
-        <div class="dropzone">
-          <div class="button-row">
-            <label class="button">
-              Upload local report JSON
-              <input id="fileInput" type="file" accept=".json" />
-            </label>
-            <label class="button">
-              Load report folder
-              <input id="directoryInput" type="file" webkitdirectory directory multiple />
-            </label>
-          </div>
-          <div class="helper-card">
+        <div class="rail-stack">
+          <section class="rail-section">
             <div class="eyebrow">Hosted Samples</div>
-            <div class="sample-actions">
-              <button class="sample-button" type="button" data-sample="./samples/mock-comparison-report.json" data-sample-name="mock-comparison-report.json">
-                <strong>Open Sample Comparison</strong>
-                <span>Loads the ranked three-model comparison used throughout the hosted demo.</span>
-              </button>
-              <button class="sample-button" type="button" data-sample="./samples/mock-full-report-openai.json" data-sample-name="mock-full-report-openai.json">
-                <strong>Open Sample Model Report</strong>
-                <span>Loads the OpenAI single-model report with full dimension detail and human review mode.</span>
-              </button>
-            </div>
-            <p class="lede" style="margin-top:12px; max-width:none; font-size:13px; line-height:1.7;">
-              Hosted samples open directly from the site. The upload control above only reads files from your computer.
-            </p>
-          </div>
-          <div class="helper-card">
-            <div class="eyebrow">Sample Library</div>
+            <p class="rail-section-copy">These are the curated demo artifacts built into the site for stakeholder walkthroughs.</p>
             <div class="sample-library">
               <div class="sample-library-item">
                 <div class="sample-library-head">
@@ -1164,28 +1197,46 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="helper-card">
-            <div class="eyebrow">Suggested Path</div>
-            <code>/Users/alanmotley/Documents/Playground/docs/norynthe/implementation/reports/</code>
-          </div>
-          <div class="helper-card">
+          </section>
+
+          <section class="rail-section">
             <div class="eyebrow">Report Browser</div>
+            <p class="rail-section-copy">Loaded artifacts appear here so I can move between saved reports without re-uploading them.</p>
             <div id="browserList" class="browser-list">
               <div class="browser-item">
                 <div class="browser-item-name">Load a report JSON or a report folder to browse artifacts here.</div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="dropzone" style="margin-top:14px;">
-          <div class="eyebrow">What This Shows</div>
-          <ul class="list">
-            <li>Overall score and trust band</li>
-            <li>Strongest and weakest dimensions</li>
-            <li>Scorer / critic resolution state</li>
-            <li>Prompt text and fixture context</li>
-          </ul>
+          </section>
+
+          <section class="rail-section">
+            <div class="eyebrow">Local Upload</div>
+            <p class="rail-section-copy">Use this when I want to inspect a report file from my machine rather than the hosted sample set.</p>
+            <div class="button-row">
+              <label class="button">
+                Upload local report JSON
+                <input id="fileInput" type="file" accept=".json" />
+              </label>
+              <label class="button">
+                Load report folder
+                <input id="directoryInput" type="file" webkitdirectory directory multiple />
+              </label>
+            </div>
+            <div class="helper-card">
+              <div class="eyebrow">Suggested Path</div>
+              <code>/Users/alanmotley/Documents/Playground/docs/norynthe/implementation/reports/</code>
+            </div>
+          </section>
+
+          <section class="rail-section">
+            <div class="eyebrow">What This Shows</div>
+            <ul class="list">
+              <li>Overall score and trust band</li>
+              <li>Strongest and weakest dimensions</li>
+              <li>Scorer / critic resolution state</li>
+              <li>Prompt text and fixture context</li>
+            </ul>
+          </section>
         </div>
       </aside>
 
@@ -1344,8 +1395,8 @@
               <div class="eyebrow">Two-Model Compare</div>
               <div id="compareSummary" class="executive-callout active" style="display:block; margin-top:14px; margin-bottom:0;"></div>
               <div class="compare-grid">
-                <div id="compareSides"></div>
-                <div style="border: 1px solid var(--line); background: rgba(255,255,255,0.7); padding: 14px;">
+                <div id="compareSides" class="compare-side-stack"></div>
+                <div class="compare-table-shell">
                   <table class="compare-table">
                     <thead>
                       <tr>
@@ -2000,6 +2051,7 @@
             <strong>Strongest:</strong> ${titleize(item.strongest_dimension.dimension)} (${displayScore(item.strongest_dimension.score)})<br>
             <strong>Weakest:</strong> ${titleize(item.weakest_dimension.dimension)} (${displayScore(item.weakest_dimension.score)})
           </div>
+          <div class="compare-side-copy">${buildRankingRationale(item)}</div>
         `;
         compareSides.appendChild(side);
       });
