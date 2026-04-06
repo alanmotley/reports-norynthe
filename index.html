@@ -6,7 +6,7 @@
   <title>Norynthe.Reports</title>
   <meta
     name="description"
-    content="Norynthe.Reports: scoring logic, architecture, workbook governance, report surfaces, and client-facing trust deliverables."
+    content="Norynthe.Reports: benchmark-owned trust scoring, architecture, workbook governance, and client-facing trust deliverables."
   >
   <link rel="icon" type="image/png" href="/favicon.png?v=20260406">
   <link rel="apple-touch-icon" href="/favicon.png?v=20260406">
@@ -693,19 +693,20 @@
             </div>
             <span class="dot dot-overlay" aria-hidden="true"></span>
           </div>
-          <p class="subline">Reports / scoring logic / architecture / workbook governance / client-facing trust surfaces</p>
+          <p class="subline">Benchmark-owned scoring / architecture / workbook governance / reporting surfaces</p>
         </div>
 
         <div class="hero-copy">
-          <h1>Turn the trust standard into a reporting product.</h1>
+          <h1>Turn the benchmark standard into a reporting product.</h1>
           <p>
-            Norynthe.Reports is the visible product layer for the Phase 1 trust system:
-            model comparison, dimension-level reasoning, calibration workflow, and client-facing
-            reporting built on the same governed standard.
+            Norynthe.Reports is the visible product layer for the Norynthe trust system:
+            controlled benchmark questions, benchmark-composite Norynthe.Score, dimension-level
+            reasoning, calibration workflow, and client-facing reporting built on one governed standard.
           </p>
           <div class="signal-row">
             <span class="signal-pill">7 trust dimensions</span>
             <span class="signal-pill">Norynthe.Score</span>
+            <span class="signal-pill">Benchmark-owned question bank</span>
             <span class="signal-pill">Workbook as control layer</span>
             <span class="signal-pill">Client-ready reports</span>
           </div>
@@ -715,17 +716,17 @@
       <section id="logic">
         <div class="section-head">
           <div class="section-label">Scoring Logic</div>
-          <h2>One prompt. Multiple models. One governed standard.</h2>
+          <h2>One owned benchmark. Multiple models. One governed standard.</h2>
           <p>
-            Norynthe does not ask which answer feels best. It asks which answer is most defensible
-            across a common trust framework, then records why.
+            Norynthe does not let random end-user prompts define the score. It evaluates models against
+            a controlled benchmark bank, then records which model is most defensible and why.
           </p>
         </div>
         <div class="grid-3">
           <article class="card">
             <div class="metric">Input</div>
-            <h3>Shared benchmark context</h3>
-            <p>The same prompt is routed to multiple models so differences in omission, framing, and structure can be observed directly.</p>
+            <h3>Controlled question bank</h3>
+            <p>Norynthe owns and versions the benchmark questions so every model is measured against the same durable evaluation surface.</p>
           </article>
           <article class="card">
             <div class="metric">Evaluation</div>
@@ -734,8 +735,8 @@
           </article>
           <article class="card">
             <div class="metric">Signal</div>
-            <h3>Final Norynthe.Score</h3>
-            <p>Dimension scores are weighted, resolved, and translated into a clear trust band without hiding the underlying rationale.</p>
+            <h3>Benchmark-composite Norynthe.Score</h3>
+            <p>Question-level results are aggregated into a composite score and trust band without hiding the question-level and dimension-level reasoning underneath.</p>
           </article>
         </div>
       </section>
@@ -744,36 +745,36 @@
         <div class="section-head">
           <div class="section-label">Current State</div>
           <h2>Where we are now, and why it matters.</h2>
-          <p>This is no longer only a concept pass. The reporting layer now has a branded front door, an internal comparison workspace, a client-facing report concept, and a cleaner bridge from narrative to implementation.</p>
+          <p>This is no longer just a concept pass. The system now has a benchmark-owned scoring standard, a runnable benchmark comparison flow, a branded reporting front door, and a client-facing report layer built on the same backbone.</p>
         </div>
         <div class="status-grid">
           <article class="status-card">
             <div class="metric">Operational</div>
             <h3>Canonical source of truth</h3>
-            <p>The rubric, score bands, weights, pass plan, and resolver policy now live in one implementation-ready standard instead of scattered notes.</p>
+            <p>The rubric, score bands, benchmark policy, pass plan, and resolver logic now live in one implementation-ready standard instead of scattered notes.</p>
             <ul class="status-list">
               <li>Single config for all seven dimensions</li>
-              <li>Per-dimension prompt-pass plan encoded</li>
+              <li>Benchmark-only scoring policy encoded</li>
               <li>Workbook and runtime point to the same standard</li>
             </ul>
           </article>
           <article class="status-card">
             <div class="metric">Operational</div>
-            <h3>Runnable reporting flow</h3>
-            <p>The system can now execute comparison, drill-down, human review, and client presentation through one connected reporting flow.</p>
+            <h3>Runnable benchmark flow</h3>
+            <p>The system can now execute a benchmark set, produce benchmark-composite reports, support question-level drill-down, and expose the result through one connected reporting flow.</p>
             <ul class="status-list">
-              <li>Comparison reports and model profiles exist</li>
-              <li>Human review mode is built into the workflow</li>
+              <li>Benchmark comparison and benchmark model profiles exist</li>
+              <li>Question-level drill-down sits under the composite score</li>
               <li>Client-facing report layer is visible on the same domain</li>
             </ul>
           </article>
           <article class="status-card">
             <div class="metric">Why</div>
             <h3>Strategic reason for this layer</h3>
-            <p>The reporting surface makes the trust system legible. It turns architecture into something a buyer, investor, or reviewer can actually inspect.</p>
+            <p>The reporting surface makes the benchmark standard legible. It turns scoring architecture into something a buyer, investor, or reviewer can actually inspect.</p>
             <ul class="status-list">
-              <li>Trust logic becomes visible</li>
-              <li>Architecture becomes defendable</li>
+              <li>The benchmark logic becomes visible</li>
+              <li>The measurement standard becomes defendable</li>
               <li>The product story now has a front door</li>
             </ul>
           </article>
@@ -827,10 +828,10 @@
       <section id="architecture">
         <div class="section-head">
           <div class="section-label">Architecture</div>
-          <h2>Scoring pipeline with built-in challenge.</h2>
+          <h2>Benchmark scoring pipeline with built-in challenge.</h2>
           <p>
             Norynthe’s MVP does not treat disagreement as noise. The scorer and critic structure makes
-            scoring more defensible by forcing each dimension result through evidence and review.
+            scoring more defensible by forcing each benchmark result through evidence and review.
           </p>
         </div>
         <div class="architecture">
@@ -839,15 +840,15 @@
               <div class="flow-step">
                 <div class="flow-index">01</div>
                 <div class="flow-copy">
-                  <strong>Prompt ingestion</strong>
-                  Same prompt, selected models, raw outputs preserved.
+                  <strong>Benchmark question selection</strong>
+                  Norynthe-controlled questions define the evaluation surface.
                 </div>
               </div>
               <div class="flow-step">
                 <div class="flow-index">02</div>
                 <div class="flow-copy">
                   <strong>Shared analysis context</strong>
-                  Normalized payload with prompt, target output, peer outputs, metadata, and rubric.
+                  Normalized payload with benchmark question, target output, peer outputs, metadata, and rubric.
                 </div>
               </div>
               <div class="flow-step">
@@ -874,8 +875,8 @@
               <div class="flow-step">
                 <div class="flow-index">06</div>
                 <div class="flow-copy">
-                  <strong>Aggregation + summary</strong>
-                  Weighted trust score, band, and an action-ready explanation.
+                  <strong>Aggregation + benchmark summary</strong>
+                  Question-level results roll into a benchmark-composite Norynthe.Score, band, and action-ready explanation.
                 </div>
               </div>
             </div>
@@ -885,6 +886,7 @@
             <h3>Why this structure holds up</h3>
             <ul class="mini-list">
               <li>The rubric lives outside the prompt text as a governed standard.</li>
+              <li>The benchmark bank is owned and versioned by Norynthe.</li>
               <li>Every score can be inspected through evidence and critique.</li>
               <li>Calibration happens through workbook changes, not guesswork.</li>
               <li>The investor story and implementation story are the same system.</li>
@@ -898,7 +900,7 @@
         <div class="section-head">
           <div class="section-label">Workbook</div>
           <h2>The control layer behind the score.</h2>
-          <p>The workbook keeps the system from becoming arbitrary. It defines what each dimension means, how deductions work, what anchor examples look like, and how the rubric evolves over time.</p>
+          <p>The workbook keeps the system from becoming arbitrary. It defines what each dimension means, how the benchmark bank is maintained, what anchor examples look like, and how the standard evolves over time.</p>
         </div>
         <div class="artifact-grid">
           <article class="artifact">
@@ -908,13 +910,13 @@
           </article>
           <article class="artifact">
             <div class="metric">Calibration</div>
-            <h3>Prompt benchmark suite</h3>
-            <p>Phase 1 starts with 20 prompts spanning policy, factual, ethics, business, and adversarial categories to stress different trust behaviors.</p>
+            <h3>Benchmark question bank</h3>
+            <p>Norynthe owns a controlled, versioned benchmark set so the product score stays consistent over time instead of drifting with whatever a user happens to ask.</p>
           </article>
           <article class="artifact">
             <div class="metric">Governance</div>
             <h3>Versioned revision log</h3>
-            <p>Rubric wording, score anchors, and deduction logic are tracked over time so the standard can improve without becoming unstable.</p>
+            <p>Rubric wording, benchmark questions, score anchors, and deduction logic are tracked over time so the standard can improve without becoming unstable.</p>
           </article>
         </div>
       </section>
@@ -923,13 +925,13 @@
         <div class="section-head">
           <div class="section-label">Report Surfaces</div>
           <h2>The trust standard now has a visible product layer.</h2>
-          <p>This is the part Phase 1 did not originally have: internal and client-facing report surfaces that turn the evaluation system into something people can actually walk through.</p>
+          <p>This is the part the system needed next: internal and client-facing report surfaces that turn the benchmark engine into something people can actually walk through.</p>
         </div>
         <div class="grid-2">
           <article class="panel">
             <div class="metric">Internal Surface</div>
             <h3>Norynthe.Reports</h3>
-            <p class="code-note">Model comparison, Norynthe.Score, dimension drill-down, two-model deltas, and human review mode inside one reporting workspace.</p>
+            <p class="code-note">Benchmark comparison, benchmark-composite Norynthe.Score, question-level drill-down, two-model deltas, and human calibration inside one reporting workspace.</p>
             <div class="report-actions">
               <a class="report-link primary" href="./norynthe-run-console.html">Open Norynthe.Reports</a>
             </div>
@@ -976,8 +978,8 @@
       <section>
         <div class="section-head">
           <div class="section-label">Prompt Structure</div>
-          <h2>One template per role, rubric injected at runtime.</h2>
-          <p>The implementation stays manageable because the dimension-specific behavior lives in config, not in seven separate prompt systems.</p>
+          <h2>One template per role, benchmark and rubric injected at runtime.</h2>
+          <p>The implementation stays manageable because the benchmark bank and dimension-specific behavior live in config, not in a tangle of separate prompt systems.</p>
         </div>
         <div class="prompt-grid">
           <article class="panel">
