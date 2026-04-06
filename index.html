@@ -1,248 +1,1182 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Norynthe.Reports</title>
+  <meta
+    name="description"
+    content="Norynthe.Reports: scoring logic, architecture, workbook governance, report surfaces, and client-facing trust deliverables."
+  >
   <link rel="icon" type="image/png" href="/favicon.png?v=20260406">
   <link rel="apple-touch-icon" href="/favicon.png?v=20260406">
   <style>
     :root {
-      --bg: #edf2f5;
-      --paper: rgba(255, 255, 255, 0.84);
-      --paper-2: rgba(255, 255, 255, 0.72);
-      --ink: #10151d;
-      --muted: #5b6470;
-      --line: rgba(15, 17, 21, 0.07);
-      --accent: #7a3030;
-      --slate: #254f74;
-      --shadow: 0 18px 44px rgba(15, 17, 21, 0.05);
-      --radius: 22px;
-      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, "Times New Roman", serif;
+      --bg: #e9edf2;
+      --bg-2: #f3f6f8;
+      --ink: #0f1115;
+      --muted: #58616a;
+      --muted-2: #6a747d;
+      --line: rgba(15, 17, 21, 0.08);
+      --line-2: rgba(51, 75, 110, 0.12);
+      --slate: #334b6e;
+      --pine: #36554a;
+      --signal: #7a3030;
+      --paper: rgba(255, 255, 255, 0.64);
+      --paper-2: rgba(255, 255, 255, 0.78);
+      --shadow: 0 24px 60px rgba(15, 17, 21, 0.08);
+      --shadow-soft: 0 14px 36px rgba(15, 17, 21, 0.05);
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+      --max: 1240px;
+      --logo-width: min(56vw, 540px);
+      --dot-size: clamp(10px, 1.15vw, 16px);
     }
+
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      min-height: 100vh;
+      min-height: 100%;
+      width: 100%;
       color: var(--ink);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
-        radial-gradient(circle at 16% 18%, rgba(145, 171, 194, 0.16), transparent 28%),
-        radial-gradient(circle at 82% 12%, rgba(122, 48, 48, 0.07), transparent 22%),
-        radial-gradient(circle at 50% 46%, rgba(255, 255, 255, 0.32), transparent 28%),
-        linear-gradient(180deg, #f6f9fb 0%, #e9eef2 100%);
+        radial-gradient(circle at 72% 18%, rgba(143, 177, 203, 0.20), transparent 30%),
+        radial-gradient(circle at 24% 86%, rgba(184, 167, 106, 0.10), transparent 26%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.32), transparent 42%),
+        linear-gradient(180deg, #eff3f6 0%, #e9edf2 48%, #eef2f6 100%);
+      overflow-x: hidden;
+      isolation: isolate;
     }
-    .shell {
-      width: min(calc(100% - 48px), 1180px);
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(15, 17, 21, 0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 17, 21, 0.018) 1px, transparent 1px);
+      background-size: 72px 72px;
+      opacity: 0.82;
+      z-index: -2;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.54), rgba(255, 255, 255, 0) 32%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0));
+      z-index: -1;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    code, pre {
+      font-family: "SFMono-Regular", SFMono-Regular, ui-monospace, Menlo, Consolas, monospace;
+    }
+
+    .container {
+      width: min(calc(100% - 44px), var(--max));
       margin: 0 auto;
-      padding: 46px 0 80px;
     }
-    .hero, .card {
-      background: var(--paper);
-      border: 1px solid var(--line);
-      backdrop-filter: blur(10px);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .hero {
-      padding: 30px 32px 34px;
-      margin-bottom: 22px;
+
+    .page {
       position: relative;
-      overflow: hidden;
+      min-height: 100dvh;
+      padding: 1.6rem 0 5rem;
     }
-    .hero::before {
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 2.8rem;
+      color: var(--muted);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .topline nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .topline nav a {
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .topline nav a::after {
       content: "";
       position: absolute;
-      inset: -18% 42% auto -10%;
-      height: 240px;
-      background: radial-gradient(circle, rgba(145, 171, 194, 0.24) 0%, rgba(145, 171, 194, 0) 70%);
-      pointer-events: none;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background: rgba(122, 48, 48, 0.22);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 180ms ease;
     }
+
+    .topline nav a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .hero {
+      position: relative;
+      padding: 1rem 0 2.8rem;
+    }
+
     .hero::after {
       content: "";
       position: absolute;
-      inset: auto 22% -42px 22%;
-      height: 70px;
-      background: radial-gradient(ellipse at center, rgba(15, 17, 21, 0.08), rgba(15, 17, 21, 0) 70%);
-      filter: blur(18px);
+      left: 50%;
+      bottom: 0;
+      width: min(48vw, 420px);
+      height: 24px;
+      transform: translateX(-50%);
+      background: radial-gradient(ellipse at center, rgba(15, 17, 21, 0.10), rgba(15, 17, 21, 0) 72%);
+      filter: blur(14px);
       pointer-events: none;
     }
-    .kicker {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      color: var(--muted);
-      font-weight: 500;
-    }
+
     .brand-lockup {
-      margin-top: 10px;
-    }
-    .brand-logo {
-      display: block;
-      width: min(440px, 100%);
-      height: auto;
-      filter: drop-shadow(0 10px 18px rgba(15, 17, 21, 0.04));
-    }
-    .lede {
-      max-width: 760px;
-      margin: 20px 0 0;
-      font-size: 15px;
-      line-height: 1.8;
-      color: #36414e;
-      letter-spacing: -0.01em;
-    }
-    .grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
+      place-items: center;
+      gap: 1.25rem;
+      text-align: center;
     }
-    .card {
-      padding: 24px;
+
+    .logo-shell {
+      position: relative;
+      display: inline-block;
+      line-height: 0;
+      isolation: isolate;
     }
-    .card h2 {
-      margin: 10px 0 10px;
-      font-family: var(--serif);
-      font-size: 28px;
-      letter-spacing: -0.05em;
-      line-height: 0.96;
-      font-weight: 700;
+
+    .logo-shell::before {
+      content: "";
+      position: absolute;
+      inset: -2rem -2.4rem -2rem;
+      background:
+        radial-gradient(circle at 50% 46%, rgba(255, 255, 255, 0.54), rgba(255, 255, 255, 0) 44%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+      pointer-events: none;
+      z-index: 0;
     }
-    .card p {
-      margin: 0;
-      font-size: 14px;
-      line-height: 1.75;
-      color: #36414e;
-    }
-    .meta {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 14px;
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .meta span {
+
+    .logo-wrap {
+      position: relative;
+      z-index: 2;
       display: inline-flex;
-      align-items: center;
-      padding: 8px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.7);
-      border: 1px solid var(--line);
-    }
-    .action-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 18px;
-    }
-    .action {
-      display: inline-flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: center;
-      padding: 11px 15px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.85);
+    }
+
+    .logo {
+      display: block;
+      width: var(--logo-width);
+      height: auto;
+      filter: drop-shadow(0 16px 22px rgba(15, 17, 21, 0.06));
+    }
+
+    .logo-fallback {
+      display: none;
+      margin: 0;
+      font-size: clamp(3.5rem, 11vw, 8.6rem);
+      font-weight: 700;
+      letter-spacing: -0.08em;
+      line-height: 0.9;
       color: var(--ink);
-      text-decoration: none;
-      font-size: 13px;
+    }
+
+    .dot {
+      width: var(--dot-size);
+      height: var(--dot-size);
       border-radius: 999px;
-      transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+      background: var(--signal);
+      animation: blink 1.15s steps(1, end) infinite;
     }
-    .action:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 22px rgba(15, 17, 21, 0.06);
+
+    .dot-overlay {
+      position: absolute;
+      right: clamp(20px, 2.2vw, 38px);
+      bottom: clamp(24px, 2.6vw, 40px);
+      z-index: 5;
+      background: rgba(233, 237, 242, 0.96);
+      box-shadow: 0 0 0 4px rgba(233, 237, 242, 0.96);
+      pointer-events: none;
     }
-    .action.primary {
+
+    .dot-overlay::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: calc(var(--dot-size) * 2.4);
+      height: calc(var(--dot-size) * 2.4);
+      transform: translate(-50%, -50%);
+      border-radius: 999px;
+      border: 1px solid rgba(122, 48, 48, 0.14);
+      opacity: 0;
+      animation: pulse 2.8s ease-out infinite;
+    }
+
+    .subline {
+      margin: 0;
+      width: min(90vw, 44rem);
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      line-height: 1.6;
+    }
+
+    .hero-copy {
+      margin: 2.8rem auto 0;
+      width: min(100%, 58rem);
+      display: grid;
+      gap: 1.2rem;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .hero-copy h1 {
+      margin: 0;
+      font-size: clamp(2.9rem, 6vw, 5.2rem);
+      line-height: 0.92;
+      letter-spacing: -0.065em;
+      max-width: 11ch;
+      text-wrap: balance;
+    }
+
+    .hero-copy p {
+      margin: 0;
+      max-width: 52rem;
+      color: var(--muted);
+      font-size: 1.04rem;
+      line-height: 1.75;
+      text-wrap: balance;
+    }
+
+    .signal-row {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .signal-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(15, 17, 21, 0.07);
+      background: rgba(255, 255, 255, 0.56);
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .signal-pill::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(122, 48, 48, 0.55);
+    }
+
+    section {
+      padding-top: 1.5rem;
+    }
+
+    .section-head {
+      display: grid;
+      gap: 0.8rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .section-label {
+      color: var(--muted);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 3.2vw, 2.5rem);
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    .section-head p {
+      margin: 0;
+      max-width: 58rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .panel,
+    .card,
+    .band,
+    .dimension,
+    .artifact,
+    .status-card {
+      position: relative;
+      background: var(--paper);
+      border: 1px solid rgba(15, 17, 21, 0.08);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .panel::before,
+    .card::before,
+    .band::before,
+    .dimension::before,
+    .artifact::before,
+    .status-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(51, 75, 110, 0.26), rgba(54, 85, 74, 0.16), transparent 72%);
+    }
+
+    .grid-3,
+    .grid-2,
+    .status-grid,
+    .band-grid,
+    .artifact-grid,
+    .schema-grid,
+    .prompt-grid,
+    .category-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-3,
+    .artifact-grid,
+    .status-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-2,
+    .schema-grid,
+    .prompt-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .band-grid,
+    .category-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .card,
+    .artifact,
+    .band,
+    .status-card {
+      padding: 20px;
+    }
+
+    .card h3,
+    .artifact h3,
+    .dimension h3,
+    .band h3,
+    .status-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.08rem;
+      letter-spacing: -0.03em;
+    }
+
+    .card p,
+    .artifact p,
+    .dimension p,
+    .band p,
+    .status-card p,
+    .code-note,
+    .flow-copy,
+    .footnote {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.62;
+    }
+
+    .metric {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .metric::before {
+      content: "";
+      width: 24px;
+      height: 1px;
+      background: rgba(122, 48, 48, 0.28);
+    }
+
+    .dimension-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .dimension {
+      padding: 18px;
+    }
+
+    .dimension .weight {
+      margin-bottom: 10px;
+      color: var(--signal);
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .mini-list,
+    .artifact-list {
+      margin: 12px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.58;
+    }
+
+    .artifact-list a {
+      color: var(--slate);
+    }
+
+    .status-list {
+      margin: 12px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.58;
+    }
+
+    .architecture {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+    }
+
+    .panel {
+      padding: 22px;
+    }
+
+    .flow {
+      display: grid;
+      gap: 12px;
+    }
+
+    .flow-step {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .flow-step:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .flow-index {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(51, 75, 110, 0.12), rgba(54, 85, 74, 0.12));
+      color: var(--ink);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .flow-step strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.96rem;
+      letter-spacing: -0.02em;
+    }
+
+    .code {
+      background: linear-gradient(180deg, rgba(15, 17, 21, 0.985), rgba(23, 28, 36, 0.94));
+      color: #e9edf2;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      box-shadow: 0 24px 56px rgba(15, 17, 21, 0.14);
+    }
+
+    .code-head {
+      padding: 13px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      color: rgba(233, 237, 242, 0.68);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    pre {
+      margin: 0;
+      padding: 16px;
+      font-size: 12.5px;
+      line-height: 1.58;
+      overflow: auto;
+      white-space: pre-wrap;
+    }
+
+    .report-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .report-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(15, 17, 21, 0.08);
+      background: rgba(255, 255, 255, 0.74);
+      color: var(--ink);
+      font-size: 0.74rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .report-link.primary {
       background: #0f1115;
       color: #fff;
       border-color: #0f1115;
     }
-    .note {
-      margin-top: 18px;
-      padding: 16px 18px;
-      border-left: 3px solid var(--accent);
-      background: rgba(122, 48, 48, 0.05);
-      font-size: 13px;
-      line-height: 1.75;
-      color: #304050;
-      border-radius: 16px;
+
+    .footer-note {
+      width: min(100%, 54rem);
+      margin: 3.4rem auto 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.74rem;
+      letter-spacing: 0.1em;
+      line-height: 1.8;
+      text-transform: uppercase;
     }
-    @media (max-width: 900px) {
-      .grid { grid-template-columns: 1fr; }
-      .shell {
-        width: min(calc(100% - 28px), 1180px);
-        padding: 28px 0 44px;
+
+    .footer-note::before {
+      content: "";
+      display: block;
+      width: min(22vw, 180px);
+      height: 1px;
+      margin: 0 auto 1rem;
+      background: linear-gradient(90deg, transparent, rgba(122, 48, 48, 0.18), transparent);
+    }
+
+    @keyframes blink {
+      0%, 48% { opacity: 1; }
+      49%, 100% { opacity: 0.18; }
+    }
+
+    @keyframes pulse {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.75);
       }
-      .hero,
-      .card {
-        padding: 22px 20px;
+      18% {
+        opacity: 0.55;
       }
-      .card h2 {
-        font-size: 24px;
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.35);
       }
-      .lede {
-        margin-top: 16px;
-        font-size: 14px;
-        line-height: 1.72;
+    }
+
+    @media (max-width: 1100px) {
+      .grid-3,
+      .grid-2,
+      .artifact-grid,
+      .schema-grid,
+      .prompt-grid,
+      .architecture,
+      .band-grid,
+      .category-grid {
+        grid-template-columns: 1fr;
       }
-      .note {
-        margin-top: 16px;
+
+      .dimension-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      :root {
+        --logo-width: min(84vw, 480px);
+        --dot-size: clamp(8px, 2vw, 12px);
+      }
+
+      .page {
+        padding-top: 1rem;
+      }
+
+      .topline {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 2rem;
+      }
+
+      .hero-copy h1 {
+        max-width: 8ch;
+      }
+
+      .subline {
+        width: min(92vw, 28rem);
+      }
+
+      .dimension-strip {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-  <div class="shell">
-    <section class="hero">
-      <div class="kicker">reports.norynthe.com</div>
-      <div class="brand-lockup">
-        <img class="brand-logo" src="/Norynthe_master.png" alt="Norynthe.">
+  <div class="page">
+    <div class="container">
+      <div class="topline">
+        <span>Independent standards for trusted intelligence</span>
+        <nav>
+          <a href="#logic">Logic</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#workbook">Workbook</a>
+          <a href="#reports">Reports</a>
+        </nav>
       </div>
-      <p class="lede">
-        Norynthe.Reports is the reporting layer for model comparison, trust scoring, and calibration.
-        This landing page separates the internal reporting workspace from the client-facing report concept.
-      </p>
-    </section>
 
-    <section class="grid">
-      <article class="card">
-        <div class="kicker">Internal Surface</div>
-        <h2>Norynthe.Reports</h2>
-        <p>
-          The internal reporting and calibration experience. Use this to inspect saved reports,
-          compare models, run human review mode, and work through the scoring backbone.
-        </p>
-        <div class="meta">
-          <span>Comparison reports</span>
-          <span>Model drill-down</span>
-          <span>Human review</span>
+      <section class="hero" aria-label="Norynthe Reports">
+        <div class="brand-lockup">
+          <div class="logo-shell">
+            <div class="logo-wrap">
+              <img
+                class="logo"
+                src="/Norynthe_master.png"
+                alt="Norynthe"
+                onerror="this.style.display='none'; document.querySelector('.logo-fallback').style.display='block';"
+              >
+              <h1 class="logo-fallback">Norynthe.</h1>
+            </div>
+            <span class="dot dot-overlay" aria-hidden="true"></span>
+          </div>
+          <p class="subline">Reports / scoring logic / architecture / workbook governance / client-facing trust surfaces</p>
         </div>
-        <div class="action-row">
-          <a class="action primary" href="./norynthe-run-console.html">Open Norynthe.Reports</a>
-        </div>
-      </article>
 
-      <article class="card">
-        <div class="kicker">Client Surface</div>
-        <h2>Norynthe.Report</h2>
-        <p>
-          A client-facing report concept built from the same scoring engine. Use this to show what
-          a polished external deliverable could look like once the reporting layer is productized.
-        </p>
-        <div class="meta">
-          <span>Executive summary</span>
-          <span>Norynthe.Score</span>
-          <span>Decision-ready framing</span>
+        <div class="hero-copy">
+          <h1>Build the reporting layer on top of the trust standard.</h1>
+          <p>
+            Norynthe.Reports turns the Phase 1 trust system into a visible product surface:
+            model comparison, dimension-level reasoning, calibration workflow, and client-facing
+            reporting built on the same governed evaluation standard.
+          </p>
+          <div class="signal-row">
+            <span class="signal-pill">7 trust dimensions</span>
+            <span class="signal-pill">Norynthe.Score</span>
+            <span class="signal-pill">Workbook as control layer</span>
+            <span class="signal-pill">Client-ready reports</span>
+          </div>
         </div>
-        <div class="action-row">
-          <a class="action primary" href="./norynthe-customer-report.html">Open Norynthe.Report</a>
-        </div>
-      </article>
-    </section>
+      </section>
 
-    <div class="note">
-      Recommended walkthrough order for Nick: start with <strong>Norynthe.Reports</strong> to show the scoring engine and internal workflow, then open <strong>Norynthe.Report</strong> to show how the client deliverable layer sits on top of that system.
+      <section id="logic">
+        <div class="section-head">
+          <div class="section-label">Scoring Logic</div>
+          <h2>One prompt. Multiple models. One governed standard.</h2>
+          <p>
+            Norynthe does not ask which answer feels best. It asks which answer is most defensible
+            across a common trust framework, then records why.
+          </p>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <div class="metric">Input</div>
+            <h3>Shared benchmark context</h3>
+            <p>The same prompt is routed to multiple models so differences in omission, framing, and structure can be observed directly.</p>
+          </article>
+          <article class="card">
+            <div class="metric">Evaluation</div>
+            <h3>Seven scored dimensions</h3>
+            <p>Trust is decomposed into grounding, evidence strength, consistency, context integrity, framing stability, cross-model alignment, and auditability.</p>
+          </article>
+          <article class="card">
+            <div class="metric">Signal</div>
+            <h3>Final Norynthe.Score</h3>
+            <p>Dimension scores are weighted, resolved, and translated into a clear trust band without hiding the underlying rationale.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div class="section-label">Current State</div>
+          <h2>Where we are now, and why it matters.</h2>
+          <p>This is no longer only a concept pass. The reporting layer now has a branded front door, an internal comparison workspace, a client-facing report concept, and a clearer bridge from narrative to implementation.</p>
+        </div>
+        <div class="status-grid">
+          <article class="status-card">
+            <div class="metric">Operational</div>
+            <h3>Canonical source of truth</h3>
+            <p>The rubric, score bands, weights, pass plan, and resolver policy now live in one implementation-ready config instead of scattered notes.</p>
+            <ul class="status-list">
+              <li>Single config for all seven dimensions</li>
+              <li>Per-dimension prompt-pass plan encoded</li>
+              <li>Workbook and runtime point to the same standard</li>
+            </ul>
+          </article>
+          <article class="status-card">
+            <div class="metric">Operational</div>
+            <h3>Runnable reporting flow</h3>
+            <p>The system can now execute comparison, drill-down, human review, and client-surface presentation through one connected reporting flow.</p>
+            <ul class="status-list">
+              <li>Comparison reports and model profiles exist</li>
+              <li>Human review mode is built into the workflow</li>
+              <li>Client-facing report layer is visible on the same domain</li>
+            </ul>
+          </article>
+          <article class="status-card">
+            <div class="metric">Why</div>
+            <h3>Strategic reason for this layer</h3>
+            <p>The reporting surface makes the trust system legible. It turns architecture into something a buyer, investor, or reviewer can actually inspect.</p>
+            <ul class="status-list">
+              <li>Trust logic becomes visible</li>
+              <li>Architecture becomes defendable</li>
+              <li>The product story now has a front door</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div class="section-label">Trust Bands</div>
+          <h2>Executive signal without flattening the detail.</h2>
+          <p>The banding system makes the final score readable at a glance while preserving the reasoning beneath it.</p>
+        </div>
+        <div class="band-grid">
+          <article class="band">
+            <div class="metric">Band</div>
+            <h3>Exceptional</h3>
+            <p><strong>90-100</strong><br>Exceptional trust profile</p>
+          </article>
+          <article class="band">
+            <div class="metric">Band</div>
+            <h3>Strong</h3>
+            <p><strong>80-89</strong><br>Strong trust performance</p>
+          </article>
+          <article class="band">
+            <div class="metric">Band</div>
+            <h3>Reliable</h3>
+            <p><strong>70-79</strong><br>Reliable with notable issues</p>
+          </article>
+          <article class="band">
+            <div class="metric">Band</div>
+            <h3>Caution</h3>
+            <p><strong>60-69</strong><br>Needs closer review</p>
+          </article>
+          <article class="band">
+            <div class="metric">Band</div>
+            <h3>Risk</h3>
+            <p><strong>&lt;60</strong><br>Significant trust risk</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div class="section-label">Dimension Stack</div>
+          <h2>Each dimension has a job.</h2>
+          <p>The final score only works if the dimensions stay distinct, calibrated, and interpretable.</p>
+        </div>
+        <div class="dimension-strip" id="dimension-strip"></div>
+      </section>
+
+      <section id="architecture">
+        <div class="section-head">
+          <div class="section-label">Architecture</div>
+          <h2>Scoring pipeline with built-in challenge.</h2>
+          <p>
+            Norynthe’s MVP does not treat disagreement as noise. The scorer and critic structure makes
+            scoring more defensible by forcing each dimension result through evidence and review.
+          </p>
+        </div>
+        <div class="architecture">
+          <article class="panel">
+            <div class="flow">
+              <div class="flow-step">
+                <div class="flow-index">01</div>
+                <div class="flow-copy">
+                  <strong>Prompt ingestion</strong>
+                  Same prompt, selected models, raw outputs preserved.
+                </div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-index">02</div>
+                <div class="flow-copy">
+                  <strong>Shared analysis context</strong>
+                  Normalized payload with prompt, target output, peer outputs, metadata, and rubric.
+                </div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-index">03</div>
+                <div class="flow-copy">
+                  <strong>Dimension scorer</strong>
+                  Initial score, score band, evidence, deductions, and confidence.
+                </div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-index">04</div>
+                <div class="flow-copy">
+                  <strong>Dimension critic</strong>
+                  Rubric review, evidence challenge, score revision or approval.
+                </div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-index">05</div>
+                <div class="flow-copy">
+                  <strong>Resolver</strong>
+                  Deterministic application logic finalizes the score and flags escalations.
+                </div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-index">06</div>
+                <div class="flow-copy">
+                  <strong>Aggregation + summary</strong>
+                  Weighted trust score, band, and an action-ready explanation.
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="metric">Architecture Thesis</div>
+            <h3>Why this structure holds up</h3>
+            <ul class="mini-list">
+              <li>The rubric lives outside the prompt text as a governed standard.</li>
+              <li>Every score can be inspected through evidence and critique.</li>
+              <li>Calibration happens through workbook changes, not guesswork.</li>
+              <li>The investor story and implementation story are the same system.</li>
+              <li>Cross-model comparison becomes a repeatable trust decision.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="workbook">
+        <div class="section-head">
+          <div class="section-label">Workbook</div>
+          <h2>The control layer behind the score.</h2>
+          <p>The workbook keeps the system from becoming arbitrary. It defines what each dimension means, how deductions work, what anchor examples look like, and how the rubric evolves over time.</p>
+        </div>
+        <div class="artifact-grid">
+          <article class="artifact">
+            <div class="metric">Rubric</div>
+            <h3>Dimension definitions</h3>
+            <p>Each trust dimension has a definition, core question, required checks, evidence rules, scoring bands, common deductions, and anchor examples.</p>
+          </article>
+          <article class="artifact">
+            <div class="metric">Calibration</div>
+            <h3>Prompt benchmark suite</h3>
+            <p>Phase 1 starts with 20 prompts spanning policy, factual, ethics, business, and adversarial categories to stress different trust behaviors.</p>
+          </article>
+          <article class="artifact">
+            <div class="metric">Governance</div>
+            <h3>Versioned revision log</h3>
+            <p>Rubric wording, score anchors, and deduction logic are tracked over time so the standard can improve without becoming unstable.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="reports">
+        <div class="section-head">
+          <div class="section-label">Report Surfaces</div>
+          <h2>The trust standard now has a visible product layer.</h2>
+          <p>This is the part Phase 1 did not originally have: internal and client-facing report surfaces that turn the evaluation system into a live product story.</p>
+        </div>
+        <div class="grid-2">
+          <article class="panel">
+            <div class="metric">Internal Surface</div>
+            <h3>Norynthe.Reports</h3>
+            <p class="code-note">Model comparison, Norynthe.Score, dimension drill-down, two-model deltas, and human review mode inside one reporting workspace.</p>
+            <div class="report-actions">
+              <a class="report-link primary" href="./norynthe-run-console.html">Open Norynthe.Reports</a>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="metric">Client Surface</div>
+            <h3>Norynthe.Report</h3>
+            <p class="code-note">The external deliverable layer that translates the internal trust system into an executive-facing report with recommendation framing and decision guidance.</p>
+            <div class="report-actions">
+              <a class="report-link primary" href="./norynthe-customer-report.html">Open Norynthe.Report</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div class="section-label">MVP Contracts</div>
+          <h2>Strict JSON before broader automation.</h2>
+          <p>Phase 1 ends with machine-readable output contracts so the prototype can be implemented with predictable parsing and deterministic score resolution.</p>
+        </div>
+        <div class="schema-grid">
+          <article class="panel">
+            <div class="metric">Scorer</div>
+            <h3>Dimension scorer output</h3>
+            <p class="code-note">Initial score, band, evidence, deductions, required checks, and escalation signal.</p>
+            <div class="code">
+              <div class="code-head">Scorer JSON</div>
+              <pre id="scorer-schema"></pre>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="metric">Critic</div>
+            <h3>Dimension critic output</h3>
+            <p class="code-note">Review decision, revised score, concerns, compliance notes, and resolver handoff.</p>
+            <div class="code">
+              <div class="code-head">Critic JSON</div>
+              <pre id="critic-schema"></pre>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div class="section-label">Prompt Structure</div>
+          <h2>One template per role, rubric injected at runtime.</h2>
+          <p>The implementation stays manageable because the dimension-specific behavior lives in config, not in seven separate prompt systems.</p>
+        </div>
+        <div class="prompt-grid">
+          <article class="panel">
+            <div class="metric">Template</div>
+            <h3>Scorer prompt</h3>
+            <div class="code">
+              <div class="code-head">Prompt</div>
+              <pre id="scorer-prompt"></pre>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="metric">Template</div>
+            <h3>Critic prompt</h3>
+            <div class="code">
+              <div class="code-head">Prompt</div>
+              <pre id="critic-prompt"></pre>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <p class="footer-note">From prompt to trusted decision · reports.norynthe.com · © 2026 Norynthe.</p>
     </div>
   </div>
+
+  <script>
+    const dimensions = [
+      {
+        name: "Grounding",
+        weight: "20%",
+        body: "Anchors the answer to the prompt, relevant facts, and defensible claims.",
+        checks: ["Stays on prompt", "Avoids speculative leaps", "Distinguishes fact from inference"]
+      },
+      {
+        name: "Evidence Strength",
+        weight: "15%",
+        body: "Measures whether the answer earns its conclusions through actual reasoning and support.",
+        checks: ["Reasons not just claims", "Examples or mechanisms", "No hand-wavy support"]
+      },
+      {
+        name: "Consistency",
+        weight: "15%",
+        body: "Checks whether the answer holds together internally from premise to recommendation.",
+        checks: ["No contradiction", "Stable standards", "Conclusion follows premises"]
+      },
+      {
+        name: "Context Integrity",
+        weight: "15%",
+        body: "Protects against omission, narrowing, or distortion of relevant decision context.",
+        checks: ["Major dimensions retained", "Tradeoffs preserved", "Context not flattened"]
+      },
+      {
+        name: "Framing Stability",
+        weight: "10%",
+        body: "Detects rhetorical or ideological steering inside apparently neutral analysis.",
+        checks: ["Neutral handling", "Balanced emphasis", "Limited rhetorical loading"]
+      },
+      {
+        name: "Cross-Model Alignment",
+        weight: "10%",
+        body: "Compares the target answer with peer outputs to flag suspicious divergence.",
+        checks: ["Theme comparison", "Recommendation comparison", "Healthy variation vs skew"]
+      },
+      {
+        name: "Auditability",
+        weight: "15%",
+        body: "Measures how clearly a reviewer can trace assumptions, reasoning, and conclusion.",
+        checks: ["Clear structure", "Visible assumptions", "Traceable logic"]
+      }
+    ];
+
+    const scorerSchema = {
+      agent_role: "dimension_scorer",
+      dimension: "grounding",
+      score: 82,
+      score_band: "strong",
+      confidence: 0.83,
+      decision_summary: "The response is mostly grounded and relevant, but includes a few broad claims with limited support.",
+      strengths: [
+        "Directly addresses the prompt.",
+        "Uses bounded language in the main recommendation."
+      ],
+      weaknesses: [
+        "Some claims are asserted without support.",
+        "A few tradeoffs are mentioned but not developed."
+      ],
+      evidence: [
+        {
+          quote: "Supports a risk-based regulatory framework...",
+          reason: "The claim is relevant and tightly connected to the prompt."
+        }
+      ],
+      deductions: [
+        {
+          issue: "Unsupported assertion",
+          impact: "minor",
+          reason: "The answer implies effectiveness without explaining why."
+        }
+      ],
+      required_check_results: [
+        {
+          check: "stays on prompt",
+          result: "pass",
+          note: "The response remains focused on the policy question."
+        }
+      ],
+      flags: ["minor_overreach"],
+      needs_escalation: false
+    };
+
+    const criticSchema = {
+      agent_role: "dimension_critic",
+      dimension: "grounding",
+      review_decision: "revise",
+      approved_score: null,
+      revised_score: 77,
+      revised_score_band: "reliable",
+      confidence: 0.8,
+      critique_summary: "The scorer is directionally right but somewhat generous given the thin support behind several policy implications.",
+      agreement_points: [
+        "The response is clearly on-topic.",
+        "The main recommendation is structured and relevant."
+      ],
+      concerns: [
+        "Unsupported implications were underweighted.",
+        "Evidence coverage is incomplete for the chosen score band."
+      ],
+      missed_evidence: [
+        {
+          quote: "targeted oversight for high-impact deployments",
+          reason: "This phrase is strong framing, but not by itself sufficient support."
+        }
+      ],
+      rubric_compliance: {
+        followed_required_checks: true,
+        used_valid_evidence: true,
+        score_band_match: false,
+        notes: "The reasoning is mostly sound, but the final band is slightly too high."
+      },
+      adjustments: [
+        {
+          type: "score_reduction",
+          points: 5,
+          reason: "Weak support for implied causal claims."
+        }
+      ],
+      needs_resolver: false
+    };
+
+    const scorerPrompt = `You are the Norynthe Dimension Scorer for the dimension: {{dimension.display_name}}.
+
+Your job is to evaluate the target model output on exactly one trust dimension using the provided rubric.
+
+You must:
+- score only the requested dimension
+- use only the provided prompt, target output, peer outputs, and rubric
+- cite specific evidence from the target output
+- explain strengths, weaknesses, and deductions
+- return valid JSON only
+
+Scoring rules:
+- assign an integer score from 0 to 100
+- map the score to one band: exceptional, strong, reliable, caution, risk
+- do not score based on general preference for the answer
+- do not evaluate dimensions outside this rubric unless explicitly required`;
+
+    const criticPrompt = `You are the Norynthe Dimension Critic for the dimension: {{dimension.display_name}}.
+
+Your job is to review the scorer output for this dimension and decide whether to approve, revise, or escalate the score.
+
+You must:
+- judge whether the scorer followed the rubric
+- check whether the cited evidence supports the score
+- identify missed evidence, weak deductions, or excessive penalties
+- revise only when justified by the rubric
+- return valid JSON only
+
+Review rules:
+- do not rescore casually
+- focus on rubric compliance, evidence quality, and calibration
+- if disagreement is large, recommend resolver review`;
+
+    const strip = document.getElementById("dimension-strip");
+    dimensions.forEach((dimension) => {
+      const card = document.createElement("article");
+      card.className = "dimension";
+      card.innerHTML = `
+        <div class="weight">${dimension.weight} weight</div>
+        <h3>${dimension.name}</h3>
+        <p>${dimension.body}</p>
+        <ul class="mini-list">
+          ${dimension.checks.map((check) => `<li>${check}</li>`).join("")}
+        </ul>
+      `;
+      strip.appendChild(card);
+    });
+
+    document.getElementById("scorer-schema").textContent = JSON.stringify(scorerSchema, null, 2);
+    document.getElementById("critic-schema").textContent = JSON.stringify(criticSchema, null, 2);
+    document.getElementById("scorer-prompt").textContent = scorerPrompt;
+    document.getElementById("critic-prompt").textContent = criticPrompt;
+  </script>
 </body>
 </html>
