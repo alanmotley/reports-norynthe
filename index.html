@@ -457,6 +457,69 @@
       line-height: 1.58;
     }
 
+    .infrastructure-shell {
+      position: relative;
+      padding: 26px;
+      border: 1px solid rgba(15, 17, 21, 0.08);
+      border-radius: calc(var(--radius-lg) + 4px);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.58), rgba(255,255,255,0.42)),
+        radial-gradient(circle at top right, rgba(51, 75, 110, 0.10), transparent 34%),
+        radial-gradient(circle at bottom left, rgba(54, 85, 74, 0.08), transparent 28%);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .infrastructure-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(51, 75, 110, 0.08), transparent 28%, transparent 72%, rgba(122, 48, 48, 0.06));
+      opacity: 0.9;
+    }
+
+    .infrastructure-shell > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .infrastructure-callout {
+      margin: 0 0 20px;
+      padding: 16px 18px;
+      border-left: 3px solid rgba(51, 75, 110, 0.62);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.56);
+      color: #314151;
+      line-height: 1.72;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .infrastructure-callout strong {
+      color: var(--ink);
+    }
+
+    .infrastructure-shell .panel {
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(10px);
+    }
+
+    .infrastructure-shell .panel h3 {
+      font-size: 1.22rem;
+      line-height: 1.04;
+      letter-spacing: -0.038em;
+    }
+
+    .infrastructure-shell .mini-list {
+      margin-top: 14px;
+      line-height: 1.66;
+    }
+
+    .infrastructure-shell .mini-list li + li {
+      margin-top: 10px;
+    }
+
     .artifact-list a {
       color: var(--slate);
     }
@@ -928,26 +991,29 @@
           <h2>Owned compute becomes the backbone, not a sidecar.</h2>
           <p>Two DGX Spark systems would give Norynthe the right local substrate for benchmark execution, rubric hardening, private inference, and future synthetic stress testing. The point is not model training. The point is owning the evaluation environment behind the trust standard.</p>
         </div>
-        <div class="grid-2">
-          <article class="panel">
-            <div class="metric">Node Plan</div>
-            <h3>How the two-box system would work</h3>
-            <ul class="mini-list">
-              <li><strong>DGX Spark 1:</strong> stable benchmark execution, scorer / critic runs, report generation, and canonical `Norynthe.Score` workflows.</li>
-              <li><strong>DGX Spark 2:</strong> rubric calibration, evaluator experiments, humanities and adversarial stress testing, and future synthetic benchmark work.</li>
-              <li><strong>Both together:</strong> heavier local model workflows and higher-capacity benchmark experiments when the product needs more headroom.</li>
-            </ul>
-          </article>
-          <article class="panel">
-            <div class="metric">Why It Matters</div>
-            <h3>Why owned compute changes the product</h3>
-            <ul class="mini-list">
-              <li>Norynthe can harden the rubric and benchmark logic on owned infrastructure instead of permanent API dependence.</li>
-              <li>The evaluation stack becomes more private, more controllable, and more enterprise-ready.</li>
-              <li>The benchmark, scoring standard, and trust signal become more defensible as core company assets.</li>
-              <li>The product moves closer to trust infrastructure and further away from “just another AI wrapper.”</li>
-            </ul>
-          </article>
+        <div class="infrastructure-shell">
+          <p class="infrastructure-callout"><strong>Infrastructure thesis:</strong> the more Norynthe becomes a benchmark-owned trust standard, the more important it becomes to harden the evaluator stack, rubric logic, and report engine on owned compute instead of treating them as permanently downstream of outside APIs.</p>
+          <div class="grid-2">
+            <article class="panel">
+              <div class="metric">Node Plan</div>
+              <h3>How the two-box system would work</h3>
+              <ul class="mini-list">
+                <li><strong>DGX Spark 1:</strong> stable benchmark execution, scorer / critic runs, report generation, and canonical `Norynthe.Score` workflows.</li>
+                <li><strong>DGX Spark 2:</strong> rubric calibration, evaluator experiments, humanities and adversarial stress testing, and future synthetic benchmark work.</li>
+                <li><strong>Both together:</strong> heavier local model workflows and higher-capacity benchmark experiments when the product needs more headroom.</li>
+              </ul>
+            </article>
+            <article class="panel">
+              <div class="metric">Why It Matters</div>
+              <h3>Why owned compute changes the product</h3>
+              <ul class="mini-list">
+                <li>Norynthe can harden the rubric and benchmark logic on owned infrastructure instead of permanent API dependence.</li>
+                <li>The evaluation stack becomes more private, more controllable, and more enterprise-ready.</li>
+                <li>The benchmark, scoring standard, and trust signal become more defensible as core company assets.</li>
+                <li>The product moves closer to trust infrastructure and further away from “just another AI wrapper.”</li>
+              </ul>
+            </article>
+          </div>
         </div>
       </section>
 
