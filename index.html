@@ -18,6 +18,7 @@
       --slate: #254f74;
       --shadow: 0 18px 44px rgba(15, 17, 21, 0.05);
       --radius: 22px;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, "Times New Roman", serif;
     }
     * { box-sizing: border-box; }
     body {
@@ -100,9 +101,11 @@
     }
     .card h2 {
       margin: 10px 0 10px;
+      font-family: var(--serif);
       font-size: 28px;
       letter-spacing: -0.05em;
-      line-height: 1;
+      line-height: 0.96;
+      font-weight: 700;
     }
     .card p {
       margin: 0;
