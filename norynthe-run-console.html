@@ -116,6 +116,121 @@
     .panel {
       padding: 24px;
     }
+    .walkthrough-strip {
+      margin-bottom: 18px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.76);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+    }
+    .walkthrough-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .walkthrough-copy {
+      max-width: 760px;
+    }
+    .walkthrough-copy p {
+      margin: 10px 0 0;
+      font-size: 14px;
+      line-height: 1.75;
+      color: #36414e;
+    }
+    .presentation-toggle {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.82);
+      color: var(--ink);
+      padding: 10px 14px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+      white-space: nowrap;
+    }
+    .presentation-toggle:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(15, 17, 21, 0.06);
+    }
+    .presentation-toggle.is-active {
+      background: #0f1115;
+      color: #fff;
+      border-color: #0f1115;
+    }
+    .walkthrough-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .walkthrough-step {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.68);
+      border-radius: 18px;
+      padding: 14px;
+      min-height: 132px;
+      transition: border-color 180ms ease, background 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+    }
+    .walkthrough-step.is-active {
+      border-color: rgba(17, 23, 34, 0.16);
+      background: rgba(17, 23, 34, 0.04);
+      box-shadow: 0 12px 28px rgba(15, 17, 21, 0.05);
+      transform: translateY(-1px);
+    }
+    .walkthrough-step-number {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .walkthrough-step h3 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 22px;
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+    }
+    .walkthrough-step p {
+      margin: 10px 0 0;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #435162;
+    }
+    .walkthrough-step button {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.84);
+      color: var(--ink);
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+    }
+    .walkthrough-step button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(15, 17, 21, 0.06);
+    }
+    .annotation {
+      margin-top: 14px;
+      padding: 13px 15px;
+      border-left: 3px solid rgba(37, 79, 116, 0.7);
+      background: rgba(37, 79, 116, 0.05);
+      border-radius: 14px;
+      font-size: 13px;
+      line-height: 1.72;
+      color: #304050;
+    }
+    .annotation strong {
+      color: var(--ink);
+    }
     .rail-intro {
       margin-top: 10px;
       font-size: 14px;
@@ -1129,9 +1244,15 @@
     }
     .hidden { display: none; }
     @media (max-width: 980px) {
-      .grid, .summary-grid, .comparison-summary, .comparison-detail-grid, .dimension-grid, .dimension-mini-grid, .compare-grid, .review-grid, .single-report-metrics, .comparison-metrics { grid-template-columns: 1fr; }
+    .grid, .summary-grid, .comparison-summary, .comparison-detail-grid, .dimension-grid, .dimension-mini-grid, .compare-grid, .review-grid, .single-report-metrics, .comparison-metrics { grid-template-columns: 1fr; }
       .single-report-hero { grid-template-columns: 1fr; }
       .comparison-hero { grid-template-columns: 1fr; }
+      .walkthrough-top {
+        flex-direction: column;
+      }
+      .walkthrough-steps {
+        grid-template-columns: 1fr;
+      }
       .shell {
         padding: 28px 14px 44px;
       }
@@ -1171,6 +1292,18 @@
         font-size: 25px;
       }
     }
+    body.presentation-mode .grid {
+      grid-template-columns: 1fr;
+    }
+    body.presentation-mode aside.panel {
+      display: none;
+    }
+    body.presentation-mode .walkthrough-strip {
+      background: rgba(255,255,255,0.82);
+    }
+    body.presentation-mode .walkthrough-copy p {
+      max-width: 860px;
+    }
   </style>
 </head>
 <body>
@@ -1184,6 +1317,42 @@
       <p class="lede">
         Norynthe.Reports lets me inspect saved scoring reports, compare models, and run human calibration without relying on live API calls.
       </p>
+    </section>
+
+    <section class="walkthrough-strip">
+      <div class="walkthrough-top">
+        <div class="walkthrough-copy">
+          <div class="eyebrow">Guided Walkthrough</div>
+          <p id="walkthroughNarrative">Start with the ranked comparison to show the scoring system at work, then move through the winner profile, the two-model delta view, and finally the client-facing report layer.</p>
+        </div>
+        <button id="presentationToggle" class="presentation-toggle" type="button">Presentation Mode</button>
+      </div>
+      <div class="walkthrough-steps">
+        <article id="walkthroughStepComparison" class="walkthrough-step is-active">
+          <div class="walkthrough-step-number">Step 1</div>
+          <h3>Open Comparison</h3>
+          <p>Show the ranked model set, the current leader, and the overall Norynthe.Score spread.</p>
+          <button type="button" data-walkthrough-step="comparison">Go To Comparison</button>
+        </article>
+        <article id="walkthroughStepWinner" class="walkthrough-step">
+          <div class="walkthrough-step-number">Step 2</div>
+          <h3>Inspect Winner</h3>
+          <p>Use the winning model drill-down to show why it ranked first and where its trust profile still bends.</p>
+          <button type="button" data-walkthrough-step="winner">Focus Winner</button>
+        </article>
+        <article id="walkthroughStepCompare" class="walkthrough-step">
+          <div class="walkthrough-step-number">Step 3</div>
+          <h3>Compare Two Models</h3>
+          <p>Use the delta table to show where two close competitors separate by dimension.</p>
+          <button type="button" data-walkthrough-step="compare">Open Two-Model Compare</button>
+        </article>
+        <article id="walkthroughStepClient" class="walkthrough-step">
+          <div class="walkthrough-step-number">Step 4</div>
+          <h3>View Client Report</h3>
+          <p>Transition from the internal reporting engine to the client-facing decision layer.</p>
+          <button type="button" data-walkthrough-step="client">Open Client Report</button>
+        </article>
+      </div>
     </section>
 
     <section class="grid">
@@ -1336,6 +1505,9 @@
                 <p id="comparisonHeroCopy" class="comparison-hero-copy">--</p>
               </div>
             </section>
+            <div class="annotation">
+              <strong>What this shows:</strong> Norynthe is ranking the model set through a structured trust method, not just showing outputs side by side and asking for a subjective judgment.
+            </div>
             <div class="comparison-metrics">
               <div class="summary-card">
                 <div class="eyebrow">Top Ranked Model</div>
@@ -1367,6 +1539,9 @@
             <section class="comparison-table-section">
               <div class="eyebrow">Ranked Comparison</div>
               <p class="report-section-intro">This table shows how the current model set ranks under Norynthe.Score and the active comparison settings.</p>
+              <div class="annotation">
+                <strong>What this shows:</strong> the ranking stays explainable because every model is tied to its trust band, strongest dimension, and weakest dimension.
+              </div>
               <div class="toolbar">
                 <div class="toolbar-group">
                   <label class="toolbar-label" for="sortField">Sort By</label>
@@ -1431,6 +1606,9 @@
             <div id="comparePanel" class="compare-panel">
               <div class="eyebrow">Two-Model Compare</div>
               <div id="compareSummary" class="executive-callout active" style="display:block; margin-top:14px; margin-bottom:0;"></div>
+              <div class="annotation">
+                <strong>What this shows:</strong> this is where a winner becomes defensible. The score can be unpacked into dimension-level differences between two models.
+              </div>
               <div class="compare-grid">
                 <div id="compareSides" class="compare-side-stack"></div>
                 <div class="compare-table-shell">
@@ -1450,6 +1628,9 @@
             </div>
 
             <div class="eyebrow" style="margin-top:18px;">Model Drill-Down</div>
+            <div class="annotation">
+              <strong>What this shows:</strong> each ranked model becomes a profile with its own rationale, report stack, and dimension fingerprint.
+            </div>
             <div id="comparisonDetailGrid" class="comparison-detail-grid"></div>
           </div>
 
@@ -1461,6 +1642,9 @@
           </section>
 
           <div class="eyebrow" style="margin-top:18px;">Dimension Results</div>
+          <div class="annotation">
+            <strong>What this shows:</strong> these are the scoring primitives under the final result. Each dimension records how the model performed, what supported the score, and where the critic pushed back.
+          </div>
           <div id="dimensionGrid" class="dimension-grid" style="margin-top:14px;"></div>
 
           <details id="reviewPanel" class="review-panel">
@@ -1472,6 +1656,9 @@
               <div class="review-chevron">Open Review</div>
             </summary>
             <div class="review-body">
+              <div class="annotation">
+                <strong>What this shows:</strong> human calibration lives inside the same system, so reviewer judgment can be tracked against the model-generated score instead of happening off to the side.
+              </div>
               <div class="review-grid" id="reviewGrid"></div>
               <div class="review-actions">
                 <button id="generateReviewSummary" class="action-button" type="button">Generate Review Summary</button>
@@ -1524,11 +1711,18 @@
     const resetReviewForm = document.getElementById("resetReviewForm");
     const overallBandPill = document.getElementById("overallBandPill");
     const comparisonHeroBadge = document.getElementById("comparisonHeroBadge");
+    const presentationToggle = document.getElementById("presentationToggle");
+    const walkthroughNarrative = document.getElementById("walkthroughNarrative");
+    const walkthroughStepComparison = document.getElementById("walkthroughStepComparison");
+    const walkthroughStepWinner = document.getElementById("walkthroughStepWinner");
+    const walkthroughStepCompare = document.getElementById("walkthroughStepCompare");
+    const walkthroughStepClient = document.getElementById("walkthroughStepClient");
     let currentComparisonReport = null;
     let currentSingleModelReport = null;
     let currentHumanReviewSummary = null;
     let browserFiles = [];
     let activeBrowserFileName = null;
+    let presentationMode = false;
     const SAMPLE_MODEL_REPORT_URLS = {
       OpenAI: "./samples/mock-full-report-openai.json",
       Anthropic: "./samples/mock-full-report-anthropic.json",
@@ -1548,6 +1742,52 @@
 
     function pillClass(band) {
       return `pill ${band}`;
+    }
+
+    function setWalkthroughStep(step) {
+      const steps = {
+        comparison: walkthroughStepComparison,
+        winner: walkthroughStepWinner,
+        compare: walkthroughStepCompare,
+        client: walkthroughStepClient
+      };
+
+      Object.values(steps).forEach((element) => {
+        element.classList.remove("is-active");
+      });
+
+      if (steps[step]) {
+        steps[step].classList.add("is-active");
+      }
+
+      const copy = {
+        comparison: "Start with the ranked comparison to show the scoring system at work, then move through the winner profile, the two-model delta view, and finally the client-facing report layer.",
+        winner: "The winner drill-down is where the comparison turns into reasoning. Use it to show why the leading model scored highest and where its weaker dimensions still matter.",
+        compare: "The two-model compare view is the cleanest proof that Norynthe is evaluating structure, not just assigning one opaque score.",
+        client: "The client-facing report is the external layer built on top of the internal scoring engine. It shows how the system becomes a decision-ready product."
+      };
+
+      walkthroughNarrative.textContent = copy[step] ?? copy.comparison;
+    }
+
+    function setPresentationMode(nextState) {
+      presentationMode = nextState;
+      document.body.classList.toggle("presentation-mode", presentationMode);
+      presentationToggle.classList.toggle("is-active", presentationMode);
+      presentationToggle.textContent = presentationMode ? "Exit Presentation Mode" : "Presentation Mode";
+    }
+
+    function focusWinnerCard() {
+      const activeCard = comparisonDetailGrid.querySelector(".model-detail.is-active");
+      if (activeCard) {
+        activeCard.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    function focusComparePanel() {
+      if (comparePanel.classList.contains("active")) {
+        comparePanel.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }
 
     function classifyReport(report) {
@@ -2212,6 +2452,7 @@
       renderComparisonRows(currentComparisonReport);
       renderComparisonCards(currentComparisonReport);
       renderComparePanel(currentComparisonReport);
+      setWalkthroughStep("comparison");
     }
 
     function renderDimensions(report) {
@@ -2287,11 +2528,46 @@
     });
 
     compareLeft.addEventListener("change", () => {
-      if (currentComparisonReport) renderComparePanel(currentComparisonReport);
+      if (currentComparisonReport) {
+        renderComparePanel(currentComparisonReport);
+        setWalkthroughStep("compare");
+      }
     });
 
     compareRight.addEventListener("change", () => {
-      if (currentComparisonReport) renderComparePanel(currentComparisonReport);
+      if (currentComparisonReport) {
+        renderComparePanel(currentComparisonReport);
+        setWalkthroughStep("compare");
+      }
+    });
+
+    presentationToggle.addEventListener("click", () => {
+      setPresentationMode(!presentationMode);
+    });
+
+    document.querySelectorAll("[data-walkthrough-step]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const step = button.dataset.walkthroughStep;
+        if (step === "comparison") {
+          setWalkthroughStep("comparison");
+          comparisonSummary.scrollIntoView({ behavior: "smooth", block: "start" });
+          return;
+        }
+        if (step === "winner") {
+          setWalkthroughStep("winner");
+          focusWinnerCard();
+          return;
+        }
+        if (step === "compare") {
+          setWalkthroughStep("compare");
+          focusComparePanel();
+          return;
+        }
+        if (step === "client") {
+          setWalkthroughStep("client");
+          window.location.href = "./norynthe-customer-report.html";
+        }
+      });
     });
 
     generateReviewSummary.addEventListener("click", () => {
