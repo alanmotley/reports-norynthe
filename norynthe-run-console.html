@@ -101,6 +101,32 @@
       display: grid;
       gap: 10px;
     }
+    .sample-actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .sample-button {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.82);
+      color: var(--ink);
+      padding: 11px 14px;
+      text-align: left;
+      cursor: pointer;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+    }
+    .sample-button strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+    .sample-button span {
+      display: block;
+      color: #49586a;
+      line-height: 1.5;
+    }
     .helper-card {
       margin-top: 14px;
       border: 1px solid var(--line);
@@ -755,6 +781,19 @@
             </label>
           </div>
           <div class="helper-card">
+            <div class="eyebrow">Hosted Samples</div>
+            <div class="sample-actions">
+              <button class="sample-button" type="button" data-sample="./samples/mock-comparison-report.json" data-sample-name="mock-comparison-report.json">
+                <strong>Open Sample Comparison</strong>
+                <span>Loads the ranked three-model comparison used throughout the hosted demo.</span>
+              </button>
+              <button class="sample-button" type="button" data-sample="./samples/mock-full-report-openai.json" data-sample-name="mock-full-report-openai.json">
+                <strong>Open Sample Model Report</strong>
+                <span>Loads the OpenAI single-model report with full dimension detail and human review mode.</span>
+              </button>
+            </div>
+          </div>
+          <div class="helper-card">
             <div class="eyebrow">Suggested Path</div>
             <code>/Users/alanmotley/Documents/Playground/docs/norynthe/implementation/reports/</code>
           </div>
@@ -782,7 +821,7 @@
         <div id="emptyState">
           <div class="eyebrow">Waiting For Report</div>
           <p class="lede">
-            Generate a mock full report with:
+            Load one of the hosted sample artifacts from the left rail, or generate a fresh mock report with:
           </p>
           <div class="prompt-box">node "/Users/alanmotley/Documents/Playground/docs/norynthe/implementation/norynthe-prototype-runner.mjs" --mode=mock --all-dimensions</div>
         </div>
@@ -951,6 +990,7 @@
   <script>
     const fileInput = document.getElementById("fileInput");
     const directoryInput = document.getElementById("directoryInput");
+    const sampleButtons = document.querySelectorAll("[data-sample]");
     const browserList = document.getElementById("browserList");
     const emptyState = document.getElementById("emptyState");
     const reportView = document.getElementById("reportView");
@@ -984,6 +1024,11 @@
     let currentHumanReviewSummary = null;
     let browserFiles = [];
     let activeBrowserFileName = null;
+    const SAMPLE_MODEL_REPORT_URLS = {
+      OpenAI: "./samples/mock-full-report-openai.json",
+      Anthropic: "./samples/mock-full-report-anthropic.json",
+      Grok: "./samples/mock-full-report-grok.json"
+    };
 
     function titleize(value) {
       return value
@@ -1020,6 +1065,27 @@
       return "Unclassified artifact";
     }
 
+    function addBrowserEntry(name, report) {
+      const existingIndex = browserFiles.findIndex((entry) => entry.name === name);
+      const entry = { name, report };
+      if (existingIndex >= 0) {
+        browserFiles[existingIndex] = entry;
+      } else {
+        browserFiles.push(entry);
+      }
+      browserFiles.sort((a, b) => a.name.localeCompare(b.name));
+      activeBrowserFileName = name;
+      renderBrowserList();
+      return report;
+    }
+
+    function enrichArtifact(report, metadata = {}) {
+      report.__artifact_name = metadata.name ?? report.__artifact_name ?? "report.json";
+      report.__artifact_url = metadata.url ?? report.__artifact_url ?? null;
+      report.__artifact_source = metadata.source ?? report.__artifact_source ?? "local";
+      return report;
+    }
+
     function renderBrowserList() {
       if (!browserFiles.length) {
         browserList.innerHTML = `
@@ -1051,18 +1117,33 @@
 
     async function addBrowserFile(file) {
       const text = await file.text();
-      const report = JSON.parse(text);
-      const existingIndex = browserFiles.findIndex((entry) => entry.name === file.name);
-      const entry = { name: file.name, report };
-      if (existingIndex >= 0) {
-        browserFiles[existingIndex] = entry;
-      } else {
-        browserFiles.push(entry);
+      const report = enrichArtifact(JSON.parse(text), {
+        name: file.name,
+        source: "local"
+      });
+      return addBrowserEntry(file.name, report);
+    }
+
+    async function loadSampleReport(url, name) {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Unable to load sample report: ${name}`);
       }
-      browserFiles.sort((a, b) => a.name.localeCompare(b.name));
-      activeBrowserFileName = file.name;
-      renderBrowserList();
+      const report = enrichArtifact(await response.json(), {
+        name,
+        url,
+        source: "sample"
+      });
+      addBrowserEntry(name, report);
+      openReport(report);
       return report;
+    }
+
+    function getArtifactLink(url, label) {
+      if (!url) {
+        return `<div class="path-link" style="text-decoration:none; color:#5a6572;">${label}</div>`;
+      }
+      return `<a class="path-link" href="${url}">${label}</a>`;
     }
 
     function openReport(report) {
@@ -1360,17 +1441,17 @@
                 <div class="report-breakdown-item">
                   <div class="report-breakdown-title">Model Report JSON</div>
                   <div class="report-breakdown-copy">Open this when you want the full saved report for ${item.target_model_name}. It contains the model identity, Norynthe.Score, trust band, strongest and weakest dimensions, full 7-dimension results, and the scorer / critic resolution output behind the final score.</div>
-                  <a class="path-link" href="file://${item.report_path}">${item.report_path}</a>
+                  ${getArtifactLink(SAMPLE_MODEL_REPORT_URLS[item.target_model_name] ?? null, SAMPLE_MODEL_REPORT_URLS[item.target_model_name] ? "Open bundled sample model report" : "Bundled sample model report not available in this view.")}
                 </div>
                 <div class="report-breakdown-item">
                   <div class="report-breakdown-title">Comparison Report JSON</div>
                   <div class="report-breakdown-copy">Open this when you want the full ranked comparison for the prompt. It contains the compared model list, ranked ordering, Norynthe.Score results across the set, dimension gap summaries, and the drill-down data used in this screen.</div>
-                  <a class="path-link" href="file://${report.report_path}">${report.report_path}</a>
+                  ${getArtifactLink(report.__artifact_url ?? null, report.__artifact_url ? "Open current comparison artifact" : "This comparison artifact was loaded locally.")}
                 </div>
                 <div class="report-breakdown-item">
                   <div class="report-breakdown-title">Human Review JSON</div>
                   <div class="report-breakdown-copy">This is where a saved manual calibration review would live for this model. A human review JSON contains manual scores by dimension, reviewer notes, system-versus-human deltas, and the review timestamp.</div>
-                  <div class="path-link" style="text-decoration:none; color:#5a6572;">/Users/alanmotley/Documents/Playground/docs/norynthe/implementation/reviews/</div>
+                  <div class="path-link" style="text-decoration:none; color:#5a6572;">Exported from Human Review Mode when a reviewer saves a calibration artifact.</div>
                 </div>
               </div>
             </div>
@@ -1623,6 +1704,27 @@
       if (!currentSingleModelReport) return;
       renderHumanReviewPanel(currentSingleModelReport);
       reviewOutput.textContent = "Load a single-model report to begin manual calibration.";
+    });
+
+    sampleButtons.forEach((button) => {
+      button.addEventListener("click", async () => {
+        const url = button.dataset.sample;
+        const name = button.dataset.sampleName || "sample-report.json";
+        try {
+          await loadSampleReport(url, name);
+        } catch (error) {
+          executiveCallout.classList.add("active");
+          executiveCallout.textContent = error.message;
+        }
+      });
+    });
+
+    window.addEventListener("DOMContentLoaded", async () => {
+      try {
+        await loadSampleReport("./samples/mock-comparison-report.json", "mock-comparison-report.json");
+      } catch (error) {
+        // Keep the console usable even when the page is opened outside a hosted environment.
+      }
     });
   </script>
 </body>
