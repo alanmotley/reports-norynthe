@@ -827,18 +827,33 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .dimension-card {
-      padding: 18px;
+      padding: 20px;
+      border-radius: 20px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.86) 0%, rgba(255,255,255,0.7) 100%);
     }
     .dimension-card h3 {
-      margin: 8px 0 8px;
-      font-size: 22px;
+      margin: 8px 0 10px;
+      font-size: 24px;
       letter-spacing: -0.04em;
+      line-height: 1.02;
     }
     .dimension-lede {
-      margin: 0 0 12px;
+      margin: 0 0 14px;
       font-size: 13px;
-      line-height: 1.7;
+      line-height: 1.8;
       color: #415061;
+    }
+    .dimension-topline {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .dimension-heading {
+      min-width: 0;
+      flex: 1;
     }
     .meta {
       display: flex;
@@ -846,13 +861,21 @@
       flex-wrap: wrap;
       font-size: 12px;
       color: var(--muted);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+    }
+    .meta span {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.74);
+      border: 1px solid var(--line);
     }
     .score-row {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
+      gap: 12px;
+      margin-bottom: 14px;
     }
     .score-badge {
       width: 82px;
@@ -878,6 +901,19 @@
       text-transform: uppercase;
       letter-spacing: 0.14em;
       color: var(--muted);
+    }
+    .dimension-strengths,
+    .dimension-concerns {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+    .dimension-section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 8px;
     }
     .path-link {
       display: block;
@@ -954,6 +990,9 @@
     .list {
       padding-left: 18px;
       margin: 8px 0 0;
+    }
+    .dimension-card .list {
+      margin: 0;
     }
     .prompt-box {
       white-space: pre-wrap;
@@ -1986,25 +2025,34 @@
         const concerns = run.critic_output?.concerns ?? [];
 
         card.innerHTML = `
-          <div class="eyebrow">${titleize(run.dimension)}</div>
-          <h3>${titleize(run.dimension)}</h3>
-          <p class="dimension-lede">${run.resolved_output.resolution_summary}</p>
-          <div class="score-row">
-            <div class="score-badge">${displayScore(run.resolved_output.final_score)}</div>
-            <div class="band">${run.resolved_output.final_score_band}</div>
+          <div class="dimension-topline">
+            <div class="dimension-heading">
+              <div class="eyebrow">${titleize(run.dimension)}</div>
+              <h3>${titleize(run.dimension)}</h3>
+              <p class="dimension-lede">${run.resolved_output.resolution_summary}</p>
+            </div>
+            <div class="score-row">
+              <div class="score-badge">${displayScore(run.resolved_output.final_score)}</div>
+              <div class="band">${run.resolved_output.final_score_band}</div>
+            </div>
           </div>
           <div class="meta">
             <span>Resolution: ${run.resolved_output.resolution_type}</span>
             <span>Passes: ${run.prompt_plan.join(", ")}</span>
             <span>Confidence: ${run.resolved_output.final_confidence}</span>
           </div>
-          <ul class="list">
-            ${strengths.map((item) => `<li>${item}</li>`).join("")}
-          </ul>
+          <div class="dimension-strengths">
+            <div class="dimension-section-title">What Supported The Score</div>
+            <ul class="list">
+              ${strengths.map((item) => `<li>${item}</li>`).join("")}
+            </ul>
+          </div>
           ${
             concerns.length
-              ? `<div class="list" style="margin-top:10px;"><strong>Critic concerns:</strong></div>
-                 <ul class="list">${concerns.map((item) => `<li>${item}</li>`).join("")}</ul>`
+              ? `<div class="dimension-concerns">
+                   <div class="dimension-section-title">Critic Concerns</div>
+                   <ul class="list">${concerns.map((item) => `<li>${item}</li>`).join("")}</ul>
+                 </div>`
               : ""
           }
         `;
