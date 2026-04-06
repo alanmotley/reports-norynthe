@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Norynthe.Reports</title>
+  <link rel="icon" type="image/png" href="/Norynthe_master.png">
   <style>
     :root {
       --bg: #edf2f5;
@@ -47,12 +48,13 @@
       letter-spacing: 0.22em;
       color: var(--muted);
     }
-    .wordmark {
-      margin: 8px 0 0;
-      font-size: clamp(3rem, 7vw, 5.2rem);
-      line-height: 0.92;
-      letter-spacing: -0.06em;
-      font-weight: 700;
+    .brand-lockup {
+      margin-top: 8px;
+    }
+    .brand-logo {
+      display: block;
+      width: min(420px, 100%);
+      height: auto;
     }
     .lede {
       max-width: 760px;
@@ -133,7 +135,9 @@
   <div class="shell">
     <section class="hero">
       <div class="kicker">reports.norynthe.com</div>
-      <div class="wordmark">Norynthe.</div>
+      <div class="brand-lockup">
+        <img class="brand-logo" src="/Norynthe_master.png" alt="Norynthe.">
+      </div>
       <p class="lede">
         Norynthe.Reports is the reporting layer for model comparison, trust scoring, and calibration.
         This landing page separates the internal reporting workspace from the client-facing report concept.
