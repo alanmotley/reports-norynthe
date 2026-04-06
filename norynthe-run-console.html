@@ -259,8 +259,59 @@
       gap: 14px;
     }
     .summary-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: 1fr;
       margin-bottom: 18px;
+    }
+    .single-report-hero {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 20px;
+      align-items: center;
+      padding: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.74);
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+    .single-report-score {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .single-report-badge-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+    .single-report-heading h2 {
+      margin: 12px 0 0;
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+    }
+    .single-report-copy {
+      margin: 14px 0 0;
+      font-size: 15px;
+      line-height: 1.8;
+      color: #32404d;
+      max-width: 760px;
+    }
+    .single-report-recommendation {
+      margin-top: 16px;
+      padding: 16px 18px;
+      border-left: 3px solid var(--accent);
+      background: rgba(125, 49, 49, 0.05);
+      font-size: 14px;
+      line-height: 1.75;
+      color: #253240;
+      border-radius: 16px;
+    }
+    .single-report-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
     }
     .summary-card {
       border: 1px solid var(--line);
@@ -288,6 +339,12 @@
       letter-spacing: 0.14em;
       color: var(--muted);
       margin-top: 6px;
+    }
+    .summary-copy {
+      margin-top: 8px;
+      font-size: 13px;
+      line-height: 1.65;
+      color: #425163;
     }
     .comparison-summary {
       display: none;
@@ -689,11 +746,16 @@
       font-size: 22px;
       letter-spacing: -0.04em;
     }
+    .dimension-lede {
+      margin: 0 0 12px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #415061;
+    }
     .meta {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 12px;
       color: var(--muted);
       margin-bottom: 12px;
@@ -720,7 +782,6 @@
       font-weight: 700;
     }
     .band {
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.14em;
@@ -741,6 +802,8 @@
       margin-top: 12px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.65);
+      border-radius: 16px;
+      overflow: hidden;
     }
     .report-details summary {
       list-style: none;
@@ -811,7 +874,8 @@
     }
     .hidden { display: none; }
     @media (max-width: 980px) {
-      .grid, .summary-grid, .comparison-summary, .comparison-detail-grid, .dimension-grid, .dimension-mini-grid, .compare-grid, .review-grid { grid-template-columns: 1fr; }
+      .grid, .summary-grid, .comparison-summary, .comparison-detail-grid, .dimension-grid, .dimension-mini-grid, .compare-grid, .review-grid, .single-report-metrics { grid-template-columns: 1fr; }
+      .single-report-hero { grid-template-columns: 1fr; }
       .masthead {
         padding: 20px;
       }
@@ -939,29 +1003,39 @@
 
         <div id="reportView" class="hidden">
           <div id="singleModelSummary" class="summary-grid">
-            <div class="summary-card score-card">
-              <div id="overallScoreBadge" class="score-badge">--</div>
-              <div class="summary-detail">
-                <div class="eyebrow">Norynthe.Score</div>
-                <div id="overallScore" class="summary-value">--</div>
-                <div class="summary-label">Final score for the reviewed model</div>
+            <section class="single-report-hero">
+              <div class="single-report-score">
+                <div id="overallScoreBadge" class="score-badge">--</div>
+                <div class="single-report-badge-label">Norynthe.Score</div>
               </div>
-            </div>
-            <div class="summary-card">
-              <div class="eyebrow">Trust Band</div>
-              <div id="overallBand" class="summary-value" style="font-size:22px;">--</div>
-            </div>
-            <div class="summary-card">
-              <div class="eyebrow">Model Under Review</div>
-              <div id="targetModel" class="summary-value" style="font-size:22px;">--</div>
-            </div>
-            <div class="summary-card">
-              <div class="eyebrow">Strongest</div>
-              <div id="strongestDimension" class="summary-value" style="font-size:22px;">--</div>
-            </div>
-            <div class="summary-card">
-              <div class="eyebrow">Weakest</div>
-              <div id="weakestDimension" class="summary-value" style="font-size:22px;">--</div>
+              <div class="single-report-heading">
+                <span id="overallBandPill" class="pill reliable">--</span>
+                <h2 id="singleReportHeadline">--</h2>
+                <p id="singleReportSummary" class="single-report-copy">--</p>
+                <div id="singleReportRecommendation" class="single-report-recommendation">--</div>
+              </div>
+            </section>
+            <div class="single-report-metrics">
+              <div class="summary-card">
+                <div class="eyebrow">Model Under Review</div>
+                <div id="targetModel" class="summary-value" style="font-size:22px;">--</div>
+                <div id="targetModelMeta" class="summary-copy">--</div>
+              </div>
+              <div class="summary-card">
+                <div class="eyebrow">Trust Band</div>
+                <div id="overallBand" class="summary-value" style="font-size:22px;">--</div>
+                <div class="summary-copy">The current overall trust classification for this evaluated use case.</div>
+              </div>
+              <div class="summary-card">
+                <div class="eyebrow">Strongest</div>
+                <div id="strongestDimension" class="summary-value" style="font-size:22px;">--</div>
+                <div class="summary-copy">The most defensible dimension in the current report.</div>
+              </div>
+              <div class="summary-card">
+                <div class="eyebrow">Weakest</div>
+                <div id="weakestDimension" class="summary-value" style="font-size:22px;">--</div>
+                <div class="summary-copy">The dimension most likely to require closer human review.</div>
+              </div>
             </div>
           </div>
 
@@ -1072,7 +1146,7 @@
             <div id="comparisonDetailGrid" class="comparison-detail-grid"></div>
           </div>
 
-          <div class="eyebrow">Prompt</div>
+          <div class="eyebrow">Prompt Context</div>
           <div id="promptBox" class="prompt-box"></div>
           <div id="promptMeta" class="meta" style="margin-top:10px;"></div>
 
@@ -1130,6 +1204,7 @@
     const generateReviewSummary = document.getElementById("generateReviewSummary");
     const downloadReviewSummary = document.getElementById("downloadReviewSummary");
     const resetReviewForm = document.getElementById("resetReviewForm");
+    const overallBandPill = document.getElementById("overallBandPill");
     let currentComparisonReport = null;
     let currentSingleModelReport = null;
     let currentHumanReviewSummary = null;
@@ -1343,6 +1418,26 @@
       }
 
       return `Ranked here because it stayed competitive in ${strongest}, but did not separate enough from the field and gave back ground through ${weakest}.`;
+    }
+
+    function buildSingleReportNarrative(report) {
+      const strongest = titleize(report.scoring_summary.strongest_dimension.dimension);
+      const weakest = titleize(report.scoring_summary.weakest_dimension.dimension);
+      return `${report.target_model_name} scored highest in ${strongest} for this run, while ${weakest} remained the main source of trust drag. The result is strong enough to be useful, but not clean enough to remove human judgment from the loop.`;
+    }
+
+    function buildSingleReportRecommendation(report) {
+      const band = report.scoring_summary.overall_band;
+      if (band === "strong" || band === "exceptional") {
+        return "Recommended use: strong candidate for reviewer-assisted analysis and decision-support workflows where traceability and consistency matter.";
+      }
+      if (band === "risk") {
+        return "Recommendation: treat this as a cautionary example. Use only with substantial human oversight, and avoid unattended use in sensitive or high-stakes contexts.";
+      }
+      if (band === "caution") {
+        return "Recommendation: use with caution. This result may still be useful for internal exploration, but should not be treated as a clean trust profile without closer review.";
+      }
+      return "Recommended use: suitable for assisted research and policy synthesis, with human review focused on the weaker trust dimensions before final use.";
     }
 
     function renderHumanReviewPanel(report) {
@@ -1705,14 +1800,23 @@
       comparisonSummary.classList.remove("active");
       comparisonTableWrap.classList.add("hidden");
       const roundedScore = displayScore(report.scoring_summary.norynthe_score);
-      document.getElementById("overallScore").textContent = roundedScore;
       overallScoreBadge.textContent = roundedScore;
       document.getElementById("overallBand").textContent = report.scoring_summary.overall_band_label;
+      overallBandPill.textContent = report.scoring_summary.overall_band_label;
+      overallBandPill.className = pillClass(report.scoring_summary.overall_band);
       document.getElementById("targetModel").textContent = report.target_model_name;
+      document.getElementById("targetModelMeta").textContent =
+        `${report.target_model?.provider ?? "n/a"} | ${report.target_model?.version ?? "n/a"} | ${report.mode}`;
       document.getElementById("strongestDimension").textContent =
         `${titleize(report.scoring_summary.strongest_dimension.dimension)} (${displayScore(report.scoring_summary.strongest_dimension.score)})`;
       document.getElementById("weakestDimension").textContent =
         `${titleize(report.scoring_summary.weakest_dimension.dimension)} (${displayScore(report.scoring_summary.weakest_dimension.score)})`;
+      document.getElementById("singleReportHeadline").textContent =
+        `${report.target_model_name} produced a ${report.scoring_summary.overall_band_label.toLowerCase()} result in this evaluation.`;
+      document.getElementById("singleReportSummary").textContent =
+        buildSingleReportNarrative(report);
+      document.getElementById("singleReportRecommendation").textContent =
+        buildSingleReportRecommendation(report);
       comparisonModels.innerHTML = (report.comparison_models ?? [])
         .map((model) => `<span>${model.name} | ${model.provider} | ${model.version}</span>`)
         .join("");
@@ -1779,6 +1883,7 @@
         card.innerHTML = `
           <div class="eyebrow">${titleize(run.dimension)}</div>
           <h3>${titleize(run.dimension)}</h3>
+          <p class="dimension-lede">${run.resolved_output.resolution_summary}</p>
           <div class="score-row">
             <div class="score-badge">${displayScore(run.resolved_output.final_score)}</div>
             <div class="band">${run.resolved_output.final_score_band}</div>
@@ -1788,7 +1893,6 @@
             <span>Passes: ${run.prompt_plan.join(", ")}</span>
             <span>Confidence: ${run.resolved_output.final_confidence}</span>
           </div>
-          <div class="list"><strong>Summary:</strong> ${run.resolved_output.resolution_summary}</div>
           <ul class="list">
             ${strengths.map((item) => `<li>${item}</li>`).join("")}
           </ul>
