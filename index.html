@@ -362,6 +362,12 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .schema-grid,
+    .prompt-grid {
+      gap: 22px;
+      align-items: start;
+    }
+
     .band-grid,
     .category-grid {
       grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -472,6 +478,11 @@
       padding: 24px;
     }
 
+    .schema-grid .panel,
+    .prompt-grid .panel {
+      padding: 26px 26px 28px;
+    }
+
     .flow {
       display: grid;
       gap: 12px;
@@ -512,6 +523,7 @@
     }
 
     .code {
+      margin-top: 14px;
       background: linear-gradient(180deg, rgba(15, 17, 21, 0.985), rgba(23, 28, 36, 0.94));
       color: #e9edf2;
       border-radius: var(--radius-md);
@@ -521,7 +533,7 @@
     }
 
     .code-head {
-      padding: 14px 16px;
+      padding: 15px 18px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       color: rgba(233, 237, 242, 0.68);
       font-size: 0.68rem;
@@ -531,11 +543,22 @@
 
     pre {
       margin: 0;
-      padding: 18px 16px;
+      padding: 20px 18px 22px;
       font-size: 12.5px;
-      line-height: 1.62;
+      line-height: 1.68;
       overflow: auto;
       white-space: pre-wrap;
+    }
+
+    .schema-grid .panel h3,
+    .prompt-grid .panel h3 {
+      margin-bottom: 12px;
+    }
+
+    .schema-grid .code-note,
+    .prompt-grid .code-note {
+      max-width: 42rem;
+      line-height: 1.76;
     }
 
     .report-actions {
