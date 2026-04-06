@@ -49,6 +49,14 @@
       position: relative;
       overflow: hidden;
     }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -18% 42% auto -10%;
+      height: 240px;
+      background: radial-gradient(circle, rgba(145, 171, 194, 0.24) 0%, rgba(145, 171, 194, 0) 70%);
+      pointer-events: none;
+    }
     .hero::after {
       content: "";
       position: absolute;
@@ -158,6 +166,25 @@
     }
     @media (max-width: 900px) {
       .grid { grid-template-columns: 1fr; }
+      .shell {
+        width: min(calc(100% - 28px), 1180px);
+        padding: 28px 0 44px;
+      }
+      .hero,
+      .card {
+        padding: 22px 20px;
+      }
+      .card h2 {
+        font-size: 24px;
+      }
+      .lede {
+        margin-top: 16px;
+        font-size: 14px;
+        line-height: 1.72;
+      }
+      .note {
+        margin-top: 16px;
+      }
     }
   </style>
 </head>
