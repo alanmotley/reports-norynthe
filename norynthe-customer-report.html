@@ -4,29 +4,33 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Norynthe.Report</title>
-  <link rel="icon" type="image/png" href="/Norynthe_master.png">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
   <style>
     :root {
       --bg: #edf2f5;
-      --paper: rgba(255, 255, 255, 0.9);
-      --paper-2: rgba(255, 255, 255, 0.76);
-      --ink: #0f1115;
-      --muted: #5c6670;
-      --line: rgba(15, 17, 21, 0.08);
+      --paper: rgba(255, 255, 255, 0.84);
+      --paper-2: rgba(255, 255, 255, 0.72);
+      --ink: #10151d;
+      --muted: #5b6470;
+      --line: rgba(15, 17, 21, 0.07);
       --accent: #7a3030;
       --good: #2a6447;
       --warn: #8a6a1b;
       --slate: #254f74;
+      --shadow: 0 18px 44px rgba(15, 17, 21, 0.05);
+      --radius: 22px;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       min-height: 100vh;
       color: var(--ink);
-      font-family: Georgia, "Times New Roman", Times, serif;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
         radial-gradient(circle at 18% 18%, rgba(145, 171, 194, 0.18), transparent 28%),
         radial-gradient(circle at 82% 12%, rgba(122, 48, 48, 0.08), transparent 22%),
+        radial-gradient(circle at 50% 46%, rgba(255, 255, 255, 0.3), transparent 28%),
         linear-gradient(180deg, #f6f9fb 0%, #e9eef2 100%);
     }
     .shell {
@@ -38,33 +42,47 @@
       background: var(--paper);
       border: 1px solid var(--line);
       backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
     .hero {
-      padding: 26px 28px 30px;
-      margin-bottom: 20px;
+      padding: 30px 32px 34px;
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 22% -42px 22%;
+      height: 70px;
+      background: radial-gradient(ellipse at center, rgba(15, 17, 21, 0.08), rgba(15, 17, 21, 0) 70%);
+      filter: blur(18px);
+      pointer-events: none;
     }
     .kicker {
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.22em;
       color: var(--muted);
+      font-weight: 500;
     }
     .brand-lockup {
-      margin-top: 8px;
+      margin-top: 10px;
     }
     .brand-logo {
       display: block;
-      width: min(420px, 100%);
+      width: min(440px, 100%);
       height: auto;
+      filter: drop-shadow(0 10px 18px rgba(15, 17, 21, 0.04));
     }
     .lede {
       max-width: 760px;
-      margin: 16px 0 0;
-      font-family: Arial, Helvetica, sans-serif;
+      margin: 20px 0 0;
       font-size: 15px;
-      line-height: 1.7;
-      color: #32404d;
+      line-height: 1.8;
+      color: #36414e;
+      letter-spacing: -0.01em;
     }
     .grid {
       display: grid;
@@ -73,7 +91,7 @@
       align-items: start;
     }
     .panel {
-      padding: 22px;
+      padding: 24px;
     }
     .summary-list {
       display: grid;
@@ -84,19 +102,19 @@
       border: 1px solid var(--line);
       background: var(--paper-2);
       padding: 14px;
+      border-radius: 18px;
     }
     .summary-title {
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.18em;
       color: var(--muted);
       margin-bottom: 8px;
+      font-weight: 500;
     }
     .summary-copy {
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 14px;
-      line-height: 1.6;
+      line-height: 1.7;
       color: #304050;
     }
     .headline-row {
@@ -118,16 +136,15 @@
       justify-content: center;
       margin: 0 auto;
       text-align: center;
+      box-shadow: 0 22px 38px rgba(15, 17, 21, 0.14);
     }
     .score-orb strong {
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 60px;
       line-height: 1;
       letter-spacing: -0.06em;
     }
     .score-orb span {
       margin-top: 10px;
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.16em;
@@ -141,10 +158,9 @@
     }
     .headline p {
       margin: 14px 0 0;
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 15px;
-      line-height: 1.7;
-      color: #32404d;
+      line-height: 1.8;
+      color: #36414e;
       max-width: 700px;
     }
     .pill {
@@ -152,7 +168,6 @@
       align-items: center;
       padding: 8px 12px;
       border-radius: 999px;
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.12em;
@@ -185,10 +200,10 @@
       padding: 16px 18px;
       border-left: 3px solid var(--accent);
       background: rgba(122, 48, 48, 0.05);
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 14px;
-      line-height: 1.7;
+      line-height: 1.75;
       color: #2f3d4d;
+      border-radius: 16px;
     }
     .section {
       margin-top: 20px;
@@ -207,6 +222,7 @@
       border: 1px solid var(--line);
       background: var(--paper-2);
       padding: 16px;
+      border-radius: 18px;
     }
     .metric-card h3 {
       margin: 8px 0 0;
@@ -215,9 +231,8 @@
     }
     .metric-card p {
       margin: 8px 0 0;
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 13px;
-      line-height: 1.6;
+      line-height: 1.75;
       color: #32404d;
     }
     .dimension-grid {
@@ -229,6 +244,7 @@
       border: 1px solid var(--line);
       background: var(--paper-2);
       padding: 16px;
+      border-radius: 18px;
     }
     .dimension-card h3 {
       margin: 10px 0 10px;
@@ -244,6 +260,7 @@
       border: 1px solid var(--line);
       background: var(--paper-2);
       padding: 16px;
+      border-radius: 18px;
     }
     .insight-card h3 {
       margin: 8px 0 8px;
@@ -253,30 +270,26 @@
     .insight-card p,
     .insight-card ul {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 13px;
-      line-height: 1.7;
+      line-height: 1.75;
       color: #32404d;
     }
     .insight-card ul {
       padding-left: 18px;
     }
     .dimension-score {
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 36px;
       line-height: 1;
       letter-spacing: -0.06em;
       margin-bottom: 10px;
     }
     .dimension-copy {
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 13px;
-      line-height: 1.7;
+      line-height: 1.75;
       color: #32404d;
     }
     .footer-note {
       margin-top: 22px;
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 12px;
       line-height: 1.7;
       color: var(--muted);
