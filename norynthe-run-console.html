@@ -366,14 +366,78 @@
       line-height: 1.65;
       color: #425163;
     }
+    .report-section {
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.72);
+      border-radius: 18px;
+      padding: 18px;
+    }
+    .report-section-intro {
+      margin: 10px 0 0;
+      font-size: 14px;
+      line-height: 1.75;
+      color: #36414e;
+      max-width: 760px;
+    }
+    .report-section .meta {
+      margin-top: 14px;
+      margin-bottom: 0;
+    }
+    .report-section .prompt-box {
+      margin-top: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.78);
+    }
     .comparison-summary {
       display: none;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: 1fr;
       gap: 14px;
       margin-bottom: 18px;
     }
     .comparison-summary.active {
       display: grid;
+    }
+    .comparison-hero {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 20px;
+      align-items: center;
+      padding: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.74);
+      border-radius: 20px;
+    }
+    .comparison-hero-score {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .comparison-hero-title {
+      margin: 12px 0 0;
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+    }
+    .comparison-hero-copy {
+      margin: 14px 0 0;
+      font-size: 15px;
+      line-height: 1.8;
+      color: #32404d;
+      max-width: 760px;
+    }
+    .comparison-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .comparison-table-section {
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.72);
+      border-radius: 20px;
+      padding: 18px;
     }
     .executive-callout {
       display: none;
@@ -1005,8 +1069,9 @@
     }
     .hidden { display: none; }
     @media (max-width: 980px) {
-      .grid, .summary-grid, .comparison-summary, .comparison-detail-grid, .dimension-grid, .dimension-mini-grid, .compare-grid, .review-grid, .single-report-metrics { grid-template-columns: 1fr; }
+      .grid, .summary-grid, .comparison-summary, .comparison-detail-grid, .dimension-grid, .dimension-mini-grid, .compare-grid, .review-grid, .single-report-metrics, .comparison-metrics { grid-template-columns: 1fr; }
       .single-report-hero { grid-template-columns: 1fr; }
+      .comparison-hero { grid-template-columns: 1fr; }
       .masthead {
         padding: 20px;
       }
@@ -1172,65 +1237,87 @@
           </div>
 
           <div id="comparisonSummary" class="comparison-summary">
-            <div class="summary-card">
-              <div class="eyebrow">Top Ranked Model</div>
-              <div id="comparisonTopModel" class="summary-value" style="font-size:22px;">--</div>
-            </div>
-            <div class="summary-card">
-              <div class="eyebrow">Models Compared</div>
-              <div id="comparisonModelCount" class="summary-value" style="font-size:22px;">--</div>
-            </div>
-            <div class="summary-card">
-              <div class="eyebrow">Score Spread</div>
-              <div id="comparisonSpread" class="summary-value" style="font-size:22px;">--</div>
+            <section class="comparison-hero">
+              <div class="comparison-hero-score">
+                <div id="comparisonHeroBadge" class="score-badge">--</div>
+                <div class="single-report-badge-label">Top Norynthe.Score</div>
+              </div>
+              <div>
+                <div class="eyebrow">Comparison Report</div>
+                <h2 id="comparisonHeroTitle" class="comparison-hero-title">--</h2>
+                <p id="comparisonHeroCopy" class="comparison-hero-copy">--</p>
+              </div>
+            </section>
+            <div class="comparison-metrics">
+              <div class="summary-card">
+                <div class="eyebrow">Top Ranked Model</div>
+                <div id="comparisonTopModel" class="summary-value" style="font-size:22px;">--</div>
+                <div class="summary-copy">The current leader under the active comparison or sort view.</div>
+              </div>
+              <div class="summary-card">
+                <div class="eyebrow">Models Compared</div>
+                <div id="comparisonModelCount" class="summary-value" style="font-size:22px;">--</div>
+                <div class="summary-copy">The number of peer models included in this evaluation set.</div>
+              </div>
+              <div class="summary-card">
+                <div class="eyebrow">Score Spread</div>
+                <div id="comparisonSpread" class="summary-value" style="font-size:22px;">--</div>
+                <div class="summary-copy">The gap between the strongest and weakest model in the current view.</div>
+              </div>
             </div>
           </div>
 
           <div id="executiveCallout" class="executive-callout"></div>
 
-          <div class="eyebrow">Comparison Set</div>
-          <div id="comparisonModels" class="meta" style="margin-top:10px;"></div>
+          <section id="comparisonSetSection" class="report-section">
+            <div class="eyebrow">Comparison Set</div>
+            <p class="report-section-intro">This report was evaluated against the peer models below, which define the comparison field for the current prompt.</p>
+            <div id="comparisonModels" class="meta"></div>
+          </section>
 
           <div id="comparisonTableWrap" class="hidden">
-            <div class="eyebrow" style="margin-top:18px;">Ranked Comparison</div>
-            <div class="toolbar">
-              <div class="toolbar-group">
-                <label class="toolbar-label" for="sortField">Sort By</label>
-                <select id="sortField">
-                  <option value="norynthe_score">Norynthe.Score</option>
-                  <option value="grounding">Grounding</option>
-                  <option value="evidence_strength">Evidence Strength</option>
-                  <option value="consistency">Consistency</option>
-                  <option value="context_integrity">Context Integrity</option>
-                  <option value="framing_stability">Framing Stability</option>
-                  <option value="cross_model_alignment">Cross-Model Alignment</option>
-                  <option value="auditability">Auditability</option>
-                </select>
+            <section class="comparison-table-section">
+              <div class="eyebrow">Ranked Comparison</div>
+              <p class="report-section-intro">This table shows how the current model set ranks under Norynthe.Score and the active comparison settings.</p>
+              <div class="toolbar">
+                <div class="toolbar-group">
+                  <label class="toolbar-label" for="sortField">Sort By</label>
+                  <select id="sortField">
+                    <option value="norynthe_score">Norynthe.Score</option>
+                    <option value="grounding">Grounding</option>
+                    <option value="evidence_strength">Evidence Strength</option>
+                    <option value="consistency">Consistency</option>
+                    <option value="context_integrity">Context Integrity</option>
+                    <option value="framing_stability">Framing Stability</option>
+                    <option value="cross_model_alignment">Cross-Model Alignment</option>
+                    <option value="auditability">Auditability</option>
+                  </select>
+                </div>
+                <div class="toolbar-group">
+                  <label class="toolbar-label" for="compareLeft">Compare Model A</label>
+                  <select id="compareLeft"></select>
+                </div>
+                <div class="toolbar-group">
+                  <label class="toolbar-label" for="compareRight">Compare Model B</label>
+                  <select id="compareRight"></select>
+                </div>
               </div>
-              <div class="toolbar-group">
-                <label class="toolbar-label" for="compareLeft">Compare Model A</label>
-                <select id="compareLeft"></select>
-              </div>
-              <div class="toolbar-group">
-                <label class="toolbar-label" for="compareRight">Compare Model B</label>
-                <select id="compareRight"></select>
-              </div>
-            </div>
-            <table class="comparison-table">
-              <thead>
-                <tr>
-                  <th>Rank</th>
-                  <th>Model</th>
-                  <th>Provider</th>
-                  <th>Version</th>
-                  <th>Norynthe.Score</th>
-                  <th>Trust Band</th>
-                  <th>Strongest</th>
-                  <th>Weakest</th>
-                </tr>
-              </thead>
-              <tbody id="comparisonTableBody"></tbody>
-            </table>
+              <table class="comparison-table">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Model</th>
+                    <th>Provider</th>
+                    <th>Version</th>
+                    <th>Norynthe.Score</th>
+                    <th>Trust Band</th>
+                    <th>Strongest</th>
+                    <th>Weakest</th>
+                  </tr>
+                </thead>
+                <tbody id="comparisonTableBody"></tbody>
+              </table>
+            </section>
 
             <div id="deltaGrid" class="delta-grid">
               <article class="delta-card">
@@ -1278,9 +1365,12 @@
             <div id="comparisonDetailGrid" class="comparison-detail-grid"></div>
           </div>
 
-          <div class="eyebrow">Prompt Context</div>
-          <div id="promptBox" class="prompt-box"></div>
-          <div id="promptMeta" class="meta" style="margin-top:10px;"></div>
+          <section class="report-section">
+            <div class="eyebrow">Prompt Context</div>
+            <p class="report-section-intro">The report below is tied to the source prompt and operating context shown here. This is the framing the model was evaluated against.</p>
+            <div id="promptBox" class="prompt-box"></div>
+            <div id="promptMeta" class="meta"></div>
+          </section>
 
           <div class="eyebrow" style="margin-top:18px;">Dimension Results</div>
           <div id="dimensionGrid" class="dimension-grid" style="margin-top:14px;"></div>
@@ -1345,6 +1435,7 @@
     const downloadReviewSummary = document.getElementById("downloadReviewSummary");
     const resetReviewForm = document.getElementById("resetReviewForm");
     const overallBandPill = document.getElementById("overallBandPill");
+    const comparisonHeroBadge = document.getElementById("comparisonHeroBadge");
     let currentComparisonReport = null;
     let currentSingleModelReport = null;
     let currentHumanReviewSummary = null;
@@ -1578,6 +1669,14 @@
         return "Recommendation: use with caution. This result may still be useful for internal exploration, but should not be treated as a clean trust profile without closer review.";
       }
       return "Recommended use: suitable for assisted research and policy synthesis, with human review focused on the weaker trust dimensions before final use.";
+    }
+
+    function buildComparisonHeroNarrative(report, field = "norynthe_score") {
+      const top = report.ranked_models?.[0];
+      const bottom = report.ranked_models?.at(-1);
+      if (!top || !bottom) return "Comparison report loaded.";
+      const spread = Math.abs(displayScore(getSortValue(top, field)) - displayScore(getSortValue(bottom, field)));
+      return `${top.target_model_name} currently leads this evaluation set, while ${bottom.target_model_name} remains the lowest-scoring model in the same prompt context. The current spread is ${spread} points under ${dimensionLabel(field)}.`;
     }
 
     function renderHumanReviewPanel(report) {
@@ -1928,6 +2027,11 @@
         top ? `${top.target_model_name} (${displayScore(getSortValue(top, field))})` : "--";
       document.getElementById("comparisonSpread").textContent =
         spread === "--" ? "--" : `${spread} points`;
+      comparisonHeroBadge.textContent = top ? `${displayScore(getSortValue(top, field))}` : "--";
+      document.getElementById("comparisonHeroTitle").textContent =
+        top ? `${top.target_model_name} leads the field under ${dimensionLabel(field)}.` : "--";
+      document.getElementById("comparisonHeroCopy").textContent =
+        buildComparisonHeroNarrative(currentComparisonReport, field);
       executiveCallout.innerHTML = top && bottom
         ? `<strong>${top.target_model_name}</strong> currently leads when sorted by <strong>${dimensionLabel(field)}</strong>. The widest gap to monitor in this view is the <strong>${spread}-point spread</strong> between the top and bottom ranked models.`
         : "Comparison report loaded.";
@@ -1996,6 +2100,12 @@
       );
       document.getElementById("comparisonSpread").textContent =
         spread === "--" ? "--" : `${spread} points`;
+      comparisonHeroBadge.textContent =
+        topModel ? `${displayScore(topModel.norynthe_score)}` : "--";
+      document.getElementById("comparisonHeroTitle").textContent =
+        topModel ? `${topModel.target_model_name} ranked first in this comparison set.` : "--";
+      document.getElementById("comparisonHeroCopy").textContent =
+        buildComparisonHeroNarrative(currentComparisonReport);
       executiveCallout.classList.add("active");
       executiveCallout.innerHTML = topModel && bottomModel
         ? `<strong>${topModel.target_model_name}</strong> currently leads this comparison with a <strong>Norynthe.Score of ${displayScore(topModel.norynthe_score)}</strong>. The widest gap to monitor is the <strong>${spread}-point spread</strong> between the top and bottom ranked models.`
