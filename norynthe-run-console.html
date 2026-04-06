@@ -1088,15 +1088,18 @@
       color: #415061;
     }
     .dimension-topline {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 14px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
+      gap: 18px;
+      margin-bottom: 16px;
     }
     .dimension-heading {
       min-width: 0;
-      flex: 1;
+    }
+    .dimension-heading h3 {
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
     .meta {
       display: flex;
@@ -1116,9 +1119,13 @@
     }
     .score-row {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
+      justify-content: flex-start;
+      gap: 10px;
+      margin-bottom: 0;
+      flex: 0 0 auto;
+      min-width: 92px;
     }
     .score-badge {
       width: 82px;
@@ -1143,6 +1150,9 @@
       text-transform: uppercase;
       letter-spacing: 0.14em;
       color: var(--muted);
+      line-height: 1.35;
+      text-align: center;
+      max-width: 140px;
     }
     .dimension-strengths,
     .dimension-concerns {
@@ -1283,6 +1293,9 @@
       .detail-title {
         font-size: 22px;
       }
+      .dimension-topline {
+        grid-template-columns: 1fr;
+      }
       .score-badge {
         width: 74px;
         height: 74px;
@@ -1290,6 +1303,14 @@
         min-height: 74px;
         flex-basis: 74px;
         font-size: 25px;
+      }
+      .score-row {
+        min-width: 0;
+        align-items: flex-start;
+      }
+      .band {
+        text-align: left;
+        max-width: none;
       }
     }
     body.presentation-mode .grid {
