@@ -758,24 +758,6 @@
       box-shadow: 0 10px 22px rgba(15, 17, 21, 0.06);
     }
 
-    .video-shell {
-      margin-top: 16px;
-      overflow: hidden;
-      border-radius: 18px;
-      border: 1px solid rgba(15, 17, 21, 0.08);
-      background:
-        radial-gradient(circle at top right, rgba(51, 75, 110, 0.10), transparent 34%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(243, 246, 248, 0.94));
-      box-shadow: var(--shadow-soft);
-    }
-
-    .video-shell video {
-      display: block;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      background: #eef2f6;
-    }
-
     .reports-shell {
       padding: 24px;
       border: 1px solid rgba(15, 17, 21, 0.08);
@@ -1238,12 +1220,6 @@
             <div class="metric">Overview Video</div>
             <h3>Watch the executive presentation</h3>
             <p class="code-note">A narrative walkthrough of the benchmark-owned product model, scoring architecture, humanities layer, reporting stack, and infrastructure thesis behind Norynthe.</p>
-            <div class="video-shell">
-              <video controls preload="metadata" playsinline>
-                <source src="/executive-overview.mp4" type="video/mp4">
-                Your browser does not support embedded video.
-              </video>
-            </div>
             <div class="report-actions">
               <a
                 class="report-link primary"
