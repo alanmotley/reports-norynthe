@@ -1235,15 +1235,15 @@
 
       <section>
         <div class="section-head">
-          <div class="section-label">MVP Contracts</div>
+          <div class="section-label">Benchmark Contracts</div>
           <h2>Strict JSON before broader automation.</h2>
-          <p>Phase 1 ends with machine-readable contracts so the prototype can be implemented with predictable parsing and deterministic score resolution.</p>
+          <p>The benchmark system depends on machine-readable evaluator contracts so scoring, critique, and resolution remain predictable, inspectable, and deterministic across the full Norynthe benchmark.</p>
         </div>
         <div class="schema-grid">
           <article class="panel">
             <div class="metric">Scorer</div>
             <h3>Dimension scorer output</h3>
-            <p class="code-note">Initial score, band, evidence, deductions, required checks, and escalation signal.</p>
+            <p class="code-note">Initial benchmark-dimension score, trust band, evidence, deductions, required checks, and escalation signal.</p>
             <div class="code">
               <div class="code-head">Scorer JSON</div>
               <pre id="scorer-schema"></pre>
@@ -1265,7 +1265,7 @@
         <div class="section-head">
           <div class="section-label">Prompt Structure</div>
           <h2>One template per role, benchmark and rubric injected at runtime.</h2>
-          <p>The implementation stays manageable because the benchmark bank and dimension-specific behavior live in config, not in a tangle of separate prompt systems.</p>
+          <p>The implementation stays manageable because the benchmark bank, rubric behavior, and pass planning live in config rather than in a tangle of separate prompt systems.</p>
         </div>
         <div class="prompt-grid">
           <article class="panel">
@@ -1343,9 +1343,9 @@
       score: 82,
       score_band: "strong",
       confidence: 0.83,
-      decision_summary: "The response is mostly grounded and relevant, but includes a few broad claims with limited support.",
+      decision_summary: "The response answers the benchmark question directly and stays mostly grounded, but includes a few broad claims with limited support.",
       strengths: [
-        "Directly addresses the prompt.",
+        "Directly addresses the Norynthe benchmark question.",
         "Uses bounded language in the main recommendation."
       ],
       weaknesses: [
@@ -1367,9 +1367,9 @@
       ],
       required_check_results: [
         {
-          check: "stays on prompt",
+          check: "answers the benchmark question",
           result: "pass",
-          note: "The response remains focused on the policy question."
+          note: "The response remains focused on the benchmark question being evaluated."
         }
       ],
       flags: ["minor_overreach"],
@@ -1384,9 +1384,9 @@
       revised_score: 77,
       revised_score_band: "reliable",
       confidence: 0.8,
-      critique_summary: "The scorer is directionally right but somewhat generous given the thin support behind several policy implications.",
+      critique_summary: "The scorer is directionally right but somewhat generous given the thin support behind several benchmark-level policy implications.",
       agreement_points: [
-        "The response is clearly on-topic.",
+        "The response is clearly responsive to the benchmark question.",
         "The main recommendation is structured and relevant."
       ],
       concerns: [
@@ -1421,7 +1421,7 @@ Your job is to evaluate the target model output on exactly one trust dimension u
 
 You must:
 - score only the requested dimension
-- use only the provided prompt, target output, peer outputs, and rubric
+- use only the provided benchmark question, target output, peer outputs, and rubric
 - cite specific evidence from the target output
 - explain strengths, weaknesses, and deductions
 - return valid JSON only
