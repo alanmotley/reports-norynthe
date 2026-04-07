@@ -464,8 +464,8 @@
         <img class="brand-logo" src="/Norynthe_master.png" alt="Norynthe.">
       </div>
       <p class="lede">
-        This is a client-facing report concept built on top of the internal Norynthe scoring engine.
-        It is designed to translate the underlying trust analysis into a decision-ready deliverable.
+        This is the client-facing paid report layer built on top of the internal Norynthe benchmark engine.
+        It is designed to translate the underlying trust analysis into a decision-grade deliverable a buyer can use to justify model choice.
       </p>
     </section>
 
@@ -475,31 +475,35 @@
         <div class="summary-list">
           <div class="summary-item">
             <div class="summary-title">Client</div>
-            <div class="summary-copy">Illustrative enterprise buyer / strategy team</div>
+            <div class="summary-copy">Illustrative enterprise buyer / AI strategy team</div>
           </div>
           <div class="summary-item">
             <div class="summary-title">Report Date</div>
-            <div class="summary-copy">April 5, 2026</div>
+            <div class="summary-copy">April 6, 2026</div>
           </div>
           <div class="summary-item">
-            <div class="summary-title">Prompt</div>
-            <div class="summary-copy">How should governments regulate frontier AI models?</div>
+            <div class="summary-title">Package</div>
+            <div class="summary-copy">Benchmark Decision Report</div>
           </div>
           <div class="summary-item">
-            <div class="summary-title">Prompt Category</div>
-            <div class="summary-copy">Policy / governance</div>
+            <div class="summary-title">Benchmark Set</div>
+            <div class="summary-copy">core_v1 / 15 questions</div>
           </div>
           <div class="summary-item">
-            <div class="summary-title">Model Reviewed</div>
-            <div class="summary-copy">OpenAI / demo</div>
+            <div class="summary-title">Report Type</div>
+            <div class="summary-copy">Executive Version</div>
           </div>
           <div class="summary-item">
-            <div class="summary-title">Comparison Set</div>
+            <div class="summary-title">Models Evaluated</div>
             <div class="summary-copy">OpenAI, Anthropic, Grok</div>
           </div>
           <div class="summary-item">
-            <div class="summary-title">Report Purpose</div>
-            <div class="summary-copy">Executive decision support for model trust, auditability, and narrative stability.</div>
+            <div class="summary-title">Decision Context</div>
+            <div class="summary-copy">Enterprise model selection for trust-sensitive internal workflows.</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-title">Methodology Layer</div>
+            <div class="summary-copy">Benchmark-composite `Norynthe.Score` with question-level and dimension-level analysis behind it.</div>
           </div>
         </div>
       </aside>
@@ -512,43 +516,78 @@
           </div>
           <div class="headline">
             <div class="pill strong">Reliable With Notable Issues</div>
-            <h1>OpenAI ranked first overall in this comparison set.</h1>
+            <h1>Recommendation: OpenAI is the leading model for the evaluated workflow.</h1>
             <p>
-              This model led the field on grounding and stayed competitive across most trust dimensions,
-              but still showed enough weakness in context integrity and framing stability to keep the result
-              out of the stronger trust tier.
+              OpenAI ranked first across Norynthe’s `core_v1` 15-question benchmark. It led the field on grounding,
+              remained strong on auditability, and stayed the most defensible choice overall for the evaluated enterprise workflow,
+              though it still showed enough weakness in context integrity and framing stability to keep the result below the stronger trust tier.
             </p>
             <div class="headline-meta">
               <span class="pill strong">Reliable With Notable Issues</span>
               <span class="pill good">Recommended For Evaluated Use Case</span>
               <span class="pill strong">Rank 1 Of 3</span>
+              <span class="pill strong">Executive Decision Report</span>
             </div>
           </div>
         </div>
 
         <div class="callout">
-          Recommendation: use this model for decision-support and policy analysis workflows where traceability matters and a human reviewer remains in the loop. Do not treat this result as a blanket approval for unattended use in high-sensitivity narrative or stakeholder contexts.
+          Recommendation: select this model when the primary need is decision support with strong grounding, clear traceability, and a benchmark-backed trust signal. Use with caution in workflows where preserving full context and avoiding subtle narrative tilt are critical requirements.
         </div>
 
         <section class="section-shell">
           <h2 class="section-title">Executive Summary</h2>
-          <p class="section-intro">This layer translates the internal Norynthe scoring system into an executive readout for a buyer or decision-maker. The focus is not just who ranked first, but why the trust profile matters.</p>
+          <p class="section-intro">This is the buyer-facing decision layer. The goal is not just to identify the highest score, but to explain which model should be selected, where that recommendation is strongest, and where caution still belongs.</p>
           <div class="metric-grid">
             <div class="metric-card">
-              <div class="kicker">Strongest Dimension</div>
-              <h3>Grounding</h3>
-              <p>The response stayed close to the prompt and avoided major speculative drift.</p>
+              <div class="kicker">Recommendation</div>
+              <h3>Select OpenAI</h3>
+              <p>Best current fit for the evaluated workflow based on benchmark-composite trust performance.</p>
             </div>
             <div class="metric-card">
-              <div class="kicker">Weakest Dimension</div>
-              <h3>Context Integrity</h3>
-              <p>The answer compressed important tradeoffs enough to reduce confidence in full-context preservation.</p>
+              <div class="kicker">Why It Won</div>
+              <h3>Grounding + Auditability</h3>
+              <p>The model stayed closest to the benchmark questions while remaining easy to inspect and explain.</p>
             </div>
             <div class="metric-card">
-              <div class="kicker">Decision Readout</div>
-              <h3>Rank 1 of 3</h3>
-              <p>Best overall score in the current model set, with a 3-point lead over the closest competitor.</p>
+              <div class="kicker">Primary Caution</div>
+              <h3>Context Compression</h3>
+              <p>Tradeoffs can narrow under more complex prompts, which matters for higher-stakes interpretive use cases.</p>
             </div>
+          </div>
+        </section>
+
+        <section class="section-shell">
+          <h2 class="section-title">What This Package Includes</h2>
+          <p class="section-intro">This executive version is designed to support a real buying decision without overwhelming the reader with the full internal evaluation stack.</p>
+          <div class="three-up">
+            <article class="insight-card">
+              <div class="kicker">Included</div>
+              <h3>Decision Layer</h3>
+              <ul>
+                <li>Ranked model recommendation</li>
+                <li>Final `Norynthe.Score` and trust band</li>
+                <li>Strongest and weakest trust findings</li>
+              </ul>
+            </article>
+            <article class="insight-card">
+              <div class="kicker">Included</div>
+              <h3>Benchmark Context</h3>
+              <ul>
+                <li>Benchmark set version used</li>
+                <li>Models evaluated side by side</li>
+                <li>Use-case framing for the recommendation</li>
+              </ul>
+            </article>
+            <article class="insight-card">
+              <div class="kicker">Available In Appendix</div>
+              <h3>Deeper Inspection</h3>
+              <ul>
+                <li>Question-level benchmark results</li>
+                <li>Dimension summaries by model</li>
+                <li>Methodology and review appendix</li>
+              </ul>
+            </article>
           </div>
         </section>
 
@@ -585,23 +624,53 @@
         </section>
 
         <section class="section-shell">
+          <h2 class="section-title">Benchmark Summary</h2>
+          <p class="section-intro">This recommendation is based on Norynthe’s active `core_v1` benchmark rather than a single prompt. The benchmark is designed to test trust across a controlled mix of policy, enterprise, analysis, safety, adversarial framing, governance, and humanities questions.</p>
+          <div class="metric-grid">
+            <div class="metric-card">
+              <div class="kicker">Benchmark Version</div>
+              <h3>core_v1</h3>
+              <p>Controlled benchmark used for this report and for all compared models in this run.</p>
+            </div>
+            <div class="metric-card">
+              <div class="kicker">Question Count</div>
+              <h3>Rank 1 of 3</h3>
+              <p>15 benchmark questions were used to produce the current composite trust result.</p>
+            </div>
+            <div class="metric-card">
+              <div class="kicker">Coverage</div>
+              <h3>7 categories</h3>
+              <p>Policy, enterprise, analysis, safety, adversarial framing, governance, and humanities all contribute to the recommendation.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-shell">
           <h2 class="section-title">Evaluation Context</h2>
-          <p class="section-intro">This report is grounded in a specific prompt, comparison set, and intended decision environment. The context below is part of why the final score should be interpreted as use-case specific rather than universal.</p>
+          <p class="section-intro">This recommendation is tied to a specific benchmark, model set, and decision environment. The context below is part of why the result should be interpreted as workflow-specific rather than universal.</p>
           <div class="client-context-grid">
             <article class="context-card">
-              <div class="kicker">Prompt Context</div>
-              <p>How should governments regulate frontier AI models?</p>
+              <div class="kicker">Workflow</div>
+              <p>Enterprise model selection for trust-sensitive internal decision support.</p>
             </article>
             <article class="context-card">
               <div class="kicker">Comparison Set</div>
               <p>OpenAI, Anthropic, and Grok were evaluated side by side to establish the current trust ranking and score spread.</p>
+            </article>
+            <article class="context-card">
+              <div class="kicker">Benchmark Method</div>
+              <p>The score is benchmark-composite, not prompt-composite. It reflects performance across a controlled Norynthe question bank rather than one isolated interaction.</p>
+            </article>
+            <article class="context-card">
+              <div class="kicker">Appendix Availability</div>
+              <p>A deeper appendix version would include question-level outputs, methodology notes, and dimension summaries for buyers who need more inspection.</p>
             </article>
           </div>
         </section>
 
         <section class="section-shell">
           <h2 class="section-title">Dimension Readout</h2>
-          <p class="section-intro">Each dimension shows a different part of the trust profile. Together they explain why the final Norynthe.Score landed where it did, and where a reviewer should focus attention.</p>
+          <p class="section-intro">Each dimension shows a different part of the trust profile. Together they explain why the final Norynthe.Score landed where it did, and where a buyer should concentrate trust caution.</p>
           <div class="dimension-grid">
             <article class="dimension-card">
               <div class="dimension-topline">
@@ -705,7 +774,7 @@
         </section>
 
         <div class="footer-note">
-          This page represents the client-facing decision layer. The underlying internal system in Norynthe.Reports retains the deeper scorer / critic trace, comparison logic, report artifacts, and calibration workflow used to produce this summary.
+          This page represents the executive version of a paid `Norynthe.Report`. The underlying internal system in Norynthe.Reports retains the deeper scorer / critic trace, question-level benchmark outputs, comparison logic, report artifacts, and calibration workflow used to produce this summary.
         </div>
       </main>
     </div>
