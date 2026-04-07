@@ -678,6 +678,22 @@
       box-shadow: 0 10px 22px rgba(15, 17, 21, 0.06);
     }
 
+    .video-shell {
+      margin-top: 16px;
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid rgba(15, 17, 21, 0.08);
+      background: rgba(255, 255, 255, 0.74);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .video-shell video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #0f1115;
+    }
+
     .footer-note {
       width: min(100%, 54rem);
       margin: 4rem auto 0;
@@ -1074,7 +1090,7 @@
           <h2>The trust standard now has a visible product layer.</h2>
           <p>This is the part the system needed next: internal and client-facing report surfaces that turn the 15-question benchmark engine into something people can actually walk through.</p>
         </div>
-        <div class="grid-2">
+        <div class="grid-3">
           <article class="panel">
             <div class="metric">Internal Surface</div>
             <h3>Norynthe.Reports</h3>
@@ -1090,6 +1106,25 @@
             <div class="report-actions">
               <a class="report-link primary" href="./norynthe-customer-report.html">Open Norynthe.Report</a>
               <a class="report-link" href="./norynthe-customer-report-appendix.html">Open Report Appendix</a>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="metric">Overview Video</div>
+            <h3>Watch the executive presentation</h3>
+            <p class="code-note">A narrative walkthrough of the benchmark-owned product model, scoring architecture, humanities layer, reporting stack, and infrastructure thesis behind Norynthe.</p>
+            <div class="video-shell">
+              <video controls preload="metadata" playsinline>
+                <source src="/executive-overview.mp4" type="video/mp4">
+                Your browser does not support embedded video.
+              </video>
+            </div>
+            <div class="report-actions">
+              <a
+                class="report-link primary"
+                href="/executive-overview.mp4"
+                target="_blank"
+                rel="noopener noreferrer"
+              >Open Video In New Tab</a>
             </div>
           </article>
         </div>
