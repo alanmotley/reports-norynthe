@@ -8,8 +8,8 @@
     name="description"
     content="Norynthe: An independent rubric-based trust scoring and verification framework for AI models."
   >
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="icon" type="image/png" href="../../../favicon.png">
+  <link rel="apple-touch-icon" href="../../../favicon.png">
   <style>
     :root {
       --bg: #edf1f4;
@@ -175,7 +175,6 @@
       padding: 22px 24px;
       border: 1px solid var(--line);
       border-radius: var(--radius-md);
-      background: rgba(255, 255, 255, 0.72);
       box-shadow: var(--shadow-soft);
       margin-bottom: 28px;
     }
@@ -212,29 +211,54 @@
       margin: 18px 0 22px;
       padding: 18px 20px;
       border-left: 3px solid rgba(122, 48, 48, 0.6);
-      background: rgba(255, 255, 255, 0.72);
       border-radius: 14px;
       color: #2d3946;
       box-shadow: var(--shadow-soft);
     }
 
     .diagram {
-      margin: 22px 0 28px;
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      background: linear-gradient(180deg, rgba(255,255,255,0.78), rgba(248,250,252,0.7));
-      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+      margin: 24px 0 30px;
+      padding: 18px 18px 14px;
+      border: 1px solid rgba(19, 23, 28, 0.08);
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at top right, rgba(50, 73, 100, 0.08), transparent 26%),
+        radial-gradient(circle at bottom left, rgba(122, 48, 48, 0.07), transparent 22%),
+        linear-gradient(180deg, rgba(255,255,255,0.9), rgba(247,249,251,0.92));
+      box-shadow: 0 18px 42px rgba(19, 23, 28, 0.08);
     }
 
-    pre.mermaid {
-      margin: 0;
-      white-space: pre-wrap;
-      overflow: auto;
-      font-family: "SFMono-Regular", SFMono-Regular, ui-monospace, Menlo, Consolas, monospace;
-      font-size: 0.82rem;
-      line-height: 1.6;
-      color: #2d3946;
+    .diagram::after {
+      content: "";
+      position: absolute;
+      inset: auto 10% 0 10%;
+      height: 28px;
+      background: radial-gradient(ellipse at center, rgba(19, 23, 28, 0.08), rgba(19, 23, 28, 0));
+      filter: blur(16px);
+      pointer-events: none;
+      opacity: 0.85;
+    }
+
+    .diagram-figure {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+      margin: 0 auto;
+      border-radius: 16px;
+    }
+
+    .diagram-caption {
+      margin-top: 10px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(19, 23, 28, 0.08);
+      color: #516070;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.78rem;
+      line-height: 1.7;
+      letter-spacing: 0.01em;
     }
 
     code {
@@ -249,86 +273,86 @@
     }
 
     .hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
-  gap: 18px;
-  align-items: end;
-  margin-top: 28px;
-}
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+      gap: 18px;
+      align-items: end;
+      margin-top: 28px;
+    }
 
-.hero-summary,
-.glance-card {
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.76);
-  box-shadow: var(--shadow-soft);
-}
+    .hero-summary,
+    .glance-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.76);
+      box-shadow: var(--shadow-soft);
+    }
 
-.hero-summary {
-  padding: 20px 22px;
-}
+    .hero-summary {
+      padding: 20px 22px;
+    }
 
-.hero-summary h2 {
-  margin: 0 0 10px;
-  font-size: 1.06rem;
-  letter-spacing: -0.02em;
-}
+    .hero-summary h2 {
+      margin: 0 0 10px;
+      font-size: 1.06rem;
+      letter-spacing: -0.02em;
+    }
 
-.hero-summary p {
-  margin: 0;
-  color: #314151;
-  font-size: 0.98rem;
-  line-height: 1.75;
-}
+    .hero-summary p {
+      margin: 0;
+      color: #314151;
+      font-size: 0.98rem;
+      line-height: 1.75;
+    }
 
-.hero-list {
-  margin: 0;
-  padding-left: 18px;
-}
+    .hero-list {
+      margin: 0;
+      padding-left: 18px;
+    }
 
-.hero-list li {
-  margin-bottom: 8px;
-  font-size: 0.96rem;
-  line-height: 1.7;
-}
+    .hero-list li {
+      margin-bottom: 8px;
+      font-size: 0.96rem;
+      line-height: 1.7;
+    }
 
-.glance {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-  margin: 6px 0 30px;
-}
+    .glance {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin: 6px 0 30px;
+    }
 
-.glance-card {
-  padding: 18px 18px 16px;
-}
+    .glance-card {
+      padding: 18px 18px 16px;
+    }
 
-.glance-label {
-  margin: 0 0 10px;
-  color: var(--muted);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
+    .glance-label {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
 
-.glance-card h3 {
-  margin: 0 0 8px;
-  font-size: 1.02rem;
-}
+    .glance-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.02rem;
+    }
 
-.glance-card p {
-  margin: 0;
-  color: #314151;
-  font-size: 0.95rem;
-  line-height: 1.72;
-}
+    .glance-card p {
+      margin: 0;
+      color: #314151;
+      font-size: 0.95rem;
+      line-height: 1.72;
+    }
 
-.section-intro {
-  max-width: 42rem;
-  color: #46525f;
-  font-size: 1rem;
-}
+    .section-intro {
+      max-width: 42rem;
+      color: #46525f;
+      font-size: 1rem;
+    }
 
 .diagram-label {
   display: inline-flex;
@@ -360,7 +384,6 @@
   text-transform: uppercase;
   line-height: 1.8;
 }
-
 
     @media (max-width: 760px) {
       .page {
@@ -394,7 +417,7 @@
     <div class="topline">
       <span>Norynthe Research</span>
       <nav>
-        <a href="index.html">Back</a>
+        <a href="../../../index.html">Back</a>
         <a href="#problem">Problem</a>
         <a href="#thesis">Thesis</a>
         <a href="#structure">Structure</a>
@@ -454,7 +477,6 @@
           <p>The public score remains legible for the market, while the verification layer adds blockers, reproducibility, and escalation for higher-stakes use.</p>
         </article>
       </section>
-
       <section id="problem">
 
         <h2>1. The Problem</h2>
@@ -483,17 +505,9 @@
         </ul>
         <p>Norynthe therefore defines a three-layer product structure: <code>Norynthe Score</code>, <code>Norynthe Report</code>, and <code>Norynthe Verification</code>.</p>
         <div class="diagram">
-          <div class="diagram-label">Framework Diagram</div>
-          <pre class="mermaid">flowchart TD
-    A["Controlled Benchmark"] --> B["Rubric Evaluation"]
-    B --> C["Norynthe Score"]
-    B --> D["Norynthe Report"]
-    C --> E["Public Market Signal"]
-    D --> F["Evidence and Explanation"]
-    C --> G["Verification Overlay"]
-    D --> G
-    G --> H["Norynthe Verification"]
-    H --> I["Pass / Conditional Pass / Fail / Human Review Required"]</pre>
+          <div class="diagram-label">Figure 1 · Product Stack</div>
+          <img class="diagram-figure" src="figures/figure-1-product-stack.svg" alt="Figure 1 showing the Norynthe product stack from benchmark and rubric through score, report, and verification.">
+          <div class="diagram-caption">The public score, explanatory report, and verification layer are built from the same controlled evaluation standard rather than from vendor-defined benchmarks.</div>
         </div>
         <p>This design allows Norynthe to operate as both a public trust index and a serious verification framework.</p>
       </section>
@@ -556,19 +570,9 @@
           <li><code>human_review_required</code></li>
         </ul>
         <div class="diagram">
-          <div class="diagram-label">Framework Diagram</div>
-          <pre class="mermaid">flowchart LR
-    A["Norynthe Score"] --> B["Norynthe Report"]
-    A --> C["Verification Overlay"]
-    B --> C
-    C --> D["Blocker Criteria"]
-    C --> E["Evidence Admissibility"]
-    C --> F["Reproducibility Checks"]
-    C --> G["Escalation Policy"]
-    D --> H["Verification Verdict"]
-    E --> H
-    F --> H
-    G --> H</pre>
+          <div class="diagram-label">Figure 2 · Verification Overlay</div>
+          <img class="diagram-figure" src="figures/figure-2-verification-overlay.svg" alt="Figure 2 showing verification as an overlay applied to the Norynthe score and report.">
+          <div class="diagram-caption">Verification is not a separate benchmark. It is a stricter decision layer that adds admissibility, blocker, reproducibility, and escalation logic on top of the score and report.</div>
         </div>
       </section>
 
@@ -599,22 +603,9 @@
           <li>Escalation triggers</li>
         </ul>
         <div class="diagram">
-          <div class="diagram-label">Framework Diagram</div>
-          <pre class="mermaid">flowchart TD
-    A["Rubric System"] --> B["Core Score Dimensions"]
-    A --> C["Diagnostic Signals"]
-    A --> D["Verification Criteria"]
-    B --> B1["Grounding"]
-    B --> B2["Evidence Strength"]
-    B --> B3["Consistency"]
-    B --> B4["Context Integrity"]
-    B --> B5["Interpretive Stability"]
-    B --> B6["Auditability"]
-    C --> C1["Cross-Model Alignment"]
-    D --> D1["Blockers"]
-    D --> D2["Required Checks"]
-    D --> D3["Reproducibility"]
-    D --> D4["Escalation"]</pre>
+          <div class="diagram-label">Figure 3 · Rubric Architecture</div>
+          <img class="diagram-figure" src="figures/figure-3-rubric-architecture.svg" alt="Figure 3 showing the Norynthe rubric system divided into core score dimensions, diagnostic signals, and verification criteria.">
+          <div class="diagram-caption">The rubric separates what contributes to the public score from what remains diagnostic and what only matters during higher-stakes verification.</div>
         </div>
       </section>
 
@@ -638,20 +629,9 @@
         <h3>7.3 Resolver</h3>
         <p>The resolver applies deterministic application logic to finalize dimension results when scorer and critic outcomes diverge.</p>
         <div class="diagram">
-          <div class="diagram-label">Framework Diagram</div>
-          <pre class="mermaid">sequenceDiagram
-    participant B as Benchmark
-    participant S as Scorer
-    participant C as Critic
-    participant R as Resolver
-    participant A as Aggregator
-
-    B->>S: model output + rubric context
-    S->>C: initial score + evidence + deductions
-    C->>R: approve / revise / escalate
-    R->>A: resolved dimension result
-    A->>A: aggregate across dimensions and questions
-    A-->>B: score + report + optional verification handoff</pre>
+          <div class="diagram-label">Figure 4 · Evaluation Flow</div>
+          <img class="diagram-figure" src="figures/figure-4-evaluation-flow.svg" alt="Figure 4 showing the Norynthe evaluation flow from benchmark context through scorer, critic, resolver, aggregation, and verification.">
+          <div class="diagram-caption">Norynthe uses challenge-and-resolution inside the evaluator flow so the final score is the product of a governed process rather than a single opaque judgment.</div>
         </div>
       </section>
 
@@ -758,9 +738,5 @@
       </div>
     </article>
   </div>
-  <script type="module">
-    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-    mermaid.initialize({ startOnLoad: true, theme: "neutral" });
-  </script>
 </body>
 </html>
