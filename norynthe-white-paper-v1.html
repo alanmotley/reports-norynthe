@@ -9,6 +9,30 @@
     content="Norynthe: An independent rubric-based trust scoring and verification framework for AI models."
   >
   <link rel="icon" type="image/png" href="../../../favicon.png">
+  <script>
+    (function () {
+      function pathExists(url) {
+        var xhr = new XMLHttpRequest();
+        try {
+          xhr.open("HEAD", url, false);
+          xhr.send();
+          return xhr.status >= 200 && xhr.status < 400;
+        } catch (error) {
+          return false;
+        }
+      }
+
+      var rootFavicon = "favicon.png";
+      var localFavicon = "../../../favicon.png";
+      var faviconHref = pathExists(localFavicon) ? localFavicon : rootFavicon;
+
+      document.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]').forEach(function (node) {
+        node.setAttribute("href", faviconHref);
+      });
+
+      window.__noryntheNavHref = pathExists("../../../index.html") ? "../../../index.html" : (pathExists("index.html") ? "index.html" : "norynthe-index.html");
+    })();
+  </script>
   <link rel="apple-touch-icon" href="../../../favicon.png">
   <style>
     :root {
@@ -417,7 +441,7 @@
     <div class="topline">
       <span>Norynthe Research</span>
       <nav>
-        <a href="../../../index.html">Back</a>
+        <a href="../../../index.html" id="backLink">Back</a>
         <a href="#problem">Problem</a>
         <a href="#thesis">Thesis</a>
         <a href="#structure">Structure</a>
@@ -506,7 +530,7 @@
         <p>Norynthe therefore defines a three-layer product structure: <code>Norynthe Score</code>, <code>Norynthe Report</code>, and <code>Norynthe Verification</code>.</p>
         <div class="diagram">
           <div class="diagram-label">Figure 1 · Product Stack</div>
-          <img class="diagram-figure" src="figures/figure-1-product-stack.svg" alt="Figure 1 showing the Norynthe product stack from benchmark and rubric through score, report, and verification.">
+          <img class="diagram-figure" src="figures/figure-1-product-stack.svg" onerror="this.onerror=null;this.src='figure-1-product-stack.svg'" alt="Figure 1 showing the Norynthe product stack from benchmark and rubric through score, report, and verification.">
           <div class="diagram-caption">The public score, explanatory report, and verification layer are built from the same controlled evaluation standard rather than from vendor-defined benchmarks.</div>
         </div>
         <p>This design allows Norynthe to operate as both a public trust index and a serious verification framework.</p>
@@ -571,7 +595,7 @@
         </ul>
         <div class="diagram">
           <div class="diagram-label">Figure 2 · Verification Overlay</div>
-          <img class="diagram-figure" src="figures/figure-2-verification-overlay.svg" alt="Figure 2 showing verification as an overlay applied to the Norynthe score and report.">
+          <img class="diagram-figure" src="figures/figure-2-verification-overlay.svg" onerror="this.onerror=null;this.src='figure-2-verification-overlay.svg'" alt="Figure 2 showing verification as an overlay applied to the Norynthe score and report.">
           <div class="diagram-caption">Verification is not a separate benchmark. It is a stricter decision layer that adds admissibility, blocker, reproducibility, and escalation logic on top of the score and report.</div>
         </div>
       </section>
@@ -604,7 +628,7 @@
         </ul>
         <div class="diagram">
           <div class="diagram-label">Figure 3 · Rubric Architecture</div>
-          <img class="diagram-figure" src="figures/figure-3-rubric-architecture.svg" alt="Figure 3 showing the Norynthe rubric system divided into core score dimensions, diagnostic signals, and verification criteria.">
+          <img class="diagram-figure" src="figures/figure-3-rubric-architecture.svg" onerror="this.onerror=null;this.src='figure-3-rubric-architecture.svg'" alt="Figure 3 showing the Norynthe rubric system divided into core score dimensions, diagnostic signals, and verification criteria.">
           <div class="diagram-caption">The rubric separates what contributes to the public score from what remains diagnostic and what only matters during higher-stakes verification.</div>
         </div>
       </section>
@@ -630,7 +654,7 @@
         <p>The resolver applies deterministic application logic to finalize dimension results when scorer and critic outcomes diverge.</p>
         <div class="diagram">
           <div class="diagram-label">Figure 4 · Evaluation Flow</div>
-          <img class="diagram-figure" src="figures/figure-4-evaluation-flow.svg" alt="Figure 4 showing the Norynthe evaluation flow from benchmark context through scorer, critic, resolver, aggregation, and verification.">
+          <img class="diagram-figure" src="figures/figure-4-evaluation-flow.svg" onerror="this.onerror=null;this.src='figure-4-evaluation-flow.svg';this.onerror=function(){this.onerror=null;this.src='figure-4-evaluation-flow.drawio.svg'}" alt="Figure 4 showing the Norynthe evaluation flow from benchmark context through scorer, critic, resolver, aggregation, and verification.">
           <div class="diagram-caption">Norynthe uses challenge-and-resolution inside the evaluator flow so the final score is the product of a governed process rather than a single opaque judgment.</div>
         </div>
       </section>
@@ -738,5 +762,13 @@
       </div>
     </article>
   </div>
+  <script>
+    (function () {
+      var backLink = document.getElementById("backLink");
+      if (backLink && window.__noryntheNavHref) {
+        backLink.setAttribute("href", window.__noryntheNavHref);
+      }
+    })();
+  </script>
 </body>
 </html>
