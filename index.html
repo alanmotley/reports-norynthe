@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Norynthe. / Phase 1</title>
+  <title>Norynthe. / Independent AI Scoring and Verification</title>
   <meta
     name="description"
-    content="Norynthe Phase 1: scoring logic, architecture, workbook governance, and MVP agent contracts."
+    content="Norynthe: independent AI scoring and verification, scoring logic, workbook governance, and evaluator architecture."
   >
   <style>
     :root {
@@ -683,7 +683,7 @@
         </nav>
       </div>
 
-      <section class="hero" aria-label="Norynthe Phase 1">
+      <section class="hero" aria-label="Norynthe">
         <div class="brand-lockup">
           <div class="logo-shell">
             <div class="logo-wrap">
@@ -697,13 +697,13 @@
             </div>
             <span class="dot dot-overlay" aria-hidden="true"></span>
           </div>
-          <p class="subline">Phase 1 / scoring logic / verification architecture / workbook governance / MVP contracts</p>
+          <p class="subline">Independent AI scoring / verification architecture / workbook governance / evaluator contracts</p>
         </div>
 
         <div class="hero-copy">
           <h1>Build the trust standard before the product races ahead.</h1>
           <p>
-            Phase 1 turns Norynthe into a governed scoring and verification system: six public score dimensions,
+            Norynthe is a governed scoring and verification system: six public score dimensions,
             one diagnostic comparative signal, scorer and critic agents per dimension, deterministic resolution,
             calibration prompts, and the workbook layer that makes the process explainable to buyers,
             researchers, and investors.
@@ -757,7 +757,7 @@
         <div class="section-head">
           <div class="section-label">Current State</div>
           <h2>Where we are now, and why it matters.</h2>
-          <p>This is no longer only a concept pass. Phase 1 now has a canonical scoring standard, a runnable prototype path, and a clearer bridge from investor narrative to actual implementation.</p>
+          <p>This is no longer only a concept pass. Norynthe now has a canonical scoring standard, a runnable prototype path, and a clearer bridge from investor narrative to actual implementation.</p>
         </div>
         <div class="status-grid">
           <article class="status-card">
@@ -765,7 +765,7 @@
             <h3>Canonical source of truth</h3>
             <p>The rubric, score bands, weights, pass plan, and resolver policy now live in one implementation-ready config instead of scattered notes.</p>
             <ul class="status-list">
-              <li>Single config for all seven dimensions</li>
+              <li>Single config for six score dimensions plus one diagnostic signal</li>
               <li>Per-dimension prompt-pass plan encoded</li>
               <li>Workbook and runtime now point to the same standard</li>
             </ul>
@@ -782,7 +782,7 @@
           </article>
           <article class="status-card">
             <div class="metric">Why</div>
-            <h3>Strategic reason for Phase 1</h3>
+            <h3>Why this layer matters</h3>
             <p>Before scaling evaluation, the system needed a governed standard. This phase reduces drift, clarifies the investor story, and makes future calibration meaningful instead of arbitrary.</p>
             <ul class="status-list">
               <li>Trust logic becomes inspectable</li>
@@ -922,7 +922,7 @@
           <article class="artifact">
             <div class="metric">Calibration</div>
             <h3>Prompt benchmark suite</h3>
-            <p>Phase 1 starts with 20 prompts spanning policy, factual, ethics, business, and adversarial categories to stress different trust behaviors.</p>
+            <p>The current benchmark suite starts with 20 prompts spanning policy, factual, ethics, business, and adversarial categories to stress different trust behaviors.</p>
           </article>
           <article class="artifact">
             <div class="metric">Governance</div>
@@ -964,9 +964,9 @@
 
       <section id="agents">
         <div class="section-head">
-          <div class="section-label">MVP Contracts</div>
+          <div class="section-label">Evaluator Contracts</div>
           <h2>Strict JSON before broader automation.</h2>
-          <p>Phase 1 ends with machine-readable output contracts so the prototype can be implemented with predictable parsing and deterministic score resolution.</p>
+          <p>The system is defined through machine-readable output contracts so it can be implemented with predictable parsing and deterministic score resolution.</p>
         </div>
         <div class="schema-grid">
           <article class="panel">
@@ -1020,7 +1020,7 @@
         <div class="section-head">
           <div class="section-label">Next Step</div>
           <h2>What comes immediately after this.</h2>
-          <p>The next milestone is calibration with real model runs. That means validating malformed JSON handling, running live dimensions against actual outputs, and comparing whether the score and diagnostic layers behave the way this Phase 1 system says they should.</p>
+          <p>The next milestone is calibration with real model runs. That means validating malformed JSON handling, running live dimensions against actual outputs, and comparing whether the score and diagnostic layers behave the way this system says they should.</p>
         </div>
         <div class="grid-3">
           <article class="card">
@@ -1045,7 +1045,7 @@
         <div class="section-head">
           <div class="section-label">Infrastructure Thesis</div>
           <h2>Why DGX-class systems may matter.</h2>
-          <p>Phase 1 does not require owned compute to prove the scoring system. But if Norynthe becomes a real trust infrastructure layer, high-end local compute starts to matter for control, cost, privacy, and strategic independence.</p>
+          <p>The current system does not require owned compute to prove the scoring framework. But if Norynthe becomes a real trust infrastructure layer, high-end local compute starts to matter for control, cost, privacy, and strategic independence.</p>
         </div>
         <div class="grid-3">
           <article class="card">
@@ -1072,8 +1072,8 @@
           </article>
           <article class="card">
             <div class="metric">Important</div>
-            <h3>Not required for Phase 1</h3>
-            <p>Phase 1 should still move fastest with API-backed execution. DGX-class systems are a scale and control argument, not a prerequisite for validating the trust framework itself.</p>
+            <h3>Not required today</h3>
+            <p>This system should still move fastest with API-backed execution. DGX-class systems are a scale and control argument, not a prerequisite for validating the trust framework itself.</p>
           </article>
           <article class="card">
             <div class="metric">Outcome</div>
