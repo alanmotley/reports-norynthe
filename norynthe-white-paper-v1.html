@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Norynthe White Paper v1</title>
+  <meta
+    name="description"
+    content="Norynthe: An independent rubric-based trust scoring and verification framework for AI models."
+  >
+  <style>
+    :root {
+      --bg: #edf1f4;
+      --paper: #fbfcfd;
+      --ink: #13171c;
+      --muted: #5b6570;
+      --line: rgba(19, 23, 28, 0.09);
+      --slate: #324964;
+      --signal: #7a3030;
+      --signal-soft: rgba(122, 48, 48, 0.08);
+      --slate-soft: rgba(50, 73, 100, 0.08);
+      --shadow: 0 24px 64px rgba(19, 23, 28, 0.08);
+      --shadow-soft: 0 10px 28px rgba(19, 23, 28, 0.05);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --max: 980px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100%;
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", Times, serif;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(122, 48, 48, 0.06), transparent 24%),
+        radial-gradient(circle at 82% 10%, rgba(50, 73, 100, 0.08), transparent 26%),
+        linear-gradient(180deg, #f4f7f9 0%, #edf1f4 48%, #f3f6f8 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(19, 23, 28, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(19, 23, 28, 0.015) 1px, transparent 1px);
+      background-size: 72px 72px;
+      opacity: 0.75;
+      z-index: -2;
+    }
+
+    a { color: var(--slate); }
+
+    .page {
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
+      padding: 32px 0 72px;
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 26px;
+      color: var(--muted);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .topline nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .topline nav a {
+      text-decoration: none;
+      color: var(--muted);
+    }
+
+    .hero,
+    .paper {
+      background: rgba(251, 252, 253, 0.86);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      padding: 42px 42px 36px;
+      margin-bottom: 24px;
+      background:
+        radial-gradient(circle at top right, rgba(50, 73, 100, 0.09), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(122, 48, 48, 0.07), transparent 26%),
+        rgba(251, 252, 253, 0.9);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 32px 28px auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.8rem, 6vw, 4.8rem);
+      line-height: 0.94;
+      letter-spacing: -0.06em;
+      max-width: 11ch;
+    }
+
+    .subtitle {
+      margin: 20px 0 0;
+      max-width: 44rem;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.86;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--muted);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .paper {
+      border-radius: var(--radius-lg);
+      padding: 40px 42px 48px;
+    }
+
+    .abstract {
+      padding: 22px 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 28px;
+    }
+
+    h2 {
+      margin: 36px 0 12px;
+      font-size: clamp(1.5rem, 2.8vw, 2.05rem);
+      line-height: 1.04;
+      letter-spacing: -0.04em;
+    }
+
+    h3 {
+      margin: 22px 0 8px;
+      font-size: 1.08rem;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    p, li {
+      font-size: 1.02rem;
+      line-height: 1.88;
+    }
+
+    p {
+      margin: 0 0 16px;
+    }
+
+    ul, ol {
+      margin: 0 0 18px 22px;
+      padding: 0;
+    }
+
+    blockquote {
+      margin: 18px 0 22px;
+      padding: 18px 20px;
+      border-left: 3px solid rgba(122, 48, 48, 0.6);
+      background: rgba(255, 255, 255, 0.72);
+      border-radius: 14px;
+      color: #2d3946;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .diagram {
+      margin: 22px 0 28px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: linear-gradient(180deg, rgba(255,255,255,0.78), rgba(248,250,252,0.7));
+      box-shadow: var(--shadow-soft);
+    }
+
+    pre.mermaid {
+      margin: 0;
+      white-space: pre-wrap;
+      overflow: auto;
+      font-family: "SFMono-Regular", SFMono-Regular, ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: #2d3946;
+    }
+
+    code {
+      font-family: "SFMono-Regular", SFMono-Regular, ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+
+    .appendix {
+      margin-top: 34px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+    }
+
+    .hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+  gap: 18px;
+  align-items: end;
+  margin-top: 28px;
+}
+
+.hero-summary,
+.glance-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: var(--shadow-soft);
+}
+
+.hero-summary {
+  padding: 20px 22px;
+}
+
+.hero-summary h2 {
+  margin: 0 0 10px;
+  font-size: 1.06rem;
+  letter-spacing: -0.02em;
+}
+
+.hero-summary p {
+  margin: 0;
+  color: #314151;
+  font-size: 0.98rem;
+  line-height: 1.75;
+}
+
+.hero-list {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.hero-list li {
+  margin-bottom: 8px;
+  font-size: 0.96rem;
+  line-height: 1.7;
+}
+
+.glance {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 6px 0 30px;
+}
+
+.glance-card {
+  padding: 18px 18px 16px;
+}
+
+.glance-label {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.glance-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.02rem;
+}
+
+.glance-card p {
+  margin: 0;
+  color: #314151;
+  font-size: 0.95rem;
+  line-height: 1.72;
+}
+
+.section-intro {
+  max-width: 42rem;
+  color: #46525f;
+  font-size: 1rem;
+}
+
+.diagram-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.diagram-label::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: rgba(122, 48, 48, 0.3);
+}
+
+.paper-footer {
+  margin-top: 34px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.8;
+}
+
+
+    @media (max-width: 760px) {
+      .page {
+        width: min(calc(100% - 24px), var(--max));
+        padding-top: 18px;
+      }
+
+      .topline {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero,
+      .paper {
+        padding: 26px 20px 30px;
+      }
+
+      .hero-grid,
+      .glance {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topline">
+      <span>Norynthe Research</span>
+      <nav>
+        <a href="#problem">Problem</a>
+        <a href="#thesis">Thesis</a>
+        <a href="#structure">Structure</a>
+        <a href="#rubric">Rubric</a>
+        <a href="#evaluation">Evaluation</a>
+        <a href="#conclusion">Conclusion</a>
+      </nav>
+    </div>
+
+    <section class="hero">
+      <p class="eyebrow">White Paper v1</p>
+      <h1>Norynthe.</h1>
+      <p class="subtitle">An independent rubric-based trust scoring and verification framework for AI models.</p>
+      <div class="meta">
+        <span>Version v1.0</span>
+        <span>April 17, 2026</span>
+        <span>Foundational Methodology Draft</span>
+      </div>
+      <div class="hero-grid">
+        <div class="hero-summary">
+          <h2>Executive Summary</h2>
+          <p>Norynthe proposes a market-facing scoring layer for AI that is benchmark-owned, rubric-governed, explainable by design, and extensible into higher-stakes verification. The system is intended to produce a public trust signal without collapsing the reasoning behind that score into a black box.</p>
+        </div>
+        <div class="hero-summary">
+          <h2>At A Glance</h2>
+          <ul class="hero-list">
+            <li>Independent scoring standard across model vendors</li>
+            <li>Score, report, and verification as separate outputs</li>
+            <li>Rubric-based evaluation with challenge and resolution</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <article class="paper">
+      <section class="abstract">
+        <h2>Abstract</h2>
+        <p>AI capability is advancing faster than the systems used to evaluate whether models are actually trustworthy for real-world use. Today, model evaluation is often shaped by benchmark gaming, vendor-controlled narratives, narrow task metrics, or ad hoc human impressions. These signals can be useful, but they do not provide a stable and independent basis for comparing models across vendors or determining whether a system is defensible for consequential use.</p>
+        <p>Norynthe is proposed as an independent scoring and verification layer for AI models. It combines a controlled benchmark, a governed rubric, a structured evaluator flow, and a reporting system that turns model comparison into a repeatable trust decision. The framework is built around three outputs: <code>Norynthe Score</code>, <code>Norynthe Report</code>, and <code>Norynthe Verification</code>. Together, these outputs provide a public market signal, an evidence-backed explanation layer, and a higher-stakes deployment review mode.</p>
+        <p>This paper introduces the problem Norynthe is intended to solve, the core methodology behind the system, the architecture of the rubric and evaluation flow, and the strategic role of independence in model scoring. It is not a claim of completed scientific validation. It is a first-principles framework for how independent AI trust scoring can be built in a way that is explainable, governable, and expandable over time.</p>
+</section>
+
+<section class="glance" aria-label="Key framework characteristics">
+  <article class="glance-card">
+    <p class="glance-label">Independence</p>
+    <h3>Vendor-disconnected scoring</h3>
+    <p>The benchmark, rubric, and interpretation layer should be owned by Norynthe rather than by the model providers being compared.</p>
+  </article>
+  <article class="glance-card">
+    <p class="glance-label">Method</p>
+    <h3>Rubric before opinion</h3>
+    <p>The framework decomposes trust into explicit dimensions, evidence rules, and challengeable evaluator outputs instead of relying on a single impressionistic judge.</p>
+  </article>
+  <article class="glance-card">
+    <p class="glance-label">Decision</p>
+    <h3>Verification above scoring</h3>
+    <p>The public score remains legible for the market, while the verification layer adds blockers, reproducibility, and escalation for higher-stakes use.</p>
+  </article>
+</section>
+
+<section id="problem">
+
+        <h2>1. The Problem</h2>
+        <p class="section-intro">AI markets are developing faster than the independent evaluation systems needed to compare models with confidence.</p>
+        <p>AI buyers, researchers, institutions, and investors increasingly face a difficult question: when multiple models appear capable, which one is most trustworthy for a real use case?</p>
+        <p>The current landscape makes that question hard to answer well.</p>
+        <ul>
+          <li>Model providers often define the terms of their own evaluation.</li>
+          <li>Headline benchmark scores compress many kinds of quality into a single narrow result.</li>
+          <li>Human preference judgments are often subjective and hard to audit.</li>
+          <li>One-off prompt comparisons are unstable and difficult to compare over time.</li>
+          <li>Organizations need more than capability signals; they need defensible reasons for selection.</li>
+        </ul>
+        <p>The result is an evaluation gap. AI systems are increasingly consequential, but the market still lacks a durable independent layer for trust scoring.</p>
+      </section>
+
+      <section id="thesis">
+        <h2>2. The Norynthe Thesis</h2>
+        <p>Norynthe is built on a simple claim:</p>
+        <blockquote>AI needs an independent scoring layer that is not controlled by model vendors.</blockquote>
+        <p>That scoring layer should do three things at once:</p>
+        <ul>
+          <li>Provide a common language for comparing models.</li>
+          <li>Expose the reasoning behind a score rather than hiding it.</li>
+          <li>Support higher-stakes verification when a model is being considered for real deployment contexts.</li>
+        </ul>
+        <p>Norynthe therefore defines a three-layer product structure: <code>Norynthe Score</code>, <code>Norynthe Report</code>, and <code>Norynthe Verification</code>.</p>
+        <div class="diagram">
+          <div class="diagram-label">Framework Diagram</div>
+          <pre class="mermaid">flowchart TD
+    A["Controlled Benchmark"] --> B["Rubric Evaluation"]
+    B --> C["Norynthe Score"]
+    B --> D["Norynthe Report"]
+    C --> E["Public Market Signal"]
+    D --> F["Evidence and Explanation"]
+    C --> G["Verification Overlay"]
+    D --> G
+    G --> H["Norynthe Verification"]
+    H --> I["Pass / Conditional Pass / Fail / Human Review Required"]</pre>
+        </div>
+        <p>This design allows Norynthe to operate as both a public trust index and a serious verification framework.</p>
+      </section>
+
+      <section>
+        <h2>3. Why Independence Matters</h2>
+        <p>Independence is not a branding preference. It is the basis of the system’s credibility.</p>
+        <p>If the party being scored defines the benchmark, the rubric, the reporting standard, or the interpretation of results, then the resulting score is not fully independent. It may still be informative, but it does not provide the market with a neutral trust signal.</p>
+        <ul>
+          <li>It allows a common scoring language across model vendors.</li>
+          <li>It reduces the influence of vendor-specific framing on trust judgments.</li>
+          <li>It creates a foundation for auditability and governance over time.</li>
+          <li>It gives buyers and institutions a reference point external to provider marketing.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>4. Core Design Principles</h2>
+        <h3>4.1 Benchmark Ownership</h3>
+        <p>The canonical score must come from a Norynthe-owned benchmark rather than arbitrary end-user prompts. This is necessary for comparability, version control, and calibration.</p>
+        <h3>4.2 Rubric Governance</h3>
+        <p>Trust must be decomposed into explicit dimensions with stable definitions, anchor examples, deduction logic, and revision policy.</p>
+        <h3>4.3 Evidence-Based Scoring</h3>
+        <p>A score must be tied to evidence, not to fluency or evaluator intuition alone.</p>
+        <h3>4.4 Structured Challenge</h3>
+        <p>Every initial score should be challengeable. Norynthe treats disagreement inside the evaluator process as useful information, not noise.</p>
+        <h3>4.5 Explainable Outputs</h3>
+        <p>A score without explanation is weak. The report layer should make the reasoning behind the score inspectable.</p>
+        <h3>4.6 Verification as an Overlay</h3>
+        <p>Not every score is a deployment decision. Verification should build on the score and report, then add higher-stakes rules such as blockers, admissibility requirements, reproducibility checks, and escalation triggers.</p>
+      </section>
+
+      <section id="structure">
+        <h2>5. Product Structure</h2>
+        <p class="section-intro">Norynthe separates the public signal, the explanation layer, and the deployment decision layer so one output does not have to do every job.</p>
+        <h3>5.1 Norynthe Score</h3>
+        <p><code>Norynthe Score</code> is the public-facing trust signal. It is intended to answer: how trustworthy is this model, relative to others, under the Norynthe standard?</p>
+        <ul>
+          <li>Overall score from <code>0-100</code></li>
+          <li>Trust band</li>
+          <li>Benchmark version</li>
+          <li>Coverage note</li>
+        </ul>
+        <h3>5.2 Norynthe Report</h3>
+        <p><code>Norynthe Report</code> explains why the model received the score it did.</p>
+        <ul>
+          <li>Dimension-level scores</li>
+          <li>Evidence excerpts</li>
+          <li>Strengths and deductions</li>
+          <li>Uncertainty flags</li>
+          <li>Diagnostic signals</li>
+          <li>Benchmark coverage summary</li>
+        </ul>
+        <h3>5.3 Norynthe Verification</h3>
+        <p><code>Norynthe Verification</code> is the higher-stakes layer for deployment or review contexts.</p>
+        <ul>
+          <li><code>pass</code></li>
+          <li><code>conditional_pass</code></li>
+          <li><code>fail</code></li>
+          <li><code>human_review_required</code></li>
+        </ul>
+        <div class="diagram">
+          <div class="diagram-label">Framework Diagram</div>
+          <pre class="mermaid">flowchart LR
+    A["Norynthe Score"] --> B["Norynthe Report"]
+    A --> C["Verification Overlay"]
+    B --> C
+    C --> D["Blocker Criteria"]
+    C --> E["Evidence Admissibility"]
+    C --> F["Reproducibility Checks"]
+    C --> G["Escalation Policy"]
+    D --> H["Verification Verdict"]
+    E --> H
+    F --> H
+    G --> H</pre>
+        </div>
+      </section>
+
+      <section id="rubric">
+        <h2>6. Rubric Architecture</h2>
+        <p class="section-intro">The rubric is the control surface that keeps scoring legible, governable, and stable over time.</p>
+        <p>The Norynthe rubric is the core control layer of the system. In this version, the public score is organized around six score dimensions and one diagnostic comparative signal.</p>
+        <h3>6.1 Core Public Score Dimensions</h3>
+        <ul>
+          <li><code>Grounding</code></li>
+          <li><code>Evidence Strength</code></li>
+          <li><code>Consistency</code></li>
+          <li><code>Context Integrity</code></li>
+          <li><code>Interpretive Stability</code></li>
+          <li><code>Auditability</code></li>
+        </ul>
+        <h3>6.2 Diagnostic Comparative Signal</h3>
+        <ul>
+          <li><code>Cross-Model Alignment</code></li>
+        </ul>
+        <p>This signal is useful for identifying divergence relative to peer outputs, but it is treated as diagnostic rather than part of the public score itself.</p>
+        <h3>6.3 Verification Criteria Beyond the Score</h3>
+        <ul>
+          <li>Blocker criteria</li>
+          <li>Required checks</li>
+          <li>Evidence admissibility rules</li>
+          <li>Reproducibility checks</li>
+          <li>Escalation triggers</li>
+        </ul>
+        <div class="diagram">
+          <div class="diagram-label">Framework Diagram</div>
+          <pre class="mermaid">flowchart TD
+    A["Rubric System"] --> B["Core Score Dimensions"]
+    A --> C["Diagnostic Signals"]
+    A --> D["Verification Criteria"]
+    B --> B1["Grounding"]
+    B --> B2["Evidence Strength"]
+    B --> B3["Consistency"]
+    B --> B4["Context Integrity"]
+    B --> B5["Interpretive Stability"]
+    B --> B6["Auditability"]
+    C --> C1["Cross-Model Alignment"]
+    D --> D1["Blockers"]
+    D --> D2["Required Checks"]
+    D --> D3["Reproducibility"]
+    D --> D4["Escalation"]</pre>
+        </div>
+      </section>
+
+      <section id="evaluation">
+        <h2>7. Evaluation Methodology</h2>
+        <p class="section-intro">The system is designed so that scoring is challenged, resolved, and aggregated rather than emitted as a single opaque judgment.</p>
+        <p>Norynthe is not designed as a single black-box judge. It uses a structured evaluator process.</p>
+        <ol>
+          <li>Select the benchmark question set.</li>
+          <li>Run the model or model set against the same benchmark.</li>
+          <li>Evaluate each model output against the rubric.</li>
+          <li>Challenge the initial score through critic review.</li>
+          <li>Apply resolver policy when disagreement occurs.</li>
+          <li>Aggregate results into score and report outputs.</li>
+          <li>Optionally apply verification rules on top.</li>
+        </ol>
+        <h3>7.1 Scorer</h3>
+        <p>The scorer assigns the initial dimension score, identifies strengths and weaknesses, cites evidence, and records deductions.</p>
+        <h3>7.2 Critic</h3>
+        <p>The critic checks rubric compliance, challenges weak evidence, and revises or escalates when the initial score appears miscalibrated.</p>
+        <h3>7.3 Resolver</h3>
+        <p>The resolver applies deterministic application logic to finalize dimension results when scorer and critic outcomes diverge.</p>
+        <div class="diagram">
+          <div class="diagram-label">Framework Diagram</div>
+          <pre class="mermaid">sequenceDiagram
+    participant B as Benchmark
+    participant S as Scorer
+    participant C as Critic
+    participant R as Resolver
+    participant A as Aggregator
+
+    B->>S: model output + rubric context
+    S->>C: initial score + evidence + deductions
+    C->>R: approve / revise / escalate
+    R->>A: resolved dimension result
+    A->>A: aggregate across dimensions and questions
+    A-->>B: score + report + optional verification handoff</pre>
+        </div>
+      </section>
+
+      <section>
+        <h2>8. Benchmark Methodology</h2>
+        <p>The canonical Norynthe score is benchmark-owned. This means benchmark governance is part of the product, not a supporting detail.</p>
+        <ul>
+          <li>Measure trust behaviors rather than random prompt variance.</li>
+          <li>Remain comparable across benchmark versions.</li>
+          <li>Expose both ordinary reasoning quality and stress behavior.</li>
+          <li>Support repeatable model comparisons over time.</li>
+        </ul>
+        <p>A benchmark-owned framework is critical because arbitrary prompts cannot produce stable public scores.</p>
+      </section>
+
+      <section>
+        <h2>9. Reporting as Infrastructure</h2>
+        <p>A trust score becomes substantially stronger when it is paired with a report architecture. The report layer is what turns an output from a number into a decision support artifact.</p>
+        <ul>
+          <li>What the score means</li>
+          <li>Why the model received it</li>
+          <li>Where the model was strong</li>
+          <li>Where the model failed or weakened</li>
+          <li>What uncertainty remains</li>
+          <li>What must be reviewed by a human in higher-stakes cases</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>10. Example Verification Logic</h2>
+        <p>A model can score well overall and still fail a verification decision if it violates a blocker criterion.</p>
+        <ul>
+          <li>Fabricated or unsupported support</li>
+          <li>Material context collapse</li>
+          <li>Non-auditable decision path</li>
+        </ul>
+        <p>This matters because public scoring and deployment decisions are related, but not identical.</p>
+      </section>
+
+      <section>
+        <h2>11. Strategic Positioning</h2>
+        <p>Norynthe is not primarily a model training company. Its likely category position is an independent AI trust scoring and verification infrastructure layer.</p>
+        <ul>
+          <li>Independent AI trust scoring</li>
+          <li>AI verification infrastructure</li>
+          <li>Rubric-based model assurance</li>
+          <li>Model comparison and reporting infrastructure</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>12. Current Scope and Limits</h2>
+        <p>This document is intentionally a methodology paper, not a claim of completed scientific validation.</p>
+        <ul>
+          <li>A governed framework and product architecture</li>
+          <li>A benchmark-owned scoring design</li>
+          <li>A structured evaluator design</li>
+          <li>An explainable reporting model</li>
+          <li>An extensible verification overlay</li>
+        </ul>
+        <p>It should not yet be represented as a completed standards body, a universally validated scientific benchmark, or a finished enterprise certification program.</p>
+      </section>
+
+      <section>
+        <h2>13. Roadmap for Validation</h2>
+        <ol>
+          <li>Calibration against anchor examples</li>
+          <li>Repeated-run stability analysis</li>
+          <li>Benchmark version governance</li>
+          <li>Human review workflow design</li>
+          <li>Domain-specific verification profiles</li>
+          <li>Report usability testing with real stakeholders</li>
+        </ol>
+      </section>
+
+      <section id="conclusion">
+        <h2>14. Conclusion</h2>
+        <p>Norynthe proposes a new layer in the AI stack: an independent, rubric-based scoring and verification framework for AI models.</p>
+        <p>Its central claim is that trust should not be inferred from vendor narrative, benchmark headlines, or subjective impressions alone. Trust should be measured through a controlled benchmark, a governed rubric, a structured evaluation process, and explainable outputs that can support real decisions.</p>
+        <p>If successful, Norynthe would not simply help users decide which model they prefer. It would help the market decide which model is most defensible under a shared and independent standard.</p>
+      </section>
+
+      <section class="appendix">
+        <h2>Appendices</h2>
+        <h3>Appendix A: Short Product Summary</h3>
+        <ul>
+          <li><code>Norynthe Score</code>: the public trust signal</li>
+          <li><code>Norynthe Report</code>: the evidence-backed explanation layer</li>
+          <li><code>Norynthe Verification</code>: the higher-stakes deployment decision layer</li>
+        </ul>
+        <h3>Appendix B: Draft Public Claim</h3>
+        <p><strong>Norynthe is the independent scoring layer for AI.</strong></p>
+        <h3>Appendix C: Suggested Next Documents</h3>
+        <ul>
+          <li>Validation plan</li>
+          <li>Rubric governance policy</li>
+          <li>Benchmark design note</li>
+          <li>Verification profile templates</li>
+          <li>Public methodology FAQ</li>
+        </ul>
+      </section>
+  <div class="paper-footer">
+    Norynthe White Paper v1 · Foundational Methodology Draft · Independent standards for trusted intelligence
+  </div>
+</article>
+  </div>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "neutral" });
+  </script>
+</body>
+</html>
