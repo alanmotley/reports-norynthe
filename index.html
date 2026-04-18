@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -266,6 +266,42 @@
       line-height: 1.75;
       text-wrap: balance;
     }
+
+
+.hero-actions {
+  margin-top: 0.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 17, 21, 0.08);
+  background: rgba(255, 255, 255, 0.74);
+  color: var(--ink);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-soft);
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.hero-cta.primary {
+  background: #0f1115;
+  color: #fff;
+  border-color: #0f1115;
+}
+
+.hero-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 22px rgba(15, 17, 21, 0.08);
+}
 
     .signal-row {
       margin-top: 2rem;
@@ -680,6 +716,12 @@
             <span class="signal-pill">Workbook as control layer</span>
             <span class="signal-pill">Deterministic resolution</span>
           </div>
+<div class="hero-actions">
+  <a class="hero-cta primary" href="docs/norynthe/implementation/console/executive-overview.html">Executive Overview</a>
+  <a class="hero-cta" href="docs/norynthe/implementation/console/norynthe-customer-report.html">Sample Report</a>
+  <a class="hero-cta" href="docs/norynthe/implementation/console/norynthe-run-console.html">Run Console</a>
+</div>
+
         </div>
       </section>
 
@@ -982,17 +1024,17 @@
         </div>
         <article class="panel">
           <ul class="artifact-list">
-            <li><a href="docs/norynthe-investor-memo.md">Investor memo</a></li>
-            <li><a href="docs/norynthe-mvp-agent-spec.md">MVP agent spec</a></li>
-            <li><a href="docs/MVP%20skeleton/norynthe-rubrics.json">Rubric config</a></li>
-            <li><a href="docs/MVP%20skeleton/norynthe-source-of-truth.json">Canonical source of truth</a></li>
-            <li><a href="docs/MVP%20skeleton/norynthe-runtime-skeleton.ts">Runtime skeleton</a></li>
-            <li><a href="docs/MVP%20skeleton/norynthe-runtime.mjs">Executable runtime</a></li>
-            <li><a href="docs/MVP%20skeleton/norynthe-prototype-runner.mjs">Prototype runner</a></li>
-            <li><a href="docs/norynthe-executive-brief.docx">Executive brief</a></li>
-            <li><a href="docs/norynthe-investor-deck-outline.docx">Investor deck outline</a></li>
-            <li><a href="docs/norynthe-workbook-v1.docx">Workbook v1</a></li>
-            <li><a href="docs/norynthe-workbook-v1-full.docx">Workbook v1 full</a></li>
+            <li><a href="docs/norynthe/implementation/console/executive-overview.html">Executive overview</a></li>
+            <li><a href="docs/norynthe/implementation/console/norynthe-customer-report.html">Customer report sample</a></li>
+            <li><a href="docs/norynthe/implementation/console/norynthe-customer-report-appendix.html">Report appendix</a></li>
+            <li><a href="docs/norynthe/implementation/console/norynthe-run-console.html">Run console</a></li>
+            <li><a href="docs/norynthe/reference/norynthe-example-walkthrough.md">Example walkthrough</a></li>
+            <li><a href="docs/norynthe/implementation/norynthe-source-of-truth.json">Canonical source of truth</a></li>
+            <li><a href="docs/norynthe/implementation/norynthe-rubrics.json">Rubric config</a></li>
+            <li><a href="docs/norynthe/implementation/norynthe-runtime.mjs">Executable runtime</a></li>
+            <li><a href="docs/norynthe/implementation/norynthe-prototype-runner.mjs">Prototype runner</a></li>
+            <li><a href="docs/norynthe/presentations/norynthe-executive-workbook-overview-v2.html">Executive workbook overview</a></li>
+            <li><a href="docs/norynthe/workbook/norynthe-workbook-v1.html">Workbook v1</a></li>
           </ul>
         </article>
       </section>
