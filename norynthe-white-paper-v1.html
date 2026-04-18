@@ -151,6 +151,16 @@
       text-transform: uppercase;
     }
 
+    .hero-logo-wrap {
+      margin: 0 0 18px;
+    }
+
+    .hero-logo {
+      width: min(360px, 62vw);
+      height: auto;
+      filter: drop-shadow(0 14px 24px rgba(19, 23, 28, 0.08));
+    }
+
     h1 {
       margin: 0;
       font-size: clamp(2.8rem, 6vw, 4.8rem);
@@ -453,12 +463,15 @@
 
     <section class="hero">
       <p class="eyebrow">White Paper v1</p>
-      <h1>Norynthe.</h1>
+      <div class="hero-logo-wrap">
+        <img class="hero-logo" src="Norynthe_master.png" alt="Norynthe">
+      </div>
+      <h1>Norynthe White Paper</h1>
       <p class="subtitle">The foundational methodology behind Norynthe Phase 1: an independent scoring and verification system for AI models.</p>
       <div class="meta">
         <span>Version v1.0</span>
         <span>April 17, 2026</span>
-        <span>Foundational Methodology</span>
+        <span>Foundational Methodology Draft</span>
       </div>
       <div class="hero-grid">
         <div class="hero-summary">
@@ -739,9 +752,27 @@
         <p>If successful, Norynthe would not simply help users decide which model they prefer. It would help the market decide which model is most defensible under a shared and independent standard.</p>
       </section>
 
+      <section class="appendix">
+        <h2>Appendices</h2>
+        <h3>Appendix A: Short Product Summary</h3>
+        <ul>
+          <li><code>Norynthe Score</code>: the public trust signal</li>
+          <li><code>Norynthe Report</code>: the evidence-backed explanation layer</li>
+          <li><code>Norynthe Verification</code>: the higher-stakes deployment decision layer</li>
+        </ul>
+        <h3>Appendix B: Draft Public Claim</h3>
+        <p><strong>Norynthe is the independent scoring layer for AI.</strong></p>
+        <h3>Appendix C: Suggested Next Documents</h3>
+        <ul>
+          <li>Validation plan</li>
+          <li>Rubric governance policy</li>
+          <li>Benchmark design note</li>
+          <li>Verification profile templates</li>
+          <li>Public methodology FAQ</li>
+        </ul>
       </section>
       <div class="paper-footer">
-        Norynthe White Paper v1 · Foundational Methodology · Independent standards for trusted intelligence
+        Norynthe White Paper v1 · Foundational Methodology Draft · Independent standards for trusted intelligence
       </div>
     </article>
   </div>
