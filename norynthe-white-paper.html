@@ -339,9 +339,9 @@
       border-top: 1px solid rgba(50, 73, 100, 0.10);
       color: #566574;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: 0.75rem;
-      line-height: 1.65;
-      letter-spacing: 0.03em;
+      font-size: 0.72rem;
+      line-height: 1.55;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
     }
 
@@ -543,7 +543,7 @@
         <h2>Abstract</h2>
         <p>AI capability is advancing faster than the systems used to evaluate whether models are actually trustworthy for real-world use. Today, model evaluation is often shaped by benchmark gaming, vendor-controlled narratives, narrow task metrics, or ad hoc human impressions. These signals can be useful, but they do not provide a stable and independent basis for comparing models across vendors or determining whether a system is defensible for consequential use.</p>
         <p>Norynthe is proposed as an independent scoring and verification layer for AI models. It combines a controlled benchmark, a workbook-governed rubric, a structured evaluator flow, and a reporting system that turns model comparison into a repeatable trust decision. The framework is built around three outputs: <code>Norynthe Score</code>, <code>Norynthe Report</code>, and <code>Norynthe Verification</code>. Together, these outputs provide a public market signal, an evidence-backed explanation layer, and a higher-stakes deployment review mode.</p>
-        <p>The implementation story is straightforward: six public score dimensions, one diagnostic comparative signal, scorer and critic agents per dimension, deterministic resolution, calibration prompts, and the workbook layer that makes the process explainable to buyers, researchers, and investors. This paper introduces the problem Norynthe is intended to solve, the core methodology behind that system, the architecture of the rubric and evaluation flow, and the strategic role of independence in model scoring. It is not a claim of completed scientific validation. It is a first-principles framework for how independent AI trust scoring can be built in a way that is explainable, governable, and expandable over time.</p>
+        <p>The implementation story is straightforward: six public score dimensions, one diagnostic comparative signal, scorer and critic agents per dimension, deterministic resolution, calibration prompts, and the workbook layer that makes the process explainable to buyers, researchers, and investors. This paper sets out the problem, the methodology, the rubric and evaluation architecture, and the strategic role of independence in model scoring. It is not a claim of completed scientific validation. It is a first-principles framework for how independent AI trust scoring can be built in a way that is explainable, governable, and expandable over time.</p>
       </section>
 
       <section class="glance" aria-label="Key framework characteristics">
@@ -615,7 +615,7 @@
         <div class="diagram">
           <div class="diagram-label">Figure 1 · Product Stack</div>
           <img class="diagram-figure" src="figure-1-product-stack.svg" alt="Figure 1 showing the Norynthe product stack from benchmark and rubric through score, report, and verification.">
-          <div class="diagram-caption">The public score, explanatory report, and verification layer are built from the same controlled evaluation standard rather than from vendor-defined benchmarks.</div>
+          <div class="diagram-caption">Score, report, and verification all derive from the same controlled evaluation standard.</div>
         </div>
         <p>This design allows Norynthe to operate as both a public trust index and a serious verification framework.</p>
       </section>
@@ -681,7 +681,7 @@
         <div class="diagram">
           <div class="diagram-label">Figure 2 · Verification Overlay</div>
           <img class="diagram-figure" src="figure-2-verification-overlay.svg" alt="Figure 2 showing verification as an overlay applied to the Norynthe score and report.">
-          <div class="diagram-caption">Verification is not a separate benchmark. It is a stricter decision layer that adds admissibility, blocker, reproducibility, and escalation logic on top of the score and report.</div>
+          <div class="diagram-caption">Verification adds admissibility, blocker, reproducibility, and escalation logic above the score and report.</div>
         </div>
       </section>
 
@@ -714,7 +714,7 @@
         <div class="diagram">
           <div class="diagram-label">Figure 3 · Rubric Architecture</div>
           <img class="diagram-figure" src="figure-3-rubric-architecture.svg" alt="Figure 3 showing the Norynthe rubric system divided into core score dimensions, diagnostic signals, and verification criteria.">
-          <div class="diagram-caption">The rubric separates what contributes to the public score from what remains diagnostic and what only matters during higher-stakes verification.</div>
+          <div class="diagram-caption">The rubric separates the public score, diagnostic signals, and verification-only criteria.</div>
         </div>
       </section>
 
@@ -740,7 +740,7 @@
         <div class="diagram">
           <div class="diagram-label">Figure 4 · Evaluation Flow</div>
           <img class="diagram-figure" src="figure-4-evaluation-flow.svg" onerror="this.onerror=null;this.src='figure-4-evaluation-flow.drawio.svg'" alt="Figure 4 showing the Norynthe evaluation flow from benchmark context through scorer, critic, resolver, aggregation, and verification.">
-          <div class="diagram-caption">Norynthe uses challenge-and-resolution inside the evaluator flow so the final score is the product of a governed process rather than a single opaque judgment.</div>
+          <div class="diagram-caption">Challenge and resolution are built into the evaluator flow rather than added after the fact.</div>
         </div>
       </section>
 
@@ -758,7 +758,7 @@
 
       <section>
         <h2>9. Reporting as Infrastructure</h2>
-        <p>A trust score becomes substantially stronger when it is paired with a report architecture. The report layer is what turns an output from a number into a decision support artifact. On the main reports page, this is the bridge between the investor story and the implementation story.</p>
+        <p>A trust score becomes materially stronger when it is paired with a report architecture. The report layer is what turns a number into a decision support artifact. On the main reports page, it is the bridge between the investor story and the implementation story.</p>
         <ul>
           <li>What the score means</li>
           <li>Why the model received it</li>
@@ -771,7 +771,7 @@
 
       <section>
         <h2>10. Example Verification Logic</h2>
-        <p>A model can score well overall and still fail a verification decision if it violates a blocker criterion.</p>
+        <p>A model can score well overall and still fail verification if it violates a blocker criterion.</p>
         <ul>
           <li>Fabricated or unsupported support</li>
           <li>Material context collapse</li>
@@ -793,7 +793,7 @@
 
       <section>
         <h2>12. Current Scope and Limits</h2>
-        <p>This document is intentionally a methodology paper, not a claim of completed scientific validation.</p>
+        <p>This document is intentionally a methodology paper, not a claim of completed scientific validation or market-wide certification.</p>
         <ul>
           <li>A governed framework and product architecture</li>
           <li>A benchmark-owned scoring design</li>
@@ -818,9 +818,9 @@
 
       <section id="conclusion">
         <h2>14. Conclusion</h2>
-        <p>Norynthe proposes a new layer in the AI stack: an independent, rubric-based scoring and verification framework for AI models.</p>
-        <p>Its central claim is that trust should not be inferred from vendor narrative, benchmark headlines, or subjective impressions alone. Trust should be measured through a controlled benchmark, a workbook-governed rubric, a scorer and critic architecture with deterministic resolution, and explainable outputs that can support real decisions.</p>
-        <p>If successful, Norynthe would not simply help users decide which model they prefer. It would help the market decide which model is most defensible under a shared and independent standard.</p>
+        <p>Norynthe proposes a new layer in the AI stack: an independent scoring, reporting, and verification framework for AI systems.</p>
+        <p>Its central claim is straightforward: trust should not be inferred from vendor narrative, benchmark headlines, or subjective impressions alone. It should be measured through a controlled benchmark, a workbook-governed rubric, a challenge-and-resolution evaluator architecture, and explainable outputs that can support real decisions.</p>
+        <p>If successful, Norynthe would do more than help users decide which model they prefer. It would give the market a shared and independent basis for deciding which systems are most defensible, most reviewable, and most trustworthy for consequential use.</p>
       </section>
 
       <div class="paper-footer">
