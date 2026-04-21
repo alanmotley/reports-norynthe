@@ -13,15 +13,16 @@
   <style>
     :root {
       --bg: #edf2f5;
-      --paper: rgba(255, 255, 255, 0.84);
-      --paper-2: rgba(255, 255, 255, 0.72);
+      --paper: rgba(255, 255, 255, 0.88);
+      --paper-2: rgba(255, 255, 255, 0.78);
       --ink: #10151d;
       --muted: #5b6470;
       --line: rgba(15, 17, 21, 0.07);
       --accent: #7a3030;
       --slate: #254f74;
-      --shadow: 0 18px 44px rgba(15, 17, 21, 0.05);
-      --radius: 22px;
+      --shadow: 0 22px 52px rgba(15, 17, 21, 0.06);
+      --shadow-soft: 0 10px 24px rgba(15, 17, 21, 0.04);
+      --radius: 24px;
       --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, "Times New Roman", serif;
     }
 
@@ -69,8 +70,8 @@
     }
 
     .hero {
-      padding: 30px 32px 34px;
-      margin-bottom: 24px;
+      padding: 34px 34px 30px;
+      margin-bottom: 26px;
       position: relative;
       overflow: hidden;
     }
@@ -91,15 +92,16 @@
       inset: 0;
       pointer-events: none;
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.20), rgba(255,255,255,0)),
-        radial-gradient(circle at top right, rgba(37, 79, 116, 0.08), transparent 34%);
+        linear-gradient(180deg, rgba(255,255,255,0.24), rgba(255,255,255,0)),
+        radial-gradient(circle at top right, rgba(37, 79, 116, 0.11), transparent 34%),
+        radial-gradient(circle at bottom left, rgba(122, 48, 48, 0.08), transparent 26%);
     }
 
     .back-row {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 18px;
+      margin-bottom: 22px;
     }
 
     .back-link {
@@ -110,13 +112,14 @@
       padding: 9px 12px;
       border: 1px solid var(--line);
       border-radius: 999px;
-      background: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.78);
       color: var(--muted);
       text-decoration: none;
       font-size: 12px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+      box-shadow: var(--shadow-soft);
     }
 
     .back-link:hover {
@@ -132,8 +135,17 @@
       font-weight: 500;
     }
 
+    .hero-title {
+      margin: 14px 0 0;
+      max-width: 10ch;
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 5.2vw, 4.9rem);
+      line-height: 0.9;
+      letter-spacing: -0.065em;
+    }
+
     .brand-lockup {
-      margin-top: 10px;
+      margin-top: 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -149,8 +161,8 @@
 
     .hero-mark {
       flex: 0 0 auto;
-      width: 92px;
-      height: 92px;
+      width: 98px;
+      height: 98px;
       border-radius: 999px;
       display: grid;
       place-items: center;
@@ -163,10 +175,10 @@
     }
 
     .lede {
-      max-width: 780px;
-      margin: 22px 0 0;
-      font-size: 16px;
-      line-height: 1.8;
+      max-width: 760px;
+      margin: 20px 0 0;
+      font-size: 15px;
+      line-height: 1.82;
       color: #36414e;
       letter-spacing: -0.01em;
     }
@@ -175,7 +187,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 18px;
+      margin-top: 22px;
     }
 
     .pill {
@@ -191,6 +203,7 @@
       color: var(--slate);
       border: 1px solid rgba(37, 79, 116, 0.16);
       white-space: nowrap;
+      box-shadow: var(--shadow-soft);
     }
 
     .grid {
@@ -201,7 +214,7 @@
     }
 
     .panel {
-      padding: 24px;
+      padding: 26px;
     }
 
     .panel h2,
@@ -213,7 +226,7 @@
     }
 
     .panel h2 {
-      font-size: clamp(2rem, 4vw, 3.1rem);
+      font-size: clamp(1.7rem, 3vw, 2.3rem);
     }
 
     .panel h3 {
@@ -233,7 +246,7 @@
       background:
         radial-gradient(circle at top right, rgba(37, 79, 116, 0.10), transparent 34%),
         linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(243, 246, 248, 0.94));
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow-soft);
     }
 
     .video-shell video {
@@ -244,10 +257,12 @@
     }
 
     .video-panel {
-      padding: 18px;
+      padding: 16px;
       background:
         linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,255,255,0.74)),
         radial-gradient(circle at top left, rgba(37, 79, 116, 0.06), transparent 30%);
+      border-radius: 22px;
+      border: 1px solid rgba(15, 17, 21, 0.05);
     }
 
     .actions {
@@ -270,7 +285,7 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       text-decoration: none;
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow-soft);
       transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
     }
 
@@ -287,15 +302,17 @@
 
     .summary-list {
       display: grid;
-      gap: 13px;
-      margin-top: 18px;
+      gap: 14px;
+      margin-top: 20px;
     }
 
     .summary-item {
       border: 1px solid var(--line);
-      background: var(--paper-2);
-      padding: 16px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.82), rgba(248,250,252,0.88));
+      padding: 17px 18px;
       border-radius: 18px;
+      box-shadow: var(--shadow-soft);
     }
 
     .summary-title {
@@ -311,6 +328,12 @@
       font-size: 14px;
       line-height: 1.7;
       color: #304050;
+    }
+
+    .summary-intro {
+      max-width: 32rem;
+      font-size: 15px;
+      line-height: 1.8;
     }
 
     .footer-note {
@@ -359,6 +382,10 @@
         gap: 18px;
       }
 
+      .hero-title {
+        max-width: 100%;
+      }
+
       .hero-mark {
         width: 74px;
         height: 74px;
@@ -386,6 +413,7 @@
         <a class="back-link" href="/executive-overview.mp4" target="_blank" rel="noopener noreferrer">Open Raw Video</a>
       </div>
       <div class="kicker">Executive Overview</div>
+      <h1 class="hero-title">A clearer trust and decision layer for enterprise AI.</h1>
       <div class="brand-lockup">
         <img class="brand-logo" src="/Norynthe_master.png" alt="Norynthe.">
         <div class="hero-mark">Watch</div>
@@ -393,6 +421,8 @@
       <p class="lede">
         This overview walks through the benchmark-owned product model, the shift away from prompt-driven scoring,
         the humanities-inclusive benchmark structure, the reporting stack, and the infrastructure thesis underneath Norynthe.
+        It is ultimately about how enterprises can make better decisions about how probabilistic systems are interpreted,
+        trusted, compared, and operationalized.
       </p>
       <div class="meta-row">
         <span class="pill">15 benchmark questions</span>
@@ -419,14 +449,16 @@
 
       <aside class="panel">
         <h2>What this walkthrough shows</h2>
-        <p>
+        <p class="summary-intro">
           The presentation is meant to make the system legible in one pass. It connects the benchmark, rubric,
           report surfaces, and infrastructure plan into one coherent product story instead of leaving them as separate artifacts.
+          The result is a clearer enterprise framework for deciding how probabilistic systems should be interpreted,
+          trusted, compared, and put into use.
         </p>
         <div class="summary-list">
           <div class="summary-item">
-            <div class="summary-title">System Shift</div>
-            <div class="summary-copy">Why Norynthe moved from prompt comparison to a benchmark-owned measurement model.</div>
+            <div class="summary-title">Enterprise Decision Layer</div>
+            <div class="summary-copy">How Norynthe helps organizations decide how probabilistic systems should be interpreted, trusted, compared, and operationalized.</div>
           </div>
           <div class="summary-item">
             <div class="summary-title">Benchmark Logic</div>
