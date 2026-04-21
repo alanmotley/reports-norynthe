@@ -521,6 +521,24 @@
       color: #36414e;
       max-width: 760px;
     }
+    .footer-note {
+      width: min(100%, 54rem);
+      margin: 36px auto 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      line-height: 1.8;
+      text-transform: uppercase;
+    }
+    .footer-note::before {
+      content: "";
+      display: block;
+      width: min(22vw, 180px);
+      height: 1px;
+      margin: 0 auto 16px;
+      background: linear-gradient(90deg, transparent, rgba(122, 48, 48, 0.18), transparent);
+    }
     .report-section .meta {
       margin-top: 14px;
       margin-bottom: 0;
@@ -3090,5 +3108,6 @@
       }
     });
   </script>
+  <p class="footer-note">Norynthe Comparison Report · Independent standards for trusted intelligence · © 2026 Norynthe.</p>
 </body>
 </html>
