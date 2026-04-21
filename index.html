@@ -366,6 +366,44 @@
       background: rgba(122, 48, 48, 0.55);
     }
 
+    .stack-strip {
+      margin-top: 1.2rem;
+      width: min(100%, 52rem);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stack-card {
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(15, 17, 21, 0.07);
+      background: rgba(255, 255, 255, 0.62);
+      box-shadow: var(--shadow-soft);
+      text-align: left;
+    }
+
+    .stack-kicker {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .stack-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.02rem;
+      letter-spacing: -0.03em;
+    }
+
+    .stack-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
     section {
       padding-top: 1.5rem;
     }
@@ -546,6 +584,12 @@
       gap: 16px;
     }
 
+    .timing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
     .panel {
       padding: 22px;
     }
@@ -616,6 +660,51 @@
       white-space: pre-wrap;
     }
 
+    .hub-footer {
+      margin-top: 2.2rem;
+      padding: 18px 20px;
+      border: 1px solid rgba(15, 17, 21, 0.07);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.48);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hub-footer-title {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .hub-footer-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .hub-footer-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 42px;
+      padding: 11px 15px;
+      border-radius: 999px;
+      border: 1px solid rgba(15, 17, 21, 0.08);
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--ink);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-soft);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .hub-footer-link:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(15, 17, 21, 0.08);
+    }
+
     .footer-note {
       width: min(100%, 54rem);
       margin: 3.4rem auto 0;
@@ -662,8 +751,10 @@
       .schema-grid,
       .prompt-grid,
       .architecture,
+      .timing-grid,
       .band-grid,
-      .category-grid {
+      .category-grid,
+      .stack-strip {
         grid-template-columns: 1fr;
       }
 
@@ -752,6 +843,23 @@
             <span class="signal-pill">Workbook as control layer</span>
             <span class="signal-pill">Deterministic resolution</span>
           </div>
+          <div class="stack-strip" aria-label="Norynthe product stack">
+            <article class="stack-card">
+              <div class="stack-kicker">Signal</div>
+              <h3>Score</h3>
+              <p>A governed trust signal for comparing models under one benchmark-owned standard.</p>
+            </article>
+            <article class="stack-card">
+              <div class="stack-kicker">Explanation</div>
+              <h3>Report</h3>
+              <p>The evidence-backed layer that shows why a model scored the way it did.</p>
+            </article>
+            <article class="stack-card">
+              <div class="stack-kicker">Decision</div>
+              <h3>Verification</h3>
+              <p>The higher-stakes layer for blockers, escalation, reproducibility, and controlled use.</p>
+            </article>
+          </div>
           <div class="hero-actions">
             <div class="hero-actions-primary">
               <a class="hero-cta secondary" href="norynthe-run-console.html">Comparison Report</a>
@@ -832,6 +940,31 @@
               <li>Architecture becomes defendable</li>
               <li>Next testing step has a real foundation</li>
             </ul>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div class="section-label">Why Now</div>
+          <h2>The timing is not about model novelty alone.</h2>
+          <p>Enterprises are being asked to operationalize probabilistic systems faster than independent trust infrastructure is being built around them. That gap is where Norynthe becomes necessary.</p>
+        </div>
+        <div class="timing-grid">
+          <article class="card">
+            <div class="metric">Pressure</div>
+            <h3>Model choice is now an enterprise decision</h3>
+            <p>Organizations are no longer experimenting at the edge. They are making procurement, policy, and workflow decisions that require more than vendor narrative or leaderboard snapshots.</p>
+          </article>
+          <article class="card">
+            <div class="metric">Gap</div>
+            <h3>Trust still lacks an external standard</h3>
+            <p>Most evaluation still collapses into demos, internal preference, or provider-controlled benchmarking. That leaves interpretation, comparison, and governance underbuilt.</p>
+          </article>
+          <article class="card">
+            <div class="metric">Opportunity</div>
+            <h3>The trust layer becomes infrastructure</h3>
+            <p>If enterprises need a governed basis for deciding how systems are interpreted, trusted, compared, and operationalized, then the evaluation layer itself becomes a durable category.</p>
           </article>
         </div>
       </section>
@@ -1125,6 +1258,18 @@
           </article>
         </div>
       </section>
+
+      <div class="hub-footer">
+        <div class="hub-footer-title">Explore The System</div>
+        <div class="hub-footer-nav">
+          <a class="hub-footer-link" href="executive-overview.html">Executive Overview</a>
+          <a class="hub-footer-link" href="norynthe-run-console.html">Comparison Report</a>
+          <a class="hub-footer-link" href="norynthe-customer-report.html">Sample Report</a>
+          <a class="hub-footer-link" href="norynthe-enterprise-use-cases.html">Use Cases</a>
+          <a class="hub-footer-link" href="norynthe-founder-memo.html">Founder Memo</a>
+          <a class="hub-footer-link" href="norynthe-white-paper.html">White Paper</a>
+        </div>
+      </div>
 
       <p class="footer-note">From prompt to trusted decision · hello@norynthe.com · © 2026 Norynthe.</p>
     </div>
