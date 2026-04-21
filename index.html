@@ -725,9 +725,9 @@
             <div class="logo-wrap">
               <img
                 class="logo"
-                src="assets/Norynthe_master.png"
+                src="Norynthe_master.png"
                 alt="Norynthe"
-                onerror="this.style.display='none'; document.querySelector('.logo-fallback').style.display='block';"
+                onerror="if (!this.dataset.fallbackTried) { this.dataset.fallbackTried='true'; this.src='assets/Norynthe_master.png'; } else { this.style.display='none'; document.querySelector('.logo-fallback').style.display='block'; }"
               >
               <h1 class="logo-fallback">Norynthe.</h1>
             </div>
