@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Norynthe Enterprise Use Cases</title>
+  <meta
+    name="description"
+    content="How Norynthe helps enterprises interpret, trust, compare, and operationalize probabilistic systems in real workflows."
+  >
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <style>
+    :root {
+      --bg: #edf2f5;
+      --paper: rgba(255, 255, 255, 0.84);
+      --paper-strong: rgba(255, 255, 255, 0.92);
+      --ink: #13181f;
+      --muted: #5d6873;
+      --line: rgba(41, 56, 78, 0.11);
+      --slate: #324964;
+      --signal: #7a3030;
+      --shadow: 0 22px 52px rgba(19, 23, 28, 0.07);
+      --shadow-soft: 0 10px 26px rgba(19, 23, 28, 0.045);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --max: 1120px;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, "Times New Roman", serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100%;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 18% 16%, rgba(122, 48, 48, 0.08), transparent 24%),
+        radial-gradient(circle at 82% 10%, rgba(50, 73, 100, 0.12), transparent 28%),
+        linear-gradient(180deg, #f5f8fa 0%, #edf2f5 48%, #f6f8fa 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(19, 23, 28, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(19, 23, 28, 0.015) 1px, transparent 1px);
+      background-size: 72px 72px;
+      opacity: 0.75;
+      z-index: -1;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .page {
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
+      padding: 28px 0 68px;
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      color: #556472;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .topline nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .topline nav a {
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .topline nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background: rgba(122, 48, 48, 0.22);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 180ms ease;
+    }
+
+    .topline nav a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .hero,
+    .section-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 34px 36px 32px;
+      margin-bottom: 24px;
+      background:
+        radial-gradient(circle at top right, rgba(50, 73, 100, 0.13), transparent 30%),
+        radial-gradient(circle at bottom left, rgba(122, 48, 48, 0.10), transparent 28%),
+        linear-gradient(180deg, rgba(252, 253, 254, 0.94), rgba(248, 250, 252, 0.92));
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 28px 24px auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.75), rgba(255,255,255,0));
+      opacity: 0.82;
+      pointer-events: none;
+    }
+
+    .back-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.8);
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-soft);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .back-link:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(19, 23, 28, 0.06);
+    }
+
+    .eyebrow {
+      margin: 0 0 16px;
+      color: #5c6875;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+      gap: 24px;
+      align-items: end;
+    }
+
+    .hero-logo {
+      width: min(360px, 62vw);
+      margin-bottom: 18px;
+      filter: drop-shadow(0 14px 24px rgba(19, 23, 28, 0.08));
+    }
+
+    .hero-heading {
+      margin: 0 0 12px;
+      color: #44515e;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .lede {
+      margin: 0;
+      max-width: 46rem;
+      color: #4d5b68;
+      font-size: 1.06rem;
+      line-height: 1.82;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(50, 73, 100, 0.12);
+      background: linear-gradient(180deg, rgba(255,255,255,0.84), rgba(249,251,252,0.9));
+      color: #4f5d6a;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-summary {
+      padding: 20px 20px 18px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(50, 73, 100, 0.11);
+      background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(249,251,252,0.88));
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-summary h2 {
+      margin: 0 0 12px;
+      font-family: var(--serif);
+      font-size: 1.55rem;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-summary ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #42505d;
+      line-height: 1.75;
+    }
+
+    .stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .section-card {
+      padding: 30px 32px;
+    }
+
+    .section-head {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .section-label {
+      color: var(--muted);
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+    }
+
+    .section-head p {
+      margin: 0;
+      max-width: 48rem;
+      color: var(--muted);
+      line-height: 1.76;
+    }
+
+    .use-case-grid,
+    .framework-grid,
+    .outcome-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .use-case-grid,
+    .outcome-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .framework-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .case-card,
+    .framework-card,
+    .outcome-card {
+      padding: 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(50, 73, 100, 0.10);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.82), rgba(249,251,252,0.9));
+      box-shadow: var(--shadow-soft);
+    }
+
+    .case-kicker,
+    .framework-kicker,
+    .outcome-kicker {
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .case-card h3,
+    .framework-card h3,
+    .outcome-card h3 {
+      margin: 0 0 10px;
+      font-family: var(--serif);
+      font-size: 1.45rem;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .case-card p,
+    .framework-card p,
+    .outcome-card p,
+    .case-card li,
+    .framework-card li {
+      margin: 0;
+      color: #3d4b59;
+      line-height: 1.74;
+    }
+
+    .case-card ul,
+    .framework-card ul {
+      margin: 12px 0 0;
+      padding-left: 18px;
+    }
+
+    .signal-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .signal-pill {
+      padding: 16px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(50, 73, 100, 0.10);
+      background: rgba(255,255,255,0.82);
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .signal-pill strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.76rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--slate);
+    }
+
+    .signal-pill span {
+      color: #41505e;
+      font-size: 0.94rem;
+      line-height: 1.55;
+    }
+
+    .footer-note {
+      width: min(100%, 54rem);
+      margin: 3.2rem auto 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.74rem;
+      letter-spacing: 0.1em;
+      line-height: 1.8;
+      text-transform: uppercase;
+    }
+
+    .footer-note::before {
+      content: "";
+      display: block;
+      width: min(22vw, 180px);
+      height: 1px;
+      margin: 0 auto 1rem;
+      background: linear-gradient(90deg, transparent, rgba(122, 48, 48, 0.18), transparent);
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .use-case-grid,
+      .framework-grid,
+      .outcome-grid,
+      .signal-strip {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        width: min(calc(100% - 24px), var(--max));
+        padding-top: 18px;
+      }
+
+      .topline {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero,
+      .section-card {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topline">
+      <span>Enterprise Decision Layer</span>
+      <nav>
+        <a href="#use-cases">Use Cases</a>
+        <a href="#framework">How It Works</a>
+        <a href="#outcomes">Outcomes</a>
+      </nav>
+    </div>
+
+    <section class="hero">
+      <div class="back-row">
+        <a class="back-link" href="norynthe-phase1.html">Back To Main Site</a>
+        <a class="back-link" href="norynthe-white-paper.html">Open White Paper</a>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">Enterprise Use Cases</div>
+          <img class="hero-logo" src="Norynthe_master.png" alt="Norynthe.">
+          <div class="hero-heading">Enterprise decision contexts for governed AI trust</div>
+          <p class="lede">
+            Norynthe is not only a scoring framework. It is an enterprise decision layer for how probabilistic systems
+            are interpreted, trusted, compared, and operationalized. The use cases below show where that matters most:
+            model selection, procurement, internal governance, regulated review, and higher-stakes deployment decisions.
+          </p>
+          <div class="meta">
+            <span>Procurement</span>
+            <span>Governance</span>
+            <span>Deployment Review</span>
+            <span>Model Comparison</span>
+          </div>
+        </div>
+        <aside class="hero-summary">
+          <h2>At A Glance</h2>
+          <ul>
+            <li>Norynthe helps enterprises compare systems under a governed standard rather than vendor narrative.</li>
+            <li>It separates public score, explanation layer, and higher-stakes verification.</li>
+            <li>It supports real workflows where model trust has operational consequences.</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <div class="stack">
+      <section id="use-cases" class="section-card">
+        <div class="section-head">
+          <div class="section-label">Core Use Cases</div>
+          <h2>Five enterprise contexts where the trust layer matters.</h2>
+          <p>The most important enterprise need is not simply more model access. It is better judgment about which systems should be used, under what constraints, with what evidence, and with what level of review.</p>
+        </div>
+        <div class="use-case-grid">
+          <article class="case-card">
+            <div class="case-kicker">Use Case 1</div>
+            <h3>Model Selection</h3>
+            <p>When multiple systems appear capable, Norynthe gives teams a governed basis for deciding which model is most defensible for a given workflow.</p>
+            <ul>
+              <li>Compare vendors under the same benchmark surface</li>
+              <li>See strongest and weakest trust dimensions clearly</li>
+              <li>Avoid selection by demo polish alone</li>
+            </ul>
+          </article>
+          <article class="case-card">
+            <div class="case-kicker">Use Case 2</div>
+            <h3>Procurement And Vendor Review</h3>
+            <p>Procurement teams need more than capability claims. They need a structured explanation of trust, defensibility, and reviewability before selection or expansion.</p>
+            <ul>
+              <li>Provide a common language for vendor evaluation</li>
+              <li>Reduce dependence on vendor-defined benchmarks</li>
+              <li>Create a stronger record for internal approval</li>
+            </ul>
+          </article>
+          <article class="case-card">
+            <div class="case-kicker">Use Case 3</div>
+            <h3>Internal Governance</h3>
+            <p>Norynthe supports internal governance by making evaluator logic, rationale, and uncertainty legible instead of burying decisions in informal intuition.</p>
+            <ul>
+              <li>Surface what was preserved, softened, or omitted</li>
+              <li>Make trust judgments reviewable across teams</li>
+              <li>Support policy and risk review with evidence</li>
+            </ul>
+          </article>
+          <article class="case-card">
+            <div class="case-kicker">Use Case 4</div>
+            <h3>Regulated Or Sensitive Workflows</h3>
+            <p>In higher-stakes contexts, strong output quality is not sufficient. Teams need a verification layer that can apply blocker criteria, reproducibility checks, and escalation logic before deployment.</p>
+            <ul>
+              <li>Separate score from final deployment decision</li>
+              <li>Use verification for stricter admissibility</li>
+              <li>Route ambiguous cases into human review</li>
+            </ul>
+          </article>
+          <article class="case-card">
+            <div class="case-kicker">Use Case 5</div>
+            <h3>Operational Deployment Decisions</h3>
+            <p>Norynthe helps organizations decide not only which model to use, but how that model should be operationalized inside real workflows with appropriate controls.</p>
+            <ul>
+              <li>Choose assisted versus constrained deployment modes</li>
+              <li>Identify where human review must remain in the loop</li>
+              <li>Link model trust to real operating conditions</li>
+            </ul>
+          </article>
+          <article class="case-card">
+            <div class="case-kicker">Cross-Cutting Benefit</div>
+            <h3>Interpretive And Framing Review</h3>
+            <p>Many enterprise failures are not only factual. They are failures of framing, omission, or interpretive compression. Norynthe gives organizations a way to review how meaning is being carried forward, not only whether an answer sounds polished.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="framework" class="section-card">
+        <div class="section-head">
+          <div class="section-label">How It Works</div>
+          <h2>The enterprise decision layer sits above the model, not inside it.</h2>
+          <p>Norynthe matters when organizations need a standard outside the model itself. That standard gives them a way to interpret model behavior, compare systems, explain trust judgments, and separate public scoring from higher-stakes deployment review.</p>
+        </div>
+        <div class="framework-grid">
+          <article class="framework-card">
+            <div class="framework-kicker">Signal</div>
+            <h3>Norynthe Score</h3>
+            <p>The public-facing trust signal that allows teams to compare models under the same governed benchmark surface.</p>
+          </article>
+          <article class="framework-card">
+            <div class="framework-kicker">Explanation</div>
+            <h3>Norynthe Report</h3>
+            <p>The evidence-backed explanation layer that shows why a model received its score and where review should concentrate.</p>
+          </article>
+          <article class="framework-card">
+            <div class="framework-kicker">Decision</div>
+            <h3>Norynthe Verification</h3>
+            <p>The higher-stakes decision layer that applies blockers, admissibility, reproducibility, and escalation logic above the score.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-card">
+        <div class="section-head">
+          <div class="section-label">Decision Signals</div>
+          <h2>What enterprises actually get from the system.</h2>
+          <p>In practice, enterprises do not need another stream of output. They need a clearer basis for action.</p>
+        </div>
+        <div class="signal-strip">
+          <div class="signal-pill">
+            <strong>Compare</strong>
+            <span>Which system is strongest under a shared benchmark?</span>
+          </div>
+          <div class="signal-pill">
+            <strong>Explain</strong>
+            <span>Why did one model outrank another?</span>
+          </div>
+          <div class="signal-pill">
+            <strong>Escalate</strong>
+            <span>Where should human review remain mandatory?</span>
+          </div>
+          <div class="signal-pill">
+            <strong>Operationalize</strong>
+            <span>How should the selected system actually be used?</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="outcomes" class="section-card">
+        <div class="section-head">
+          <div class="section-label">Enterprise Outcomes</div>
+          <h2>What becomes possible when trust is treated as infrastructure.</h2>
+          <p>Norynthe is most valuable when organizations need to turn probabilistic system behavior into decisions that can be explained, governed, and defended.</p>
+        </div>
+        <div class="outcome-grid">
+          <article class="outcome-card">
+            <div class="outcome-kicker">Outcome</div>
+            <h3>Stronger Selection Decisions</h3>
+            <p>Teams gain a more defensible basis for choosing between systems than demos, vendor claims, or narrow benchmark headlines alone.</p>
+          </article>
+          <article class="outcome-card">
+            <div class="outcome-kicker">Outcome</div>
+            <h3>Clearer Governance</h3>
+            <p>Trust judgments become inspectable, discussable, and auditable across procurement, product, legal, and risk teams.</p>
+          </article>
+          <article class="outcome-card">
+            <div class="outcome-kicker">Outcome</div>
+            <h3>Better Operational Controls</h3>
+            <p>Enterprises can distinguish where AI can assist, where it must be constrained, and where it should not be relied on without escalation.</p>
+          </article>
+          <article class="outcome-card">
+            <div class="outcome-kicker">Outcome</div>
+            <h3>More Serious AI Adoption</h3>
+            <p>Organizations can move from ad hoc experimentation to a governed model of interpretation, comparison, and deployment.</p>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <p class="footer-note">Norynthe Enterprise Use Cases · Independent standards for trusted intelligence</p>
+  </div>
+</body>
+</html>
