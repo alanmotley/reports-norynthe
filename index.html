@@ -268,40 +268,72 @@
     }
 
 
-.hero-actions {
-  margin-top: 0.4rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-}
+    .hero-actions {
+      margin-top: 0.6rem;
+      width: min(100%, 56rem);
+      display: grid;
+      gap: 12px;
+      justify-items: center;
+    }
 
-.hero-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  padding: 13px 18px;
-  border-radius: 999px;
-  border: 1px solid rgba(15, 17, 21, 0.08);
-  background: rgba(255, 255, 255, 0.74);
-  color: var(--ink);
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  box-shadow: var(--shadow-soft);
-  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
-}
+    .hero-actions-primary,
+    .hero-actions-secondary {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
 
-.hero-cta.primary {
-  background: #0f1115;
-  color: #fff;
-  border-color: #0f1115;
-}
+    .hero-actions-secondary {
+      padding: 10px 12px;
+      border: 1px solid rgba(15, 17, 21, 0.06);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.42);
+      box-shadow: var(--shadow-soft);
+    }
 
-.hero-cta:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 12px 22px rgba(15, 17, 21, 0.08);
-}
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 46px;
+      padding: 13px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(15, 17, 21, 0.08);
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--ink);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-soft);
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, border-color 180ms ease;
+      white-space: nowrap;
+    }
+
+    .hero-cta.primary {
+      min-width: 238px;
+      background: #0f1115;
+      color: #fff;
+      border-color: #0f1115;
+      box-shadow: 0 14px 30px rgba(15, 17, 21, 0.12);
+    }
+
+    .hero-cta.secondary {
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .hero-cta.tertiary {
+      padding-left: 16px;
+      padding-right: 16px;
+      background: rgba(255, 255, 255, 0.68);
+      box-shadow: none;
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(15, 17, 21, 0.08);
+    }
 
     .signal-row {
       margin-top: 2rem;
@@ -667,6 +699,10 @@
       .dimension-strip {
         grid-template-columns: 1fr;
       }
+
+      .hero-actions-secondary {
+        border-radius: 20px;
+      }
     }
   </style>
 </head>
@@ -689,7 +725,7 @@
             <div class="logo-wrap">
               <img
                 class="logo"
-                src="Norynthe_master.png"
+                src="assets/Norynthe_master.png"
                 alt="Norynthe"
                 onerror="this.style.display='none'; document.querySelector('.logo-fallback').style.display='block';"
               >
@@ -717,12 +753,16 @@
             <span class="signal-pill">Deterministic resolution</span>
           </div>
           <div class="hero-actions">
-            <a class="hero-cta primary" href="executive-overview.html">Executive Overview</a>
-            <a class="hero-cta" href="norynthe-run-console.html">Comparison Report</a>
-            <a class="hero-cta" href="norynthe-customer-report.html">Sample Report</a>
-            <a class="hero-cta" href="norynthe-enterprise-use-cases.html">Use Cases</a>
-            <a class="hero-cta" href="norynthe-founder-memo.html">Founder Memo</a>
-            <a class="hero-cta" href="norynthe-white-paper.html" target="_blank" rel="noopener noreferrer">White Paper</a>
+            <div class="hero-actions-primary">
+              <a class="hero-cta secondary" href="norynthe-run-console.html">Comparison Report</a>
+              <a class="hero-cta secondary" href="norynthe-customer-report.html">Sample Report</a>
+            </div>
+            <div class="hero-actions-secondary">
+              <a class="hero-cta primary" href="executive-overview.html">Executive Overview</a>
+              <a class="hero-cta tertiary" href="norynthe-enterprise-use-cases.html">Use Cases</a>
+              <a class="hero-cta tertiary" href="norynthe-founder-memo.html">Founder Memo</a>
+              <a class="hero-cta tertiary" href="norynthe-white-paper.html" target="_blank" rel="noopener noreferrer">White Paper</a>
+            </div>
           </div>
 
         </div>
