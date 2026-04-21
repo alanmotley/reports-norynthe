@@ -76,6 +76,12 @@
       font-size: 12px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+    .back-link:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.84);
+      box-shadow: 0 10px 22px rgba(15, 17, 21, 0.06);
     }
     .kicker {
       font-size: 11px;
@@ -120,6 +126,7 @@
       background: var(--paper-2);
       padding: 14px;
       border-radius: 18px;
+      box-shadow: 0 10px 22px rgba(15, 17, 21, 0.03);
     }
     .summary-title {
       font-size: 11px;
@@ -144,7 +151,9 @@
       width: 180px;
       height: 180px;
       border-radius: 999px;
-      background: #0f1115;
+      background:
+        radial-gradient(circle at 30% 28%, rgba(255,255,255,0.08), transparent 24%),
+        linear-gradient(180deg, #161a21 0%, #0f1115 100%);
       color: #fff;
       display: flex;
       flex-direction: column;
@@ -227,6 +236,7 @@
       margin-top: 20px;
       padding: 20px;
       background: var(--paper-2);
+      box-shadow: 0 14px 30px rgba(15, 17, 21, 0.04);
     }
     .section-title {
       font-size: 24px;
@@ -247,6 +257,7 @@
     .appendix-card {
       padding: 16px;
       background: var(--paper-2);
+      box-shadow: 0 10px 22px rgba(15, 17, 21, 0.03);
     }
     .appendix-card h3 {
       font-size: 22px;
@@ -271,6 +282,7 @@
     .question-row {
       padding: 16px 18px;
       background: rgba(255,255,255,0.76);
+      box-shadow: 0 10px 22px rgba(15, 17, 21, 0.025);
     }
     .question-head {
       display: grid;
@@ -298,6 +310,7 @@
       background: rgba(255,255,255,0.78);
       padding: 12px;
       text-align: center;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
     }
     .score-cell .label {
       display: block;
@@ -325,6 +338,7 @@
       border-radius: 18px;
       background: rgba(255,255,255,0.78);
       padding: 16px;
+      box-shadow: 0 10px 22px rgba(15, 17, 21, 0.03);
     }
     .method-card h3 {
       margin: 0 0 10px;
@@ -344,9 +358,14 @@
       margin-top: 10px;
     }
     .footer-note {
-      margin-top: 22px;
+      margin-top: 26px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
       font-size: 12px;
       color: var(--muted);
+      line-height: 1.78;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
     }
     @media (max-width: 1020px) {
       .overview-grid, .headline-row, .appendix-grid, .method-grid, .question-head {
@@ -370,10 +389,10 @@
 <body>
   <div class="shell">
     <section class="hero">
-      <a class="back-link" href="./index.html">Back To Reports</a>
+      <a class="back-link" href="./norynthe-customer-report.html">Back To Executive Report</a>
       <div class="kicker">Norynthe.Report / Review Appendix</div>
       <div class="brand-lockup">
-        <img class="brand-logo" src="/Norynthe_master.png" alt="Norynthe.">
+        <img class="brand-logo" src="../../../../Norynthe_master.png" alt="Norynthe." onerror="if (!this.dataset.fallbackTried) { this.dataset.fallbackTried='true'; this.src='../../../../assets/Norynthe_master.png'; } else { this.style.display='none'; }">
       </div>
       <p class="lede">
         This is the appendix version of a paid `Norynthe.Report`. It is designed for buyers who need the executive recommendation along with the benchmark detail, question-level comparison, and methodology context behind it.
@@ -386,7 +405,7 @@
         <div class="summary-list">
           <div class="summary-item">
             <div class="summary-title">Client</div>
-            <div class="summary-copy">Illustrative enterprise buyer / AI strategy team</div>
+            <div class="summary-copy">Sample enterprise buyer / AI strategy team</div>
           </div>
           <div class="summary-item">
             <div class="summary-title">Package</div>
@@ -406,7 +425,7 @@
           </div>
           <div class="summary-item">
             <div class="summary-title">Appendix Purpose</div>
-            <div class="summary-copy">Provide the benchmark detail, methodology, and comparative depth needed for broader internal review.</div>
+            <div class="summary-copy">Provide the benchmark detail, methodology, and comparative depth needed for executive, technical, and governance review.</div>
           </div>
         </div>
       </aside>
@@ -421,7 +440,7 @@
             <div class="pill strong">Reliable With Notable Issues</div>
             <h1>Benchmark evidence behind the recommendation.</h1>
             <p>
-              The executive conclusion remains the same: OpenAI is the leading model for the evaluated workflow. This appendix shows the question-level performance, benchmark structure, and methodology context supporting that recommendation.
+              The executive conclusion remains the same: OpenAI is the leading model for the evaluated workflow. This appendix provides the question-level performance, benchmark structure, and methodology context supporting that recommendation.
             </p>
             <div class="headline-meta">
               <span class="pill good">Executive + Appendix</span>
@@ -435,7 +454,7 @@
 
     <section class="section-shell">
       <h2 class="section-title">What The Appendix Adds</h2>
-      <p class="section-intro">This appendix is intended for buyers who need more than the headline recommendation. It adds benchmark detail, model-by-model comparison, and enough methodology to support technical, procurement, or governance review.</p>
+      <p class="section-intro">This appendix is intended for buyers who need more than the headline recommendation. It adds benchmark detail, model-by-model comparison, and enough methodology to support procurement, technical review, and governance review.</p>
       <div class="appendix-grid">
         <article class="appendix-card">
           <div class="kicker">Added Layer</div>
@@ -457,7 +476,7 @@
 
     <section class="section-shell">
       <h2 class="section-title">Question-Level Benchmark Summary</h2>
-      <p class="section-intro">This section shows how the field performed across the benchmark set. Scores are rounded for readability; the purpose is comparative signal rather than false precision.</p>
+      <p class="section-intro">This section shows how the field performed across the benchmark set. Scores are rounded for readability; the purpose is comparative signal rather than false precision or false certainty.</p>
       <div class="question-table">
         <article class="question-row">
           <div class="question-head">
@@ -517,17 +536,17 @@
         <article class="method-card">
           <div class="kicker">Benchmark Logic</div>
           <h3>What `Norynthe.Score` means</h3>
-          <p>`Norynthe.Score` is a benchmark-composite trust score computed from Norynthe’s controlled question bank rather than arbitrary prompts.</p>
+          <p>`Norynthe.Score` is a benchmark-composite trust score computed from Norynthe’s controlled question bank rather than arbitrary prompts or isolated interactions.</p>
           <ul>
             <li>15 benchmark questions</li>
-            <li>7 trust dimensions</li>
+            <li>6 public score dimensions + 1 diagnostic comparative signal</li>
             <li>The same evaluation surface across all compared models</li>
           </ul>
         </article>
         <article class="method-card">
           <div class="kicker">Review Logic</div>
           <h3>How scores are formed</h3>
-          <p>Each benchmark result is evaluated dimension by dimension, challenged through a scorer / critic structure, and then resolved into a final benchmark-composite score.</p>
+          <p>Each benchmark result is evaluated dimension by dimension, challenged through a scorer / critic structure, and then resolved into a final benchmark-composite score and recommendation layer.</p>
           <ul>
             <li>Question-level benchmarking</li>
             <li>Dimension-level trust analysis</li>
@@ -538,7 +557,7 @@
     </section>
 
     <div class="footer-note">
-      This page represents the appendix version of a paid `Norynthe.Report`. The executive report provides the decision layer; this appendix adds benchmark depth, comparison context, and concise methodology for broader internal review.
+      This page represents the appendix version of a paid `Norynthe.Report`. The executive report provides the decision layer; this appendix adds benchmark depth, comparison context, and concise methodology for broader stakeholder review. © 2026 Norynthe.
     </div>
   </div>
 </body>
