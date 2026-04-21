@@ -463,11 +463,23 @@
       padding-top: 18px;
       border-top: 1px solid var(--line);
       color: #5f6c79;
+      display: grid;
+      gap: 6px;
+      justify-items: start;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       font-size: 0.7rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       line-height: 1.8;
+    }
+
+    .paper-footer-meta,
+    .paper-footer-copy {
+      display: block;
+    }
+
+    .paper-footer-copy {
+      letter-spacing: 0.16em;
     }
 
     @media (max-width: 760px) {
@@ -824,7 +836,8 @@
       </section>
 
       <div class="paper-footer">
-        Norynthe White Paper · Foundational Methodology · Independent standards for trusted intelligence · © 2026 Norynthe.
+        <span class="paper-footer-meta">Norynthe White Paper · Foundational Methodology · Independent standards for trusted intelligence</span>
+        <span class="paper-footer-copy">© 2026 Norynthe.</span>
       </div>
     </article>
   </div>
