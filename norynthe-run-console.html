@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Norynthe.Reports</title>
+  <title>Norynthe.Reports / Model Standing</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="/favicon.png?v=20260406">
   <link rel="apple-touch-icon" href="/favicon.png?v=20260406">
@@ -2102,7 +2102,7 @@
     function buildComparisonHeroNarrative(report, field = "norynthe_score") {
       const top = report.ranked_models?.[0];
       const bottom = report.ranked_models?.at(-1);
-      if (!top || !bottom) return "Comparison report loaded.";
+      if (!top || !bottom) return "Comparison record loaded.";
       const spread = Math.abs(displayScore(getSortValue(top, field)) - displayScore(getSortValue(bottom, field)));
       return `${top.target_model_name} currently leads this evaluation set, while ${bottom.target_model_name} remains the lowest-scoring model in the same prompt context. The current spread is ${spread} points under ${dimensionLabel(field)}.`;
     }
@@ -2110,9 +2110,9 @@
     function buildBenchmarkHeroNarrative(report) {
       const top = report.ranked_models?.[0];
       const bottom = report.ranked_models?.at(-1);
-      if (!top || !bottom) return "Benchmark report loaded.";
+      if (!top || !bottom) return "Benchmark record loaded.";
       const spread = Math.abs(displayScore(top.norynthe_score) - displayScore(bottom.norynthe_score));
-      return `${top.target_model_name} currently leads the active benchmark set across ${report.benchmark_question_count} controlled Norynthe questions, including the humanities layer. The current benchmark-composite spread is ${spread} points from top to bottom.`;
+      return `${top.target_model_name} currently holds the strongest standing in the active benchmark set across ${report.benchmark_question_count} controlled benchmark assets. The current spread is ${spread} points from top to bottom.`;
     }
 
     function buildBenchmarkModelNarrative(report) {
@@ -2699,7 +2699,7 @@
           buildBenchmarkHeroNarrative(currentComparisonReport);
         executiveCallout.innerHTML = top && bottom
         ? `<strong>${top.target_model_name}</strong> currently leads the active 15-question benchmark set with a <strong>Norynthe.Score of ${displayScore(top.norynthe_score)}</strong>. The composite spread across the field is <strong>${spread} points</strong>.`
-          : "Benchmark report loaded.";
+          : "Benchmark record loaded.";
         renderBenchmarkComparisonRows(currentComparisonReport);
         renderBenchmarkComparisonCards(currentComparisonReport);
         renderBenchmarkComparePanel(currentComparisonReport);
@@ -2761,7 +2761,7 @@
       document.getElementById("weakestDimension").textContent =
         `${report.scoring_summary.weakest_question.prompt_id} (${displayScore(report.scoring_summary.weakest_question.score)})`;
       document.getElementById("singleReportHeadline").textContent =
-        `${report.target_model_name} produced a ${report.scoring_summary.overall_band_label.toLowerCase()} benchmark result across the active 15-question set, including the humanities layer.`;
+        `${report.target_model_name} produced a ${report.scoring_summary.overall_band_label.toLowerCase()} result across the active benchmark set.`;
       document.getElementById("singleReportSummary").textContent =
         buildBenchmarkModelNarrative(report);
       document.getElementById("singleReportRecommendation").textContent =
@@ -2769,7 +2769,7 @@
       comparisonModels.innerHTML = report.question_reports
         .map((question) => `<span>${question.prompt_id} | ${question.category} | ${displayScore(question.norynthe_score)}</span>`)
         .join("");
-      promptBox.textContent = "This report is benchmark-composite. Use the question cards below to inspect each of the 15 benchmark questions included in the final Norynthe.Score, including the new humanities questions.";
+      promptBox.textContent = "This record is benchmark-composite. Use the question cards below to inspect each benchmark asset included in the final Norynthe.Score.";
       promptMeta.innerHTML = `
         <span>Benchmark Set: ${report.benchmark_set_id ?? "n/a"}</span>
         <span>Questions Evaluated: ${report.benchmark_question_count ?? "n/a"}</span>
@@ -2833,7 +2833,7 @@
       document.getElementById("weakestDimension").textContent =
         `${titleize(report.scoring_summary.weakest_dimension.dimension)} (${displayScore(report.scoring_summary.weakest_dimension.score)})`;
       document.getElementById("singleReportHeadline").textContent =
-        `${report.target_model_name} produced a ${report.scoring_summary.overall_band_label.toLowerCase()} result in this evaluation.`;
+        `${report.target_model_name} produced a ${report.scoring_summary.overall_band_label.toLowerCase()} result in this record.`;
       document.getElementById("singleReportSummary").textContent =
         buildSingleReportNarrative(report);
       document.getElementById("singleReportRecommendation").textContent =
@@ -2882,8 +2882,8 @@
         buildComparisonHeroNarrative(currentComparisonReport);
       executiveCallout.classList.add("active");
       executiveCallout.innerHTML = topModel && bottomModel
-        ? `<strong>${topModel.target_model_name}</strong> currently leads this comparison with a <strong>Norynthe.Score of ${displayScore(topModel.norynthe_score)}</strong>. The widest gap to monitor is the <strong>${spread}-point spread</strong> across the full 15-question benchmark between the top and bottom ranked models.`
-        : "Comparison report loaded.";
+        ? `<strong>${topModel.target_model_name}</strong> currently leads this comparison with a <strong>Norynthe.Score of ${displayScore(topModel.norynthe_score)}</strong>. The widest gap to monitor is the <strong>${spread}-point spread</strong> across the controlled benchmark set between the top and bottom ranked models.`
+        : "Comparison record loaded.";
       renderDeltaInsights(currentComparisonReport);
       comparisonModels.innerHTML = (currentComparisonReport.compared_models ?? [])
         .map((model) => `<span>${model.name} | ${model.provider} | ${model.version}</span>`)
@@ -2931,13 +2931,13 @@
         buildBenchmarkHeroNarrative(currentComparisonReport);
       executiveCallout.classList.add("active");
       executiveCallout.innerHTML = topModel && bottomModel
-        ? `<strong>${topModel.target_model_name}</strong> currently leads the active benchmark set with a <strong>Norynthe.Score of ${displayScore(topModel.norynthe_score)}</strong>. The benchmark-composite spread is <strong>${spread} points</strong> across ${report.benchmark_question_count} controlled questions, including the humanities layer.`
-        : "Benchmark report loaded.";
+        ? `<strong>${topModel.target_model_name}</strong> currently leads the active benchmark set with a <strong>Norynthe.Score of ${displayScore(topModel.norynthe_score)}</strong>. The benchmark-composite spread is <strong>${spread} points</strong> across ${report.benchmark_question_count} controlled benchmark assets.`
+        : "Benchmark record loaded.";
       renderDeltaInsights(currentComparisonReport);
       comparisonModels.innerHTML = report.ranked_models
         .map((model) => `<span>${model.target_model_name} | ${model.provider} | ${model.questions_evaluated} questions</span>`)
         .join("");
-      promptBox.textContent = "This view shows the active 15-question benchmark set rather than a single prompt. Each model score is a composite across Norynthe’s controlled questions, including policy, enterprise, analysis, safety, adversarial framing, governance, and humanities.";
+      promptBox.textContent = "This view shows the active benchmark set rather than a single prompt. Each model score is a composite across Norynthe controlled benchmark assets.";
       promptMeta.innerHTML = `
         <span>Benchmark Set: ${report.benchmark_set_id ?? "n/a"}</span>
         <span>Questions Evaluated: ${report.benchmark_question_count ?? "n/a"}</span>
@@ -3108,6 +3108,6 @@
       }
     });
   </script>
-  <p class="footer-note">Norynthe Comparison Report · Independent standards for trusted intelligence · © 2026 Norynthe.</p>
+  <p class="footer-note">Norynthe.Reports · Norynthe.Score, score detail, and model standing · © 2026 Norynthe.</p>
 </body>
 </html>
