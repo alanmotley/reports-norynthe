@@ -6,7 +6,7 @@
   <title>Norynthe.Reports / MVP Walkthrough</title>
   <meta
     name="description"
-    content="A walkthrough of the internal scoring workflow behind Norynthe.Score, from benchmark setup through completed assessment record."
+    content="A walkthrough of the internal scoring workflow behind Norynthe.Score, from assessment setup through completed record review."
   >
   <link rel="icon" type="image/png" href="/favicon.png?v=20260406">
   <link rel="apple-touch-icon" href="/favicon.png?v=20260406">
@@ -200,7 +200,8 @@
     .section-intro,
     .stage-card p,
     .related-card p,
-    .caption {
+    .caption,
+    .bottom-note {
       margin: 0;
       color: #36414e;
       line-height: 1.8;
@@ -413,6 +414,12 @@
       box-shadow: 0 10px 22px rgba(15, 17, 21, 0.06);
     }
 
+    .bottom-note {
+      margin-top: 18px;
+      font-size: 14px;
+      max-width: 820px;
+    }
+
     @media (max-width: 980px) {
       .hero-grid,
       .summary-grid,
@@ -452,8 +459,8 @@
         <span>Norynthe.Score / internal workflow / proof layer</span>
         <nav>
           <a href="./index.html">Reports</a>
-          <a href="./executive-overview.html">Executive Overview</a>
-          <a href="./norynthe-customer-report-appendix.html">Appendix</a>
+          <a href="./executive-overview.html">Executive Report</a>
+          <a href="./norynthe-customer-report-appendix.html">Score Detail Appendix</a>
         </nav>
       </div>
 
@@ -461,19 +468,19 @@
 
       <div class="hero-grid">
         <div class="hero-copy">
-          <div class="kicker">Workflow Proof</div>
+          <div class="kicker">NORYNTHE. / INTERNAL WORKFLOW RECORD</div>
           <div class="hero-brand">
             <img src="/Norynthe_master.png" alt="Norynthe" class="hero-logo">
             <h1>MVP Walkthrough</h1>
           </div>
           <p>
-            This walkthrough records the internal scoring workflow behind Norynthe.Score, from benchmark selection and
-            model setup through runtime execution, completed assessment record, and score review.
+            This page shows the internal scoring workflow behind Norynthe.Score, from assessment setup through completed record review.
+            It connects benchmark selection, runtime execution, and assessment output into the operating surface that produces the report layer.
           </p>
           <div class="meta-row">
-            <span class="pill slate">Internal scoring workflow</span>
-            <span class="pill good">Approx. 5 minutes</span>
-            <span class="pill risk">Proof artifact</span>
+            <span class="pill slate">Internal MVP walkthrough</span>
+            <span class="pill good">~5 minutes</span>
+            <span class="pill risk">Workflow proof</span>
           </div>
         </div>
 
@@ -481,28 +488,32 @@
           <div class="eyebrow">Context Rail</div>
           <div class="meta-rail" style="margin-top: 14px;">
             <div class="meta-item">
-              <div class="meta-label">Asset type</div>
+              <div class="meta-label">Asset Type</div>
               <div class="meta-value">Internal MVP walkthrough</div>
             </div>
             <div class="meta-item">
+              <div class="meta-label">Duration</div>
+              <div class="meta-value">~5 minutes</div>
+            </div>
+            <div class="meta-item">
               <div class="meta-label">Workflow</div>
-              <div class="meta-value">Scoring, assessment, record review</div>
+              <div class="meta-value">Scoring / assessment / record review</div>
             </div>
             <div class="meta-item">
-              <div class="meta-label">Benchmark example</div>
-              <div class="meta-value">Safety recommendation under incomplete evidence</div>
+              <div class="meta-label">Benchmark Example</div>
+              <div class="meta-value">Safety — Safety recommendation under incomplete evidence</div>
             </div>
             <div class="meta-item">
-              <div class="meta-label">Model example</div>
+              <div class="meta-label">Model Example</div>
               <div class="meta-value">Qwen 2.5 7B Instruct</div>
             </div>
             <div class="meta-item">
-              <div class="meta-label">Output shown</div>
+              <div class="meta-label">Output Shown</div>
               <div class="meta-value">Assessment Record / Norynthe.Score overview</div>
             </div>
             <div class="meta-item">
               <div class="meta-label">Purpose</div>
-              <div class="meta-value">Show the operating surface behind the report layer</div>
+              <div class="meta-value">Show the scoring layer behind the trust signal</div>
             </div>
           </div>
         </aside>
@@ -514,8 +525,8 @@
         <div class="eyebrow">Video Feature</div>
         <h2 class="section-title">Internal scoring workflow</h2>
         <p class="section-intro">
-          The recorded flow moves from assessment setup through benchmark-driven evaluation, runtime processing,
-          record creation, and the resulting Norynthe.Score overview.
+          The workflow shown here is the internal operating path behind a completed Norynthe.Score record.
+          It captures how benchmark context, model selection, execution flow, and record generation connect inside the MVP.
         </p>
       </div>
       <div class="video-frame">
@@ -526,55 +537,69 @@
             <a href="./mvp-walkthrough.mp4">mvp-walkthrough.mp4</a>.
           </video>
           <p class="caption">
-            Recorded inside the internal MVP scoring console. The walkthrough shows assessment setup, benchmark and
-            model selection, live scoring progress, record generation, and score review inside the resulting assessment record.
+            This walkthrough follows a benchmark-driven assessment from setup to completed record, showing how runtime evaluation resolves into a Norynthe.Score output.
           </p>
         </div>
       </div>
     </section>
 
-    <section class="section-shell" aria-label="Walkthrough interpretation">
+    <section class="section-shell" aria-label="What this shows">
       <div class="section-head">
         <div class="eyebrow">What This Shows</div>
         <h2 class="section-title">The score and the workflow are one system.</h2>
-      </div>
-      <div class="summary-grid">
-        <div class="summary-item">
-          <div class="summary-title">Assessment setup</div>
-          <p>The workflow begins inside the internal scoring surface, where benchmark context, target model, and workbook state are set before execution.</p>
-        </div>
-        <div class="summary-item">
-          <div class="summary-title">Benchmark control</div>
-          <p>The walkthrough shows that the score is benchmark-driven rather than prompt-random. The benchmark layer remains under Norynthe control throughout the run.</p>
-        </div>
-        <div class="summary-item">
-          <div class="summary-title">Runtime execution</div>
-          <p>The viewer sees the active scoring stages rather than a static score reveal. Progress, calibration, and record creation are visible as operating steps.</p>
-        </div>
-        <div class="summary-item">
-          <div class="summary-title">Record continuity</div>
-          <p>The completed result opens directly into the assessment record, showing continuity between the scoring surface and the Norynthe.Score output layer.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section-shell" aria-label="Strategic significance">
-      <div class="section-head">
-        <div class="eyebrow">Why It Matters</div>
-        <h2 class="section-title">Operational trust, not static presentation.</h2>
         <p class="section-intro">
-          This walkthrough matters because it shows that Norynthe.Score is produced through a governed workflow, not a detached presentation layer.
-          Benchmark logic, scoring flow, calibration, and record output operate as one connected trust system.
+          The workflow shown here is the internal operating path behind a completed Norynthe.Score record.
+          It captures how benchmark context, model selection, execution flow, and record generation connect inside the MVP.
         </p>
       </div>
       <div class="summary-grid">
         <div class="summary-item">
-          <div class="summary-title">Trust issuance</div>
-          <p>The public signal sits on top of an internal method. The walkthrough shows the operating surface that issues the score record behind the report layer.</p>
+          <div class="summary-title">Assessment setup</div>
+          <p>The run begins in the internal scoring workflow, where assessment context, benchmark selection, and runtime configuration are established.</p>
         </div>
         <div class="summary-item">
-          <div class="summary-title">System evidence</div>
-          <p>This is product evidence that the trust layer is operational. The score is the visible output of a controlled benchmark and assessment pipeline.</p>
+          <div class="summary-title">Benchmark-driven evaluation</div>
+          <p>A controlled benchmark scenario is selected to anchor the evaluation. This keeps the assessment tied to a defined trust question rather than an abstract prompt.</p>
+        </div>
+        <div class="summary-item">
+          <div class="summary-title">Runtime execution</div>
+          <p>The selected model is processed through the scoring workflow, showing the transition from setup state to active evaluation and completion.</p>
+        </div>
+        <div class="summary-item">
+          <div class="summary-title">Record generation</div>
+          <p>Once execution completes, the workflow resolves into a structured assessment record rather than a disposable output.</p>
+        </div>
+        <div class="summary-item">
+          <div class="summary-title">Score review</div>
+          <p>The walkthrough ends in the Assessment Record / Norynthe.Score overview, where the result is reviewed as a trust artifact rather than a raw response log.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-shell" aria-label="Why it matters">
+      <div class="section-head">
+        <div class="eyebrow">Why It Matters</div>
+        <h2 class="section-title">Operational trust, not static presentation.</h2>
+        <p class="section-intro">
+          Norynthe.Score is not a decorative number. This walkthrough matters because it shows that the visible score sits on top of a governed internal workflow.
+        </p>
+      </div>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <div class="summary-title">The score is operational</div>
+          <p>The walkthrough shows that Norynthe.Score is produced through a working scoring flow, not added as a surface-level label after the fact.</p>
+        </div>
+        <div class="summary-item">
+          <div class="summary-title">Benchmark logic is central</div>
+          <p>The run is benchmark-driven. Scenario framing, evaluation context, and record output remain connected throughout the workflow.</p>
+        </div>
+        <div class="summary-item">
+          <div class="summary-title">The record is part of the system</div>
+          <p>The completed assessment resolves into a structured record that can support review, comparison, and downstream reporting.</p>
+        </div>
+        <div class="summary-item">
+          <div class="summary-title">The report layer has machinery behind it</div>
+          <p>This page makes visible the internal operating surface behind the polished report output, showing that the trust layer is functioning as a system.</p>
         </div>
       </div>
     </section>
@@ -587,68 +612,71 @@
       <div class="stage-grid">
         <article class="stage-card">
           <h3>Assessment setup</h3>
-          <p>Entry into the internal scoring surface and preparation of the evaluation record.</p>
+          <p>Initialize the scoring run and establish evaluation context.</p>
         </article>
         <article class="stage-card">
           <h3>Benchmark selection</h3>
-          <p>Selection of a controlled benchmark scenario from the owned benchmark bank.</p>
+          <p>Choose the controlled scenario used to anchor the run.</p>
         </article>
         <article class="stage-card">
           <h3>Model selection</h3>
-          <p>Registration context and target model choice before execution begins.</p>
+          <p>Target the model to be assessed under the chosen benchmark condition.</p>
         </article>
         <article class="stage-card">
           <h3>Evaluation run</h3>
-          <p>Runtime execution of the benchmark-driven assessment pipeline.</p>
+          <p>Execute the scoring workflow against the configured model and benchmark pair.</p>
         </article>
         <article class="stage-card">
-          <h3>Processing state</h3>
-          <p>Live scoring progress through the active runtime stages and record construction.</p>
+          <h3>Runtime processing</h3>
+          <p>Move through active execution until the run resolves.</p>
         </article>
         <article class="stage-card">
           <h3>Record creation</h3>
-          <p>Completed run state and the transition from workflow execution into a stored assessment record.</p>
+          <p>Generate the completed assessment artifact.</p>
         </article>
         <article class="stage-card">
           <h3>Score review</h3>
-          <p>Open Record entry into the resulting Norynthe.Score overview and output summary.</p>
+          <p>Open the resulting Norynthe.Score overview.</p>
         </article>
         <article class="stage-card">
-          <h3>Record inspection</h3>
-          <p>Scrolling through the assessment record, including result framing, dimension output, and supporting detail.</p>
+          <h3>Assessment record inspection</h3>
+          <p>Review the final record and underlying result structure.</p>
         </article>
       </div>
     </section>
 
     <section class="section-shell" aria-label="Related surfaces">
       <div class="section-head">
-        <div class="eyebrow">Related Surfaces</div>
+        <div class="eyebrow">Related Links</div>
         <h2 class="section-title">Connected reporting surfaces.</h2>
       </div>
       <div class="related-grid">
         <article class="related-card">
-          <h3>Reports index</h3>
-          <p>The main report root connecting public signal, score detail, and internal method surfaces.</p>
+          <h3>Executive Report</h3>
+          <p>A top-level view of Norynthe.Score, reporting structure, and strategic framing.</p>
         </article>
         <article class="related-card">
-          <h3>Executive overview</h3>
-          <p>A concise top-level view of Norynthe.Score, scoring architecture, and reporting posture.</p>
+          <h3>Score Detail Appendix</h3>
+          <p>Expanded detail supporting the score layer and deeper record interpretation.</p>
         </article>
         <article class="related-card">
-          <h3>Score detail appendix</h3>
-          <p>Deeper record interpretation and expanded detail supporting the executive score layer.</p>
+          <h3>Reports Index</h3>
+          <p>The main report root connecting public signal, score detail, and related proof surfaces.</p>
         </article>
         <article class="related-card">
-          <h3>Assessment records</h3>
-          <p>The internal artifacts that connect runtime scoring workflow to report-facing trust outputs.</p>
+          <h3>Assessment Record Examples</h3>
+          <p>Internal record artifacts that connect workflow execution to trust-facing outputs.</p>
         </article>
       </div>
       <div class="related-actions">
-        <a class="link-pill primary" href="./reports-index.html">Open Reports Index</a>
-        <a class="link-pill" href="./executive-overview.html">Open Executive Overview</a>
-        <a class="link-pill" href="./norynthe-customer-report-appendix.html">Open Report Appendix</a>
-        <a class="link-pill" href="./norynthe-run-console.html">Open Internal Surface</a>
+        <a class="link-pill" href="./executive-overview.html">Executive Report</a>
+        <a class="link-pill" href="./norynthe-customer-report-appendix.html">Score Detail Appendix</a>
+        <a class="link-pill primary" href="./index.html">Reports Index</a>
+        <a class="link-pill" href="./norynthe-run-console.html">Assessment Record Examples</a>
       </div>
+      <p class="bottom-note">
+        This walkthrough is included as a workflow proof layer within the Norynthe reporting surface. It shows the operating path behind score issuance, record formation, and the trust output presented elsewhere in the system.
+      </p>
     </section>
   </main>
 </body>
