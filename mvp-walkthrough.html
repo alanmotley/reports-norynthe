@@ -166,7 +166,20 @@
       align-items: start;
     }
 
-    .hero-copy h1,
+    .hero-brand {
+      display: grid;
+      gap: 14px;
+      align-items: start;
+      margin-top: 14px;
+    }
+
+    .hero-logo {
+      display: block;
+      width: min(520px, 100%);
+      height: auto;
+    }
+
+    .hero-brand h1,
     .section-title,
     .panel h2,
     .stage-card h3,
@@ -176,11 +189,10 @@
       letter-spacing: -0.06em;
     }
 
-    .hero-copy h1 {
-      margin-top: 14px;
-      font-size: clamp(2.4rem, 5vw, 4.1rem);
+    .hero-brand h1 {
+      font-size: clamp(2.2rem, 4.6vw, 3.8rem);
       line-height: 0.92;
-      max-width: 12ch;
+      color: var(--ink);
     }
 
     .hero-copy p,
@@ -426,6 +438,10 @@
       .section-shell {
         padding: 20px;
       }
+
+      .hero-logo {
+        width: min(360px, 100%);
+      }
     }
   </style>
 </head>
@@ -446,7 +462,10 @@
       <div class="hero-grid">
         <div class="hero-copy">
           <div class="kicker">Workflow Proof</div>
-          <h1>Norynthe. MVP Walkthrough</h1>
+          <div class="hero-brand">
+            <img src="/Norynthe_master.png" alt="Norynthe" class="hero-logo">
+            <h1>MVP Walkthrough</h1>
+          </div>
           <p>
             This walkthrough records the internal scoring workflow behind Norynthe.Score, from benchmark selection and
             model setup through runtime execution, completed assessment record, and score review.
@@ -504,7 +523,7 @@
           <video controls preload="metadata" playsinline>
             <source src="./mvp-walkthrough.mp4" type="video/mp4">
             Your browser does not support HTML5 video. Use the direct asset link instead:
-            <a href="./map-walkthrough.mp4">map-walkthrough.mp4</a>.
+            <a href="./mvp-walkthrough.mp4">mvp-walkthrough.mp4</a>.
           </video>
           <p class="caption">
             Recorded inside the internal MVP scoring console. The walkthrough shows assessment setup, benchmark and
