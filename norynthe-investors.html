@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Norynthe For Investors</title>
+  <title>Norynthe Investor Overview</title>
   <meta
     name="description"
     content="Investor overview for Norynthe, an independent AI scoring and verification infrastructure layer."
@@ -188,6 +188,8 @@
     h1 {
       max-width: 10ch;
       margin-bottom: 18px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-weight: 700;
       font-size: clamp(2.8rem, 6vw, 5rem);
       line-height: 0.92;
       letter-spacing: -0.065em;
@@ -220,6 +222,31 @@
       flex-wrap: wrap;
       gap: 10px;
       margin-top: 24px;
+    }
+
+    .materials-note {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(18, 23, 30, 0.07);
+      background: rgba(255,255,255,0.58);
+      box-shadow: var(--shadow-soft);
+      color: #55616d;
+    }
+
+    .materials-note strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--slate);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .materials-note span {
+      display: block;
+      font-size: 0.86rem;
+      line-height: 1.72;
     }
 
     .pill {
@@ -267,6 +294,8 @@
     }
 
     .glance-card h3 {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-weight: 700;
       margin-bottom: 8px;
       font-size: 1.14rem;
       letter-spacing: -0.04em;
@@ -302,6 +331,8 @@
     }
 
     .section-head h2 {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-weight: 700;
       font-size: clamp(1.9rem, 3.6vw, 2.8rem);
       line-height: 0.98;
       letter-spacing: -0.055em;
@@ -351,6 +382,8 @@
     }
 
     .card h3 {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-weight: 700;
       margin-bottom: 10px;
       font-size: 1.12rem;
       line-height: 1.05;
@@ -398,6 +431,8 @@
 
     .ask-copy h2 {
       margin-bottom: 14px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-weight: 700;
       font-size: clamp(2rem, 4vw, 3rem);
       line-height: 0.96;
       letter-spacing: -0.06em;
@@ -516,7 +551,6 @@
       <span>Investor Overview</span>
       <nav>
         <a href="index.html">Main Site</a>
-        <a href="norynthe-white-paper.html">White Paper</a>
         <a href="norynthe-founder-memo.html">Founder Memo</a>
       </nav>
     </div>
@@ -524,51 +558,54 @@
     <section class="hero">
       <div class="back-row">
         <a class="back-link" href="index.html">Back To Main Site</a>
-        <a class="back-link" href="norynthe-white-paper.html">Open White Paper</a>
+        <a class="back-link" href="norynthe-founder-memo.html">Founder Memo</a>
       </div>
 
       <div class="hero-grid">
         <div>
-          <p class="eyebrow">For Investors</p>
+          <p class="eyebrow">Investor Overview</p>
           <img
             class="hero-logo"
-            src="../../../../norynthe-logo.png"
+            src="norynthe-logo.png"
             alt="Norynthe"
-            onerror="if (!this.dataset.fallbackTried) { this.dataset.fallbackTried='true'; this.src='../../../../assets/norynthe-logo.png'; } else { this.style.display='none'; }"
+            onerror="if (!this.dataset.fallbackTried) { this.dataset.fallbackTried='true'; this.src='assets/norynthe-logo.png'; } else { this.style.display='none'; }"
           >
-          <h1>The case for independent AI trust infrastructure.</h1>
+          <h1>The trust standard behind Norynthe.Score</h1>
           <p class="lede">
-            Norynthe is building an independent scoring, reporting, and verification layer for AI systems. Its practical role
-            is to help enterprises make better decisions about how probabilistic systems are interpreted, trusted, compared,
-            and operationalized under a governed standard.
+            Norynthe is building an independent trust company for AI. Norynthe.Score is the public signal. The Norynthe Model
+            is the proprietary scoring engine that turns controlled benchmark assets into ranked model standing, score detail,
+            and institution-ready reporting.
           </p>
           <div class="hero-links">
-            <a class="hero-link primary" href="norynthe-white-paper.html">Read The White Paper</a>
-            <a class="hero-link" href="executive-overview.html">Executive Overview</a>
-            <a class="hero-link" href="norynthe-founder-memo.html">Founder Memo</a>
+            <a class="hero-link primary" href="norynthe-founder-memo.html">Founder Memo</a>
+            <a class="hero-link" href="index.html">Main Site</a>
           </div>
           <div class="hero-pills">
-            <span class="pill">Benchmark-owned evaluation</span>
-            <span class="pill">Score / Report / Verification</span>
-            <span class="pill">6 public score dimensions</span>
-            <span class="pill">Owned compute path</span>
+            <span class="pill">Norynthe.Score</span>
+            <span class="pill">Norynthe Model</span>
+            <span class="pill">Benchmark Layer</span>
+            <span class="pill">Reporting Layer</span>
+          </div>
+          <div class="materials-note">
+            <strong>Additional Materials</strong>
+            <span>White paper access, use-case materials, report surfaces, and the MVP demo are available by request via <a href="mailto:hello@norynthe.com">hello@norynthe.com</a>.</span>
           </div>
         </div>
 
         <div class="glance">
           <article class="glance-card">
             <div class="glance-kicker">Category</div>
-            <h3>AI trust infrastructure</h3>
-            <p>Not a model wrapper and not a model training company. Norynthe sits outside the model as the governed trust layer.</p>
+            <h3>AI trust company</h3>
+            <p>Not a model wrapper and not a model training company. Norynthe sits outside the model as the independent scoring layer.</p>
           </article>
           <article class="glance-card">
             <div class="glance-kicker">Core Question</div>
-            <h3>Which system is most defensible?</h3>
+            <h3>Which model has standing under an external standard?</h3>
             <p>When multiple models appear capable, Norynthe helps enterprises decide which one is strongest for consequential use and why.</p>
           </article>
           <article class="glance-card">
             <div class="glance-kicker">Why It Matters</div>
-            <h3>Trust is becoming a deployment decision</h3>
+            <h3>Trust is becoming a budgeted decision</h3>
             <p>As AI moves into procurement, regulated review, and operational workflows, trust becomes infrastructure rather than marketing.</p>
           </article>
         </div>
@@ -578,7 +615,7 @@
     <section class="section-card">
       <div class="section-head">
         <div class="section-label">Why This Company</div>
-        <h2>Norynthe is being built around the judgment problem, not just the output problem.</h2>
+        <h2>Independent scoring becomes infrastructure.</h2>
         <p>
           Most AI evaluation still collapses into demos, brand perception, leaderboard headlines, or provider-controlled benchmarks.
           Norynthe starts from a different premise: enterprises need a governed basis for deciding how probabilistic systems should
@@ -593,7 +630,7 @@
     <section class="section-card">
       <div class="section-head">
         <div class="section-label">Why Now</div>
-        <h2>The market is operationalizing AI faster than it is building trust infrastructure around it.</h2>
+        <h2>AI adoption is moving faster than external scoring.</h2>
         <p>
           That timing gap creates room for a company that is benchmark-owned, rubric-governed, and enterprise-legible from the start.
           The investor case is not only that AI is growing. It is that the governance and trust layer around AI remains materially underbuilt.
@@ -621,32 +658,31 @@
     <section class="section-card">
       <div class="section-head">
         <div class="section-label">What Exists Today</div>
-        <h2>This is not a pitch built on pure abstraction.</h2>
+        <h2>The system already has public signal, internal method, and reporting depth.</h2>
         <p>
-          Norynthe already has a coherent narrative stack and a working product thesis: a main site, executive overview, white paper,
-          founder memo, enterprise use-case articulation, and report surfaces that make the system legible to buyers, researchers, and investors.
+          Norynthe already has a working public layer, a controlled internal method, strategic supporting materials, and reporting surfaces that make the system legible to buyers, researchers, and investors.
         </p>
       </div>
       <div class="grid-4">
         <article class="card">
           <div class="card-kicker">Method</div>
-          <h3>White Paper</h3>
-          <p>The formal methodology for scoring, comparison, verification, and interpretive integrity under a governed standard.</p>
+          <h3>Method Layer</h3>
+          <p>Controlled method documents covering scoring, comparison, verification, and interpretive integrity under the Norynthe standard.</p>
         </article>
         <article class="card">
           <div class="card-kicker">Surface</div>
-          <h3>Report System</h3>
-          <p>Comparison and sample report views that show how the trust signal becomes an evidence-backed enterprise artifact.</p>
+          <h3>Report Layer</h3>
+          <p>Reporting surfaces that turn the score into an evidence-backed decision artifact.</p>
         </article>
         <article class="card">
-          <div class="card-kicker">Narrative</div>
-          <h3>Founder + Use Cases</h3>
-          <p>A conviction layer and an enterprise-application layer that connect the category thesis to real organizational decisions.</p>
+          <div class="card-kicker">Strategic Materials</div>
+          <h3>Founder + Institutional Context</h3>
+          <p>Supporting materials that connect the standard to procurement, governance, and deployment decisions.</p>
         </article>
         <article class="card">
           <div class="card-kicker">Architecture</div>
-          <h3>Governed Evaluator Design</h3>
-          <p>Six public score dimensions, one diagnostic comparative signal, scorer and critic agents, deterministic resolution, and a workbook control layer.</p>
+          <h3>Scoring Architecture</h3>
+          <p>Public score dimensions, diagnostic lenses, deterministic resolution, and a calibration layer under Norynthe control.</p>
         </article>
       </div>
     </section>
@@ -654,7 +690,7 @@
     <section class="section-card">
       <div class="section-head">
         <div class="section-label">Why It Can Be Defensible</div>
-        <h2>The asset is not a single model output. It is the standard, the workflow, and the control over the evaluator layer.</h2>
+        <h2>The asset is the benchmark layer, scoring engine, and reporting authority.</h2>
         <p>
           Norynthe becomes more defensible as the benchmark, rubric governance, reporting system, and verification layer harden together.
           Over time, the owned-compute path strengthens that defensibility by turning evaluator behavior into something the company can control,
@@ -669,8 +705,8 @@
         </article>
         <article class="card">
           <div class="card-kicker">Product</div>
-          <h3>Score / Report / Verification</h3>
-          <p>The outputs are legible to the market, legible to enterprise buyers, and extensible into higher-stakes deployment review.</p>
+          <h3>Norynthe.Score + Reports</h3>
+          <p>The public signal is legible to the market, and the reporting layer adds deeper score detail for institutional use.</p>
         </article>
         <article class="card">
           <div class="card-kicker">Infrastructure</div>
@@ -684,7 +720,7 @@
       <div class="ask-grid">
         <div class="ask-copy">
           <p class="eyebrow">The Ask</p>
-          <h2>Capital should turn the category thesis into hardened infrastructure.</h2>
+          <h2>Capital should harden the scoring engine.</h2>
           <p>
             Norynthe is preparing for aligned investor conversations around the next build phase. The goal is not simply to fund more pages
             or more prompt experiments. It is to harden the benchmark, evaluator, reporting, and enterprise-deployment layers into a real trust product.
@@ -694,13 +730,16 @@
             for a world where probabilistic systems increasingly shape enterprise decisions.
           </p>
           <p>
-            Detailed fundraising structure can be shared directly in conversation. The page here is meant to clarify the thesis, the asset logic,
-            and what capital is intended to unlock.
+            Detailed fundraising structure can be shared directly in conversation. This page is meant to clarify the thesis, the asset logic,
+            and what capital is intended to harden.
+          </p>
+          <p>
+            White paper access, use-case documents, and a guided MVP demo are available on request for qualified investor conversations.
           </p>
           <div class="contact-row">
             <a class="contact-pill" href="mailto:hello@norynthe.com">hello@norynthe.com</a>
-            <a class="contact-pill" href="norynthe-white-paper.html">Methodology</a>
             <a class="contact-pill" href="norynthe-founder-memo.html">Founder Memo</a>
+            <a class="contact-pill" href="index.html">Main Site</a>
           </div>
         </div>
         <div class="ask-points">
@@ -724,7 +763,7 @@
       </div>
     </section>
 
-    <p class="footer-note">Norynthe For Investors · Independent trust infrastructure for probabilistic systems · © 2026 Norynthe.</p>
+    <p class="footer-note">Norynthe Investor Overview · Public signal, private method, controlled benchmark layer · © 2026 Norynthe.</p>
   </div>
 </body>
 </html>
