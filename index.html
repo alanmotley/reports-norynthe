@@ -2315,6 +2315,17 @@
         font-size: 0.58rem;
       }
     }
+
+    /* Match the main Norynthe page's top breathing room. */
+    .page {
+      padding-top: 30px;
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        padding-top: 22px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -2334,7 +2345,7 @@
         <a class="topline-brand" href="/" aria-label="Norynthe home">
           <img
             class="topline-logo"
-            src="/Norynthe_master.png"
+            src="assets/Norynthe_master.png"
             alt="Norynthe."
             loading="eager"
             decoding="async"
@@ -2356,7 +2367,7 @@
             <div class="logo-wrap">
               <img
                 class="logo"
-                src="/Norynthe_master.png"
+                src="assets/Norynthe_master.png"
                 alt="Norynthe"
                 onerror="this.style.display='none'; document.querySelector('.logo-fallback').style.display='block';"
               >
