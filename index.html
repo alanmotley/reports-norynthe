@@ -2201,6 +2201,120 @@
         grid-template-columns: 1fr 1fr auto;
       }
     }
+
+    /* Carry the main Norynthe header language into the reports side. */
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 54px;
+      margin-bottom: 3.2rem;
+      padding: 0 0 18px;
+      border-bottom: 1px solid rgba(15, 17, 21, 0.1);
+      gap: 1.4rem;
+      letter-spacing: 0;
+    }
+
+    .topline-brand {
+      display: inline-flex;
+      align-items: center;
+      width: 140px;
+      min-width: 140px;
+      max-width: 32vw;
+      line-height: 0;
+    }
+
+    .topline-logo {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+      filter: none;
+    }
+
+    .topline-nav,
+    .topline nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .topline-nav a,
+    .topline nav a {
+      display: inline-flex;
+      align-items: center;
+      min-height: auto;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      color: #53606C;
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      line-height: 1.2;
+      text-transform: uppercase;
+      font-weight: 760;
+      opacity: 1;
+      transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .topline-nav a::after,
+    .topline nav a::after {
+      display: none;
+    }
+
+    .topline-nav a:hover,
+    .topline nav a:hover {
+      color: var(--ink);
+      transform: none;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .topline-nav a:last-child,
+    .topline nav a:last-child {
+      min-height: 34px;
+      padding: 0 12px;
+      border: 1px solid rgba(15, 17, 21, 0.13);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.48);
+      color: #27313B;
+    }
+
+    .topline-nav a:last-child:hover,
+    .topline nav a:last-child:hover {
+      border-color: rgba(15, 17, 21, 0.22);
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    @media (max-width: 720px) {
+      .topline {
+        align-items: flex-start;
+        gap: 14px;
+        min-height: 0;
+        margin-bottom: 2.2rem;
+      }
+
+      .topline-brand {
+        width: 132px;
+        min-width: 132px;
+      }
+
+      .topline-nav,
+      .topline nav {
+        justify-content: flex-start;
+        gap: 12px 16px;
+      }
+
+      .topline-nav a,
+      .topline nav a {
+        font-size: 0.58rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -2216,7 +2330,7 @@
 
   <div class="page">
     <div class="container">
-      <div class="topline">
+      <header class="topline">
         <a class="topline-brand" href="/" aria-label="Norynthe home">
           <img
             class="topline-logo"
@@ -2227,17 +2341,14 @@
             onerror="this.replaceWith(document.createTextNode('Norynthe.'));"
           >
         </a>
-        <span class="topline-context">Norynthe.Score / evidence layer / assessment records</span>
-        <nav>
+        <nav class="topline-nav" aria-label="Reports navigation">
           <a href="#logic">Scoring</a>
           <a href="#architecture">Method</a>
           <a href="#workbook">Calibration</a>
-          <a href="./mvp-walkthrough.html">System Walkthrough</a>
-          <a href="/norynthe-white-paper.html">White Paper</a>
-          <a href="/norynthe-enterprise-use-cases.html">Use Cases</a>
           <a href="#reports">Reports</a>
+          <a href="mailto:hello@norynthe.com">Contact</a>
         </nav>
-      </div>
+      </header>
 
       <section class="hero" aria-label="Norynthe Reports">
         <div class="brand-lockup">
