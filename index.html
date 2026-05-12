@@ -346,28 +346,30 @@
     }
 
     .score-card-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 18px 20px 16px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 22px;
+      align-items: start;
+      padding: 20px 20px 18px;
       border-bottom: 1px solid rgba(15, 17, 21, 0.075);
     }
 
     .score-card h2 {
-      margin: 0.55rem 0 0;
-      max-width: 12ch;
-      font-size: clamp(1.55rem, 3vw, 2.05rem);
+      margin: 0.68rem 0 0;
+      max-width: 13.5ch;
+      font-size: clamp(1.42rem, 2.45vw, 1.9rem);
       font-weight: 760;
       letter-spacing: 0;
-      line-height: 0.98;
+      line-height: 1.02;
       text-wrap: balance;
     }
 
     .record-state {
       display: inline-flex;
       align-items: center;
+      justify-self: end;
       gap: 8px;
-      height: 32px;
+      min-height: 30px;
       padding: 0 10px;
       border: 1px solid rgba(54, 85, 74, 0.18);
       border-radius: 999px;
@@ -390,10 +392,10 @@
 
     .score-card-main {
       display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 18px;
+      grid-template-columns: 136px minmax(0, 1fr);
+      gap: 24px;
       align-items: center;
-      padding: 20px;
+      padding: 24px 20px;
       border-bottom: 1px solid rgba(15, 17, 21, 0.075);
     }
 
@@ -417,6 +419,10 @@
       background: linear-gradient(180deg, #fff, #f5f7f9);
     }
 
+    .score-ring-inner > div {
+      text-align: center;
+    }
+
     .score-ring strong {
       display: block;
       color: var(--ink);
@@ -426,6 +432,7 @@
     }
 
     .score-ring span {
+      display: block;
       margin-top: 7px;
       color: var(--muted);
       font-size: 0.5rem;
@@ -435,7 +442,7 @@
     }
 
     .score-card-main h3 {
-      margin: 0 0 8px;
+      margin: 0 0 10px;
       color: var(--ink);
       font-size: 1.1rem;
       font-weight: 760;
@@ -446,7 +453,7 @@
       margin: 0;
       color: #4a5662;
       font-size: 0.91rem;
-      line-height: 1.55;
+      line-height: 1.58;
     }
 
     .score-card-meta {
@@ -457,7 +464,8 @@
     }
 
     .score-card-meta div {
-      padding: 14px 16px;
+      min-height: 78px;
+      padding: 15px 16px;
       border-right: 1px solid rgba(15, 17, 21, 0.065);
     }
 
@@ -484,16 +492,16 @@
 
     .top-three {
       display: grid;
-      gap: 10px;
-      padding: 16px;
+      gap: 11px;
+      padding: 17px 16px 18px;
     }
 
     .top-rank {
       display: grid;
       grid-template-columns: auto 1fr auto;
-      gap: 12px;
+      gap: 13px;
       align-items: center;
-      padding: 12px;
+      padding: 13px 12px;
       border: 1px solid rgba(15, 17, 21, 0.07);
       border-radius: 10px;
       background: rgba(255, 255, 255, 0.58);
@@ -1163,6 +1171,15 @@
       .summary-grid,
       .score-row {
         grid-template-columns: 1fr;
+      }
+
+      .score-card-top {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .record-state {
+        justify-self: start;
       }
 
       .score-ring {
