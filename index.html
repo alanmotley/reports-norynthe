@@ -403,20 +403,25 @@
       display: grid;
       place-items: center;
       width: 136px;
-      aspect-ratio: 1;
-      border-radius: 999px;
+      min-height: 124px;
+      border: 1px solid rgba(15, 17, 21, 0.08);
+      border-radius: 12px;
       background:
-        conic-gradient(from -90deg, var(--signal) 0 91%, rgba(15, 17, 21, 0.08) 91% 100%);
-      box-shadow: inset 0 0 0 1px rgba(15, 17, 21, 0.08);
+        linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(244, 247, 249, 0.76)),
+        radial-gradient(circle at top right, rgba(122, 48, 48, 0.08), transparent 40%);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        0 14px 26px rgba(15, 17, 21, 0.045);
     }
 
     .score-ring-inner {
       display: grid;
       place-items: center;
-      width: calc(100% - 18px);
-      aspect-ratio: 1;
+      width: 100%;
+      min-height: 100%;
+      padding: 16px 12px;
       border-radius: inherit;
-      background: linear-gradient(180deg, #fff, #f5f7f9);
+      background: transparent;
     }
 
     .score-ring-inner > div {
@@ -426,7 +431,7 @@
     .score-ring strong {
       display: block;
       color: var(--ink);
-      font-size: 3.2rem;
+      font-size: 3.55rem;
       font-weight: 780;
       line-height: 0.9;
     }
