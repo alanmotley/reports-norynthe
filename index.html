@@ -516,37 +516,37 @@
 
     .top-three {
       display: grid;
-      gap: 11px;
-      padding: 17px 16px 18px;
+      gap: 0;
+      padding: 15px 20px 17px;
     }
 
     .top-rank {
       display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 13px;
+      grid-template-columns: 32px 1fr auto;
+      gap: 16px;
       align-items: center;
-      padding: 13px 12px;
-      border: 1px solid rgba(15, 17, 21, 0.07);
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.58);
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(15, 17, 21, 0.08);
+      background: transparent;
+    }
+
+    .top-rank:last-child {
+      border-bottom: 0;
     }
 
     .rank-dot {
-      display: grid;
-      place-items: center;
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      background: rgba(15, 17, 21, 0.06);
-      color: var(--ink);
-      font-size: 0.72rem;
+      color: var(--signal);
+      font-size: 0.62rem;
       font-weight: 820;
+      letter-spacing: 0.12em;
+      line-height: 1;
     }
 
     .top-rank strong {
       display: block;
-      font-size: 0.95rem;
-      line-height: 1.18;
+      color: #172029;
+      font-size: 0.94rem;
+      line-height: 1.24;
     }
 
     .top-rank span {
@@ -559,7 +559,7 @@
 
     .top-score {
       color: var(--ink);
-      font-size: 1.45rem;
+      font-size: 1.32rem;
       font-weight: 780;
       line-height: 1;
     }
