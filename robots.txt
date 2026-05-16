@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://reports.norynthe.com/sitemap.xml
