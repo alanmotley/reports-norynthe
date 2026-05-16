@@ -1,0 +1,22 @@
+html.nt-transition-enabled body {
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+html.nt-transition-enabled.nt-transition-ready body {
+  opacity: 1;
+}
+
+html.nt-transition-enabled.nt-transition-exiting body {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.nt-transition-enabled body,
+  html.nt-transition-enabled.nt-transition-ready body,
+  html.nt-transition-enabled.nt-transition-exiting body {
+    opacity: 1;
+    transition: none;
+  }
+}
