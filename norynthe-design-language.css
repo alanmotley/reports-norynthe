@@ -72,6 +72,18 @@ body.market-position-page .hero .lede {
   color: rgba(238, 243, 246, 0.68);
 }
 
+body.score-dashboard-page .hero-copy h1 {
+  max-width: 12.5ch;
+  font-size: clamp(3.15rem, 6vw, 5.45rem) !important;
+  line-height: 0.93 !important;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+body.score-dashboard-page .hero-copy h1 .no-break {
+  white-space: nowrap;
+}
+
 .hero-actions a,
 .hero-actions .button,
 .hero-cta {
@@ -99,6 +111,12 @@ body.market-position-page .hero .lede {
     max-width: 13ch;
     font-size: var(--nt-report-title-mobile-size) !important;
     line-height: 1 !important;
+  }
+
+  body.score-dashboard-page .hero-copy h1 {
+    max-width: 8.9ch;
+    font-size: clamp(2.75rem, 11.8vw, 3rem) !important;
+    line-height: 0.95 !important;
   }
 
   .grid,
