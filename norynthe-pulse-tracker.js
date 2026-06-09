@@ -1,5 +1,6 @@
 (function () {
   const ENDPOINT = "https://norynthe-pulse-tracker.alanmotley.workers.dev/track";
+  const SESSION_KEY = "norynthe_pulse_session_id_v1";
   const HOST_SITE = {
     "www.norynthe.com": "norynthe",
     "norynthe.com": "norynthe",
@@ -11,13 +12,28 @@
 
   const currentScript = document.currentScript;
   const site = currentScript?.dataset?.pulseSite || HOST_SITE[window.location.hostname] || "unknown";
+  const sessionId = getSessionId();
+  const device = detectDevice();
+  const utm = readUtm();
 
   function send(payload) {
+    const referrer = payload?.referrer ?? document.referrer;
     const body = JSON.stringify(Object.assign({
       site,
+      eventType: "page_view",
+      sessionId,
       page: window.location.pathname + window.location.search,
       title: document.title,
-      referrer: document.referrer
+      referrer,
+      referrerDomain: domainFromUrl(referrer),
+      utmSource: utm.source,
+      utmMedium: utm.medium,
+      utmCampaign: utm.campaign,
+      utmTerm: utm.term,
+      utmContent: utm.content,
+      deviceType: device.type,
+      browser: device.browser,
+      os: device.os
     }, payload));
 
     if (navigator.sendBeacon) {
@@ -33,7 +49,9 @@
     }).catch(function () {});
   }
 
-  send();
+  send({
+    assetName: assetNameFromPage(window.location.pathname, document.title)
+  });
 
   document.addEventListener("click", function (event) {
     const link = event.target.closest("a[href]");
@@ -50,10 +68,103 @@
       page = href;
     }
 
+    const label = cleanText(link.textContent || link.getAttribute("aria-label") || "PDF", 120) || "PDF";
     send({
+      eventType: "pdf_download",
       page,
-      title: "Download: " + ((link.textContent || "PDF").replace(/\s+/g, " ").trim() || "PDF"),
-      referrer: window.location.href
+      title: "Download: " + label,
+      referrer: window.location.href,
+      referrerDomain: window.location.hostname.replace(/^www\./, ""),
+      assetName: assetNameFromLink(href, label)
     });
   }, { capture: true });
+
+  function getSessionId() {
+    try {
+      const existing = window.sessionStorage.getItem(SESSION_KEY);
+      if (existing) return existing;
+
+      const next = window.crypto?.randomUUID
+        ? window.crypto.randomUUID()
+        : "session-" + Math.random().toString(36).slice(2) + Date.now().toString(36);
+      window.sessionStorage.setItem(SESSION_KEY, next);
+      return next;
+    } catch (error) {
+      return "session-" + Math.random().toString(36).slice(2) + Date.now().toString(36);
+    }
+  }
+
+  function readUtm() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+      source: cleanText(params.get("utm_source"), 120),
+      medium: cleanText(params.get("utm_medium"), 120),
+      campaign: cleanText(params.get("utm_campaign"), 160),
+      term: cleanText(params.get("utm_term"), 160),
+      content: cleanText(params.get("utm_content"), 160)
+    };
+  }
+
+  function detectDevice() {
+    const ua = navigator.userAgent || "";
+    const platform = navigator.platform || "";
+    const isTablet = /ipad|tablet|playbook|silk/i.test(ua) || (platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const isMobile = !isTablet && /mobi|iphone|ipod|android.*mobile|windows phone/i.test(ua);
+
+    return {
+      type: isTablet ? "tablet" : isMobile ? "mobile" : "desktop",
+      browser: detectBrowser(ua),
+      os: detectOs(ua, platform)
+    };
+  }
+
+  function detectBrowser(ua) {
+    if (/edg\//i.test(ua)) return "Edge";
+    if (/opr\//i.test(ua) || /opera/i.test(ua)) return "Opera";
+    if (/firefox\//i.test(ua)) return "Firefox";
+    if (/chrome\//i.test(ua) || /crios\//i.test(ua)) return "Chrome";
+    if (/safari\//i.test(ua)) return "Safari";
+    return "Unknown";
+  }
+
+  function detectOs(ua, platform) {
+    if (/iphone|ipad|ipod/i.test(ua) || (platform === "MacIntel" && navigator.maxTouchPoints > 1)) return "iOS";
+    if (/android/i.test(ua)) return "Android";
+    if (/windows/i.test(ua)) return "Windows";
+    if (/mac os x|macintosh|macintel/i.test(ua) || /mac/i.test(platform)) return "macOS";
+    if (/linux/i.test(ua)) return "Linux";
+    return "Unknown";
+  }
+
+  function assetNameFromLink(href, label) {
+    const combined = `${href} ${label}`.toLowerCase();
+    if (combined.includes("investor") && combined.includes("packet")) return "Investor Packet";
+    if (combined.includes("white")) return "White Paper";
+    if (combined.includes("raise")) return "Raise Plan";
+    if (combined.includes("financial")) return "Financial Model";
+    if (combined.includes("report")) return "Report";
+    return label || "PDF";
+  }
+
+  function assetNameFromPage(path, title) {
+    const combined = `${path} ${title}`.toLowerCase();
+    if (combined.includes("white-paper") || combined.includes("white paper")) return "White Paper";
+    if (combined.includes("raise-plan") || combined.includes("raise plan")) return "Raise Plan";
+    if (combined.includes("business-model") || combined.includes("business model")) return "Business Model";
+    if (combined.includes("run-console") || combined.includes("console")) return "MVP Console";
+    if (combined.includes("investor") && combined.includes("packet")) return "Investor Packet";
+    return "";
+  }
+
+  function domainFromUrl(value) {
+    try {
+      return new URL(value).hostname.replace(/^www\./, "");
+    } catch (error) {
+      return "";
+    }
+  }
+
+  function cleanText(value, maxLength) {
+    return String(value || "").replace(/\s+/g, " ").trim().slice(0, maxLength);
+  }
 }());
