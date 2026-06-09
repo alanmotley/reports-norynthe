@@ -53,6 +53,7 @@
   send({
     assetName: assetNameFromPage(window.location.pathname, document.title)
   });
+  tagClaritySession();
 
   document.addEventListener("click", function (event) {
     const link = event.target.closest("a[href]");
@@ -84,6 +85,7 @@
       referrerDomain: window.location.hostname.replace(/^www\./, ""),
       assetName: assetNameFromLink(href, label)
     });
+    emitClarityEvent("pulse_pdf_download");
   }, { capture: true });
 
   function getSessionId() {
@@ -178,6 +180,39 @@
       if (value) next.searchParams.set(key, value);
     }
     return next;
+  }
+
+  function tagClaritySession() {
+    withClarity(function (clarity) {
+      const pageId = cleanText(window.location.pathname || "/", 120) || "/";
+      clarity("identify", "pulse:" + sessionId, sessionId, pageId, site);
+      clarity("set", "pulse_site", site);
+      clarity("set", "pulse_session", sessionId);
+      clarity("set", "pulse_page", pageId);
+      if (utm.source) clarity("set", "pulse_utm_source", utm.source);
+      if (utm.medium) clarity("set", "pulse_utm_medium", utm.medium);
+      if (utm.campaign) clarity("set", "pulse_utm_campaign", utm.campaign);
+    });
+  }
+
+  function emitClarityEvent(eventName) {
+    withClarity(function (clarity) {
+      clarity("event", eventName);
+    });
+  }
+
+  function withClarity(callback, attempt) {
+    const count = attempt || 0;
+    if (typeof window.clarity === "function") {
+      callback(window.clarity);
+      return;
+    }
+
+    if (count < 20) {
+      window.setTimeout(function () {
+        withClarity(callback, count + 1);
+      }, 250);
+    }
   }
 
   function assetNameFromPage(path, title) {
