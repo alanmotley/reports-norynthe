@@ -1,5 +1,6 @@
 (function () {
-  const ENDPOINT = "https://norynthe-pulse-tracker.alanmotley.workers.dev/track";
+  const ENDPOINT = window.NORYNTHE_PULSE_ENDPOINT || "https://norynthe-pulse-tracker.alanmotley.workers.dev/track";
+  const TRACKER_HOST = new URL(ENDPOINT).hostname;
   const SESSION_KEY = "norynthe_pulse_session_id_v1";
   const HOST_SITE = {
     "www.norynthe.com": "norynthe",
@@ -155,7 +156,7 @@
   function directDownloadHref(href) {
     try {
       const url = new URL(href, window.location.href);
-      return url.hostname === "norynthe-pulse-tracker.alanmotley.workers.dev" && url.pathname.startsWith("/download/")
+      return url.hostname === TRACKER_HOST && url.pathname.startsWith("/download/")
         ? url
         : null;
     } catch (error) {
