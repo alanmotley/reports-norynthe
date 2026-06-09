@@ -2,6 +2,10 @@
   const ENDPOINT = window.NORYNTHE_PULSE_ENDPOINT || "https://norynthe-pulse-tracker.alanmotley.workers.dev/track";
   const TRACKER_HOST = new URL(ENDPOINT).hostname;
   const SESSION_KEY = "norynthe_pulse_session_id_v1";
+  const OWNER_MODE_KEY = "norynthe_pulse_owner_mode_v1";
+  const OWNER_MODE_COOKIE = "norynthe_pulse_owner_mode";
+  const OWNER_MODE_ENABLE_VALUES = ["1", "true", "yes", "on", "enable", "enabled"];
+  const OWNER_MODE_DISABLE_VALUES = ["0", "false", "no", "off", "disable", "disabled"];
   const HOST_SITE = {
     "www.norynthe.com": "norynthe",
     "norynthe.com": "norynthe",
@@ -13,6 +17,11 @@
 
   const currentScript = document.currentScript;
   const site = currentScript?.dataset?.pulseSite || HOST_SITE[window.location.hostname] || "unknown";
+  const ownerModeCommand = applyOwnerModeCommand();
+  if (ownerModeCommand || isOwnerModeEnabled()) {
+    return;
+  }
+
   const sessionId = getSessionId();
   const device = detectDevice();
   const utm = readUtm();
@@ -101,6 +110,74 @@
     } catch (error) {
       return "session-" + Math.random().toString(36).slice(2) + Date.now().toString(36);
     }
+  }
+
+  function applyOwnerModeCommand() {
+    const params = new URLSearchParams(window.location.search);
+    const value = cleanText(params.get("pulse_owner"), 32).toLowerCase();
+    if (!value) return "";
+
+    if (OWNER_MODE_ENABLE_VALUES.includes(value)) {
+      setOwnerMode(true);
+      stripOwnerModeParam(params);
+      return "enabled";
+    }
+
+    if (OWNER_MODE_DISABLE_VALUES.includes(value)) {
+      setOwnerMode(false);
+      stripOwnerModeParam(params);
+      return "disabled";
+    }
+
+    return "";
+  }
+
+  function isOwnerModeEnabled() {
+    try {
+      if (window.localStorage.getItem(OWNER_MODE_KEY) === "1") return true;
+    } catch (error) {}
+
+    return document.cookie.split(";").some(function (part) {
+      return part.trim() === OWNER_MODE_COOKIE + "=1";
+    });
+  }
+
+  function setOwnerMode(enabled) {
+    try {
+      if (enabled) {
+        window.localStorage.setItem(OWNER_MODE_KEY, "1");
+      } else {
+        window.localStorage.removeItem(OWNER_MODE_KEY);
+      }
+    } catch (error) {}
+
+    const maxAge = enabled ? 60 * 60 * 24 * 400 : 0;
+    const cookieParts = [
+      OWNER_MODE_COOKIE + "=" + (enabled ? "1" : ""),
+      "path=/",
+      "max-age=" + maxAge,
+      "SameSite=Lax"
+    ];
+    const domain = ownerCookieDomain();
+    if (domain) cookieParts.push("domain=" + domain);
+    if (window.location.protocol === "https:") cookieParts.push("Secure");
+    document.cookie = cookieParts.join("; ");
+  }
+
+  function ownerCookieDomain() {
+    const host = window.location.hostname.replace(/^www\./, "");
+    if (host.endsWith("norynthe.com")) return ".norynthe.com";
+    if (host.endsWith("alanmotley.com")) return ".alanmotley.com";
+    return "";
+  }
+
+  function stripOwnerModeParam(params) {
+    try {
+      params.delete("pulse_owner");
+      const nextQuery = params.toString();
+      const nextUrl = window.location.pathname + (nextQuery ? "?" + nextQuery : "") + window.location.hash;
+      window.history.replaceState(null, document.title, nextUrl);
+    } catch (error) {}
   }
 
   function readUtm() {
