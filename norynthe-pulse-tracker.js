@@ -18,7 +18,10 @@
   const currentScript = document.currentScript;
   const site = currentScript?.dataset?.pulseSite || HOST_SITE[window.location.hostname] || "unknown";
   const ownerModeCommand = applyOwnerModeCommand();
-  if (ownerModeCommand || isOwnerModeEnabled()) {
+  const ownerModeEnabled = isOwnerModeEnabled();
+  window.NORYNTHE_PULSE_OWNER_MODE = ownerModeEnabled;
+  window.NORYNTHE_PULSE_OWNER_MODE_COMMAND = Boolean(ownerModeCommand);
+  if (ownerModeEnabled || ownerModeCommand) {
     return;
   }
 

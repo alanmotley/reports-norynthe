@@ -34,15 +34,69 @@
   <link rel="canonical" href="https://reports.norynthe.com/">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/favicon.png">
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-570981B382"></script>
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag("js", new Date());
-    gtag("config", "G-570981B382", {
-      page_title: document.title,
-      page_path: window.location.pathname + window.location.search + window.location.hash
-    });
+    window.NORYNTHE_PULSE_OWNER_MODE_COMMAND = false;
+    window.NORYNTHE_PULSE_OWNER_MODE = (function () {
+      const key = "norynthe_pulse_owner_mode_v1";
+      const cookie = "norynthe_pulse_owner_mode";
+      const enableValues = ["1", "true", "yes", "on", "enable", "enabled"];
+      const disableValues = ["0", "false", "no", "off", "disable", "disabled"];
+      const params = new URLSearchParams(window.location.search);
+      const value = String(params.get("pulse_owner") || "").replace(/\s+/g, " ").trim().toLowerCase();
+
+      if (enableValues.includes(value) || disableValues.includes(value)) {
+        const enabled = enableValues.includes(value);
+        window.NORYNTHE_PULSE_OWNER_MODE_COMMAND = true;
+        try {
+          if (enabled) {
+            window.localStorage.setItem(key, "1");
+          } else {
+            window.localStorage.removeItem(key);
+          }
+        } catch (error) {}
+
+        const parts = [
+          cookie + "=" + (enabled ? "1" : ""),
+          "path=/",
+          "max-age=" + (enabled ? 60 * 60 * 24 * 400 : 0),
+          "SameSite=Lax"
+        ];
+        const host = window.location.hostname.replace(/^www\./, "");
+        if (host.endsWith("norynthe.com")) parts.push("domain=.norynthe.com");
+        if (host.endsWith("alanmotley.com")) parts.push("domain=.alanmotley.com");
+        if (window.location.protocol === "https:") parts.push("Secure");
+        document.cookie = parts.join("; ");
+
+        try {
+          params.delete("pulse_owner");
+          const nextQuery = params.toString();
+          window.history.replaceState(null, document.title, window.location.pathname + (nextQuery ? "?" + nextQuery : "") + window.location.hash);
+        } catch (error) {}
+      }
+
+      try {
+        if (window.localStorage.getItem(key) === "1") return true;
+      } catch (error) {}
+      return document.cookie.split(";").some(function (part) {
+        return part.trim() === cookie + "=1";
+      });
+    }());
+
+    if (!window.NORYNTHE_PULSE_OWNER_MODE && !window.NORYNTHE_PULSE_OWNER_MODE_COMMAND) {
+      const gaId = "G-570981B382";
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function gtag(){ window.dataLayer.push(arguments); };
+      window.gtag("js", new Date());
+      window.gtag("config", gaId, {
+        page_title: document.title,
+        page_path: window.location.pathname + window.location.search + window.location.hash
+      });
+
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(gaId);
+      document.head.appendChild(script);
+    }
   </script>
   <style>
     :root {
