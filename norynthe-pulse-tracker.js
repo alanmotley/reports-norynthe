@@ -58,6 +58,12 @@
     if (!link) return;
 
     const href = link.getAttribute("href") || "";
+    const directDownloadUrl = directDownloadHref(href);
+    if (directDownloadUrl) {
+      link.href = withSessionParams(directDownloadUrl).toString();
+      return;
+    }
+
     const isPdf = /\.pdf(?:[?#].*)?$/i.test(href) || link.hasAttribute("download");
     if (!isPdf) return;
 
@@ -144,6 +150,33 @@
     if (combined.includes("financial")) return "Financial Model";
     if (combined.includes("report")) return "Report";
     return label || "PDF";
+  }
+
+  function directDownloadHref(href) {
+    try {
+      const url = new URL(href, window.location.href);
+      return url.hostname === "norynthe-pulse-tracker.alanmotley.workers.dev" && url.pathname.startsWith("/download/")
+        ? url
+        : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function withSessionParams(url) {
+    const next = new URL(url.toString());
+    next.searchParams.set("session_id", sessionId);
+    next.searchParams.set("site", site);
+    for (const [key, value] of [
+      ["utm_source", utm.source],
+      ["utm_medium", utm.medium],
+      ["utm_campaign", utm.campaign],
+      ["utm_term", utm.term],
+      ["utm_content", utm.content]
+    ]) {
+      if (value) next.searchParams.set(key, value);
+    }
+    return next;
   }
 
   function assetNameFromPage(path, title) {
